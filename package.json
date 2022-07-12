@@ -2,6 +2,9 @@
   "name": "elscanner",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.x",
