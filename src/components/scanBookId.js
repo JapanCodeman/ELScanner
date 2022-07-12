@@ -1,11 +1,24 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { QrReader } from 'react-qr-reader';
 
-export default class ScanBookID extends Component {
-  render () {
-    return (
-      <div>
-        ScanBookID goes here...
-      </div>
-    );
-  }
-}
+const Test = (props) => {
+  const [data, setData] = useState('No result');
+
+  return (
+    <>
+      <QrReader
+        onResult={(result, error) => {
+          if (!!result) {
+            setData(result?.text);
+          }
+
+          if (!!error) {
+            console.info(error);
+          }
+        }}
+        style={{ width: '100%' }}
+      />
+      <p>{data}</p>
+    </>
+  );
+};
