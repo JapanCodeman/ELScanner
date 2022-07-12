@@ -27,5 +27,9 @@ body {
   justify-items: center;
 }
 
+@import './await.scss';
+@import './greenButton.scss';
 @import './header.scss';
 @import './home.scss';
+@import './login.scss';
+@import './page-titler.scss';

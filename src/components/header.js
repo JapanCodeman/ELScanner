@@ -6,7 +6,6 @@ export default class Header extends Component {
       <div className='header-wrapper'>
         <div className='header'>
           ELScanner
-          <button className='header__login-button'>Login</button>
         </div>
       </div>
     );

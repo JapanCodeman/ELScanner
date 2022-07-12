@@ -2,8 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './styles/main.scss';
 
+import Await from './components/await';
 import Header from './components/header';
 import Home from './components/home.js';
+import Login from './components/login';
+import ScanStudentID from './components/scanStudentId';
+import ScanBookID from './components/scanBookId';
 
 function App() {
   return (
@@ -13,6 +17,11 @@ function App() {
           <Header />
           <Routes>
             <Route path = '/' element={<Home/>} />
+            <Route path = '/await' element={<Await/>} />
+            <Route path = '/login' element={<Login/>} />
+            <Route path = '/scan-book-id' element={<ScanBookID/>} />
+            <Route path = '/scan-student-id' element={<ScanStudentID />} />
+
           </Routes>
         </Router>
       </header>
