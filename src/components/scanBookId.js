@@ -10,6 +10,8 @@ export default class ScanBookID extends Component {
       result: [],
       text: []
     }
+
+    this.onNewScanResult = this.onNewScanResult.bind(this);
   }
   render () {
     return (
