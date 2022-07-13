@@ -1,33 +1,33 @@
 import React, { Component } from 'react';
 import Html5QrcodePlugin from './html5QrcodeScannerPlugin';
+import ScannedBookResult from './scannedBookResult';
 
 export default class ScanBookID extends Component {
   constructor(props) {
-    super(props)
+    super(props) 
 
     this.state = {
-      Text: '',
-      Result: ''
+      result: [],
+      text: []
     }
   }
   render () {
     return (
       <div>
-        <h1>Html 5Qrcode React example!</h1>
+        <h1>QR/Barcode Scanner Demo</h1>
         <Html5QrcodePlugin 
             fps={10}
-            qrbox={250}
             disableFlip={false}
             qrCodeSuccessCallback={this.onNewScanResult}/>
-        <div className='decodedText'>{this.state.decodedText}</div>
-        <div className='decodedResult'>{this.state.decodedResult}</div>
-      </div>);
+        {this.state ? this.state.text.map(scanned => <ScannedBookResult result={scanned.result} text={scanned.text}/>) : null}
+      </div>
+    );
   }
 
   onNewScanResult(decodedText, decodedResult) {
     this.setState({
-      Text: {decodedText},
-      Result: {decodedResult}
+      result: decodedResult,
+      text: decodedText
     })
   }
 }
