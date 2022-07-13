@@ -26,8 +26,8 @@ export default class ScanBookID extends Component {
 
   onNewScanResult(decodedText, decodedResult) {
     this.setState({
-      result: decodedResult,
-      text: decodedText
+      result: [...decodedResult],
+      text: [...decodedText]
     })
   }
 }
