@@ -19,7 +19,8 @@ export default class ScanBookID extends Component {
             qrbox={250}
             disableFlip={false}
             qrCodeSuccessCallback={this.onNewScanResult}/>
-        <div className='decodedText'>{this.props.decodedText}</div>
+        <div className='decodedText'>{this.state.decodedText}</div>
+        <div className='decodedResult'>{this.state.decodedResult}</div>
       </div>);
   }
 
