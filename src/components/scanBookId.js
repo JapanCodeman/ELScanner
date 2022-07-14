@@ -7,29 +7,36 @@ export default class ScanBookID extends Component {
     super(props) 
 
     this.state = {
-      result: [],
-      text: []
+      result: '',
+      barcodeNumber: ''
     }
 
+    this.handleChange = this.handleChange.bind(this)
     this.onNewScanResult = this.onNewScanResult.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.value]: event.target.name
+    })
+  }
+
   render () {
     return (
       <div>
         <h1>QR/Barcode Scanner Demo</h1>
         <Html5QrcodePlugin 
-            fps={10}
+            fps={2}
             disableFlip={false}
             qrCodeSuccessCallback={this.onNewScanResult}/>
-        {this.state ? this.state.text.map(scanned => <ScannedBookResult result={scanned.result} text={scanned.text}/>) : null}
+        <ScannedBookResult barcode={this.state.barcodeNumber} />
       </div>
     );
   }
 
-  onNewScanResult(decodedText, decodedResult) {
-    this.setState({
-      result: [...decodedResult],
-      text: [...decodedText]
-    })
+  onNewScanResult(decodedText) {
+    console.log("decoded text", decodedText) // return simple number of barcode
+    // console.log("decoded result", decodedResult) // returns object which includes decodedText as string, format and type of barcode
+    this.handleChange(this.state.barcodeNumber)
   }
 }

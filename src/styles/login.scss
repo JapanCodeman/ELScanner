@@ -1,7 +1,7 @@
 .login-page {
 
   
-  &__input-wrapper {
+  &__input-wrapper, form {
     height: 50vh;
     display: grid;
     grid-template-columns: 10vw [input-field-s] 80vw [input-field-e] 20vw ;
@@ -11,41 +11,38 @@
   &__username-label {
     grid-column: input-field-s/input-field-e;
     grid-row: username-label-s/username-label-e;
-    color: green;
-    font-family: 'Edu TAS Beginner', cursive;
-    font-size: 32px;
   }
 
   &__username-input {
     height: 5vh;
     grid-column: input-field-s/input-field-e;
     grid-row: username-input-s/username-input-e;
-    background: none;
-    border: none;
-    border-bottom: 2px solid green;
-    font-size: 24px;
   }
 
   &__password-label {
     grid-column: input-field-s/input-field-e;
     grid-row: password-label-s/password-label-e;
-    color: green;
-    font-family: 'Edu TAS Beginner', cursive;
-    font-size: 32px;
   }
 
   &__password-input {
     height: 5vh;
     grid-column: input-field-s/input-field-e;
     grid-row: password-input-s/password-input-e;
-    background: none;
+  }
+
+  input {
     border: none;
-    outline: none;
     border-bottom: 2px solid green;
     font-size: 24px;
   }
 
   input:focus {
     outline: none;
+  }
+
+  label {
+    color: green;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 32px;
   }
 }

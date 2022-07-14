@@ -1,0 +1,73 @@
+.register-page {
+  &__form {
+    height: 40vh;
+    display: grid;
+    grid-template-columns: 10vw [input-field-s] 80vw [input-field-e] 20vw;
+    grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 5vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 5vh [last-name-input-e password-label-s] 5vh [password-label-e password-input-s] 5vh [password-input-e confirm-password-label-s] 5vh [confirm-password-label-e confirm-password-input-s] 5vh [confirm-password-input-e];
+    margin-bottom: 30px;
+
+    &__first-name-label {
+      grid-column: input-field-s/input-field-e;
+      grid-row: first-name-label-s/first-name-label-e;
+    }
+
+    &__first-name-input {
+      grid-column: input-field-s/input-field-e;
+      grid-row: first-name-input-s/first-name-input-e;
+    }
+
+    &__last-name-label {
+      grid-column: input-field-s/input-field-e;
+      grid-row: last-name-label-s/last-name-label-e;
+    }
+
+    &__last-name-input {
+      grid-column: input-field-s/input-field-e;
+      grid-row: last-name-input-s/last-name-input-e;
+    }
+
+    &__password-label {
+      grid-column: input-field-s/input-field-e;
+      grid-row: password-label-s/password-label-e;
+    }
+
+    &__password-input {
+      grid-column: input-field-s/input-field-e;
+      grid-row: password-input-s/password-input-e;
+    }
+
+    &__confirm-password-label {
+      grid-column: input-field-s/input-field-e;
+      grid-row: confirm-password-label-s/confirm-password-label-e;
+    }
+
+    &__confirm-password-input {
+      grid-column: input-field-s/input-field-e;
+      grid-row: confirm-password-input-s/confirm-password-input-e;
+    }
+  }
+
+  label {
+    color: green;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 32px;
+  }
+
+  input {
+    border: none;
+    border-bottom: 2px solid green;
+    font-size: 24px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  &__buttons {
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

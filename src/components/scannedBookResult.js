@@ -4,7 +4,7 @@ export default class ScannedBookResult extends Component {
   render () {
     return (
       <div>
-        {this.props.text}
+        {this.props.barcode}
       </div>
     );
   }

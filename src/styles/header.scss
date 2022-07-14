@@ -11,13 +11,12 @@
     font-family: 'Edu TAS Beginner', cursive;
     font-size: 24px;
     position: absolute;
+    text-decoration: none;
 
     &__login-button {
       height: 20px;
       padding: 3px 5px;
       margin-left: auto;
-
-      
     }
   }
 }
