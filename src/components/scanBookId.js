@@ -37,6 +37,6 @@ export default class ScanBookID extends Component {
   onNewScanResult(decodedText) {
     console.log("decoded text", decodedText) // return simple number of barcode
     // console.log("decoded result", decodedResult) // returns object which includes decodedText as string, format and type of barcode
-    this.handleChange(this.state.barcodeNumber)
+    this.handleChange()
   }
 }
