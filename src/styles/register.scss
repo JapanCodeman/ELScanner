@@ -84,6 +84,7 @@
 
   &__buttons {
     height: 12vh;
+    grid-column: input-field-s/input-field-e;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -91,3 +92,4 @@
     margin-top: 2vh;
   }
 }
+
