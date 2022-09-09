@@ -34,7 +34,7 @@ export default class App extends Component {
               <Route path = '/await' element={<Await/>} />
               <Route path = '/login' element={<Login/>} />
               <Route path = '/register' element={<Register />} />
-              <Route path = '/scan-book-id' element={<ScanBookID/>} />
+              <Route path = '/scan-book-id' element={<ScanBookID />} />
               <Route path = '/scan-student-id' element={<ScanStudentID />} />
             </Routes>
           </Router>

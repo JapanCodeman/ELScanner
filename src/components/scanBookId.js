@@ -1,42 +1,77 @@
 import React, { Component } from 'react';
-import Html5QrcodePlugin from './html5QrcodeScannerPlugin';
-import ScannedBookResult from './scannedBookResult';
+import { Html5Qrcode, Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
+
 
 export default class ScanBookID extends Component {
   constructor(props) {
-    super(props) 
+    super(props)
 
     this.state = {
-      result: '',
-      barcodeNumber: ''
+      bookId: ''
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.onNewScanResult = this.onNewScanResult.bind(this);
   }
+  
+  componentDidMount() {
+    Html5Qrcode.getCameras().then(devices => {
+      console.log(devices);
+      if (devices && devices.length) {
+        var cameraId = devices[0].id;
+        const html5QrCode = new Html5Qrcode("qr-reader");
 
-  handleChange(event) {
+html5QrCode.start(
+  cameraId,     // retreived in the previous step.
+  {
+    fps: 10,    // sets the framerate to 10 frame per second
+    qrbox: 250  // sets only 250 X 250 region of viewfinder to
+                // scannable, rest shaded.
+  },
+  qrCodeMessage => {
+    // do something when code is read. For example:
     this.setState({
-      [event.target.value]: event.target.name
-    })
+      bookId: qrCodeMessage
+    });
+    html5QrCode.stop().then(ignore => {
+      // QR Code scanning is stopped.
+      console.log("QR Code scanning stopped.");
+    }).catch(err => {
+      // Stop failed, handle it.
+      console.log("Unable to stop scanning.", err);
+    });
+  },
+  errorMessage => {
+    // parse error, ideally ignore it. For example:
+    console.log(`QR Code no longer in front of camera.`);
+  })
+.catch(err => {
+  // Start failed, handle it. For example,
+  console.log(`Unable to start scanning, error: ${err}`);
+});
+      }
+    }).catch(error => {
+      console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
+    
+
+    function onScanSuccess(decodedResult) {
+      console.log(decodedResult)
+    }
+    let config = {
+      fps: 10,
+      qrbox: {width: 250, height: 250},
+      rememberLastUsedCamera: true,
+      // Only support camera scan type.
+      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+    };
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+    "qr-reader", config);
+    html5QrcodeScanner.render(onScanSuccess);
   }
 
   render () {
     return (
       <div>
-        <h1>QR/Barcode Scanner Demo</h1>
-        <Html5QrcodePlugin 
-            fps={2}
-            disableFlip={false}
-            qrCodeSuccessCallback={this.onNewScanResult}/>
-        <ScannedBookResult barcode={this.state.barcodeNumber} />
+        <div id="qr-reader" style={{width: 600, height: 600}} />
       </div>
     );
-  }
-
-  onNewScanResult(decodedText) {
-    console.log("decoded text", decodedText) // return simple number of barcode
-    // console.log("decoded result", decodedResult) // returns object which includes decodedText as string, format and type of barcode
-    this.handleChange()
   }
 }
