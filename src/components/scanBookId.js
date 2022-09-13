@@ -7,13 +7,16 @@ export default class ScanBookID extends Component {
     super(props)
 
     this.state = {
-      bookId: ''
+      bookId: '',
+      availableCameras: []
     }
   }
   
 componentDidMount() {
   Html5Qrcode.getCameras().then(devices => {
-    console.log(devices);
+    this.setState({
+      availableCameras: devices
+    })
     // if (devices && devices.length) {
       var cameraId = devices[0].id;
       const html5QrCode = new Html5Qrcode("qr-reader");
@@ -30,10 +33,10 @@ componentDidMount() {
       this.setState({
         bookId: qrCodeMessage
       });
-      window.alert(`${qrCodeMessage} detected.`)
+      // window.alert(`${qrCodeMessage} detected.`)
       html5QrCode.stop().then(ignore => {
         // QR Code scanning is stopped.
-        console.log("QR Code scanning stopped.");
+        // window.location.assign('/register-new-book') <-- this works for "pushing" without state preservation
       }).catch(err => {
         // Stop failed, handle it.
         console.log("Unable to stop scanning.", err);
@@ -50,11 +53,13 @@ componentDidMount() {
         // }
       }).catch(error => {
         console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
+        
       
 
   function onScanSuccess(decodedResult) {
     console.log(decodedResult)
   }
+
   let config = {
     fps: 10,
     qrbox: {width: 250, height: 250},
@@ -63,18 +68,24 @@ componentDidMount() {
     supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
   };
 
-      var html5QrcodeScanner = new Html5QrcodeScanner(
-      "qr-reader", config);
-      html5QrcodeScanner.render(onScanSuccess);
-    }
+  var html5QrcodeScanner = new Html5QrcodeScanner(
+  "qr-reader", config);
+  html5QrcodeScanner.render(onScanSuccess)
+  }
 
   render () {
     return (
-      <div id="qr-reader" >
-        <select className="scanbook__camera-dropdown" name="camera" value={this.cameraId} onChange={this.handleChange}>
-          <option value={this.cameraId}>Front Camera</option>
-          <option value={this.cameraId}>Back Camera</option>
-        </select>
+      <div>
+        <div id="qr-reader">
+          {/* <select className="scanbook__camera-dropdown" name="camera" value={this.cameraId} onChange={this.handleChange}>
+            ({this.state.availableCameras.map(camera => {
+              return(
+              <option value={camera} key={camera}>{camera}</option>)
+            })}) */}
+          {/* </select> */}
+        </div>
+        {this.state.bookId ? 
+        <h1>{this.state.bookId}</h1> : null}
       </div>
     );
   }
