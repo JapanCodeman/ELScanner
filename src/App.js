@@ -32,7 +32,7 @@ export default class App extends Component {
           <Router history = {history}>
             <Header />
             <Routes>
-              <Route path = '/' element={<Home/>} />
+              <Route exact path = '/' element={<Home/>} />
               <Route path = '/await' element={<Await/>} />
               <Route path = '/login' element={<Login/>} />
               <Route path = '/register' element={<Register />} />

@@ -1,91 +1,55 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import { Html5Qrcode, Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
+import Scanner from './scanner';
 
-
-export default class ScanBookID extends Component {
+export default class scanBookId extends Component {
   constructor(props) {
-    super(props)
+    super(props) 
 
     this.state = {
-      bookId: '',
-      availableCameras: []
     }
+
+    this.updateBookId = this.updateBookId.bind(this)
   }
   
-componentDidMount() {
-  Html5Qrcode.getCameras().then(devices => {
-    this.setState({
-      availableCameras: devices
-    })
-    // if (devices && devices.length) {
-      var cameraId = devices[0].id;
-      const html5QrCode = new Html5Qrcode("qr-reader");
-
-  html5QrCode.start(
-    cameraId,     // retrieved in the previous step.
-    {
-      fps: 10,    // sets the framerate to 10 frame per second
-      qrbox: 250  // sets only 250 X 250 region of viewfinder to
-                  // scannable, rest shaded.
-    },
-    qrCodeMessage => {
-      // do something when code is read. For example:
+  async updateBookId(bookID) {
+    await
+    axios
+    .get(`http://127.0.0.1:5000/retrieve-book-info/${bookID}`)
+    .then(book => {
       this.setState({
-        bookId: qrCodeMessage
-      });
-      // window.alert(`${qrCodeMessage} detected.`)
-      html5QrCode.stop().then(ignore => {
-        // QR Code scanning is stopped.
-        // window.location.assign('/register-new-book') <-- this works for "pushing" without state preservation
-      }).catch(err => {
-        // Stop failed, handle it.
-        console.log("Unable to stop scanning.", err);
-      });
-    },
-    errorMessage => {
-      // parse error, ideally ignore it. For example:
-      console.log(`QR Code no longer in front of camera.`);
+        book
+      })
     })
-  .catch(err => {
-    // Start failed, handle it. For example,
-    console.log(`Unable to start scanning, error: ${err}`);
-  });
-        // }
-      }).catch(error => {
-        console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
-        
-      
-
-  function onScanSuccess(decodedResult) {
-    console.log(decodedResult)
-  }
-
-  let config = {
-    fps: 10,
-    qrbox: {width: 250, height: 250},
-    rememberLastUsedCamera: true,
-    // Only support camera scan type.
-    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-  };
-
-  var html5QrcodeScanner = new Html5QrcodeScanner(
-  "qr-reader", config);
-  html5QrcodeScanner.render(onScanSuccess)
+    .catch(error => {
+      console.log("There was an error in updateBookId function", error)
+    })
   }
 
   render () {
     return (
-      <div>
-        <div id="qr-reader">
-          {/* <select className="scanbook__camera-dropdown" name="camera" value={this.cameraId} onChange={this.handleChange}>
-            ({this.state.availableCameras.map(camera => {
-              return(
-              <option value={camera} key={camera}>{camera}</option>)
-            })}) */}
-          {/* </select> */}
+      <div className='scan-book-wrapper'>
+        <Scanner updateBookId = {(bookID) => this.updateBookId(bookID)}/>
+        {this.state.book != null ? 
+        <div className='scan-result-table'>
+          <div className='scan-result__upc-label'>UPC</div>
+          <div className='scan-result__upc'>{this.state.book.data.upc}</div>
+          <div className='scan-result__title-label'>Title</div>
+          <div className='scan-result__title'>{this.state.book.data.title} 
+          <div className='scan-result__publisher-label'>Publisher</div>
+          <div className='scan-result__publisher'>{this.state.book.data.publisher}</div>
+          <div className='scan-result__author-label'>Author</div>
+          <div className='scan-result__author'>{this.state.book.data.author}</div>
+          <div className='scan-result__word-count-label'>Word Count</div>
+          <div className='scan-result__word-count'>{this.state.book.data.wordCount}</div>
+          <div className='scan-result__status-label'>Status</div>
+          <div className='scan-result__status'>{this.state.book.data.status}</div>
+          <div className='scan-result__current-holder-label'>{this.state.book.data.currentHolder}</div>
         </div>
-        {this.state.bookId ? 
-        <h1>{this.state.bookId}</h1> : null}
+      </div>
+          : 
+          
+          null }
       </div>
     );
   }
