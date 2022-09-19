@@ -5,7 +5,6 @@ export default class ScanStudentID extends Component {
     super(props)
 
     this.state = {
-      data: "Not Found"
     }
   }
   render () {
