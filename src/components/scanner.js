@@ -29,7 +29,7 @@ componentDidMount() {
     },
     qrCodeMessage => {
       // do something when code is read. For example:
-      this.props.updateBookId(qrCodeMessage);
+      this.props.returnedInfo(qrCodeMessage);
       html5QrCode.stop().then(ignore => {
         // QR Code scanning is stopped.
       }).catch(err => {

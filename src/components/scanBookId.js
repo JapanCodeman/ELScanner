@@ -40,7 +40,7 @@ function ScanBookId() {
 
   const checkBookOut = () => {
     console.log('checkBooktOut clicked');
-    navigate('/scan-student-id');
+    navigate('/scan-student-id', {state: {...book}});
   }
 
   const rescan = () => {
@@ -51,7 +51,7 @@ function ScanBookId() {
   return (
     <div className='scan-book-wrapper'>
       <PageTitler pagetitle='Scan Book' />
-      <Scanner updateBookId = {(bookID) => updateBookId(bookID)}/>
+      <Scanner returnedInfo = {(bookID) => updateBookId(bookID)}/>
       {book.upc !== null ? 
       <div className='scan-result-table'>
         <button onClick={rescan} className='scan-result__restart'>Wrong title?</button>
