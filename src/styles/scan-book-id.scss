@@ -14,10 +14,11 @@
   display: grid;
   grid-template-columns: [left-start] 20vw [left-end label-s] 80vw [label-e right-start] 20vw [right-end];
   grid-template-rows: [button-s] 5vh [button-e upc-label-s] 5vh [upc-label-e upc-s] 5vh [upc-e title-label-s] 5vh [title-label-e title-s] 5vh [title-e pub-label-s] 5vh [pub-label-e pub-s] 5vh [pub-e auth-label-s] 5vh [auth-label-e auth-s] 5vh [auth-e word-label-s] 5vh [word-label-e word-s] 5vh [word-e status-label-s] 5vh [status-label-e status-s] 5vh [status-e holder-label-s] 5vh [holder-label-e holder-s] 5vh [holder-e];
-  // font-family: 'Edu TAS Beginner', cursive;
+  font-family: 'Edu TAS Beginner', cursive;
   font-size: 24px;
   color: darkgreen;
   align-items: center;
+  margin: 30px;
 
   &__upc-label {
     grid-row: upc-label-s/upc-label-e;
@@ -85,10 +86,13 @@ button {
   color: white;
   font-family: 'Edu TAS Beginner', cursive;
   font-size: 24px;
+  padding: 5px;
+  border-radius: 10px;
 }
 
-.scan-result label {
+.scan-result-table label {
   font-size: 32px;
+  font-weight: bold;
   transform: translateX(-10px);
 }
 
