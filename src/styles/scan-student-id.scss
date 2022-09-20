@@ -1,0 +1,9 @@
+.checkout-confirmation {
+  &__student-info {
+    display: flex;
+    flex-direction: row;
+    color: green;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 20px;
+  }
+}
