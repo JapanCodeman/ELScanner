@@ -1,9 +1,25 @@
 .checkout-confirmation {
+
   &__student-info {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 5vw [label-s] 45vw [label-e info-s] 45vw [info-e] 5vw;
+    grid-template-rows: 5vh [name-s] 5vh [name-e class-s] 5vh [class-e status-s] 5vh [status-e];
+    align-items: center;
+    width: 100vw;
     color: green;
     font-family: 'Edu TAS Beginner', cursive;
     font-size: 20px;
+  }
+
+  label {
+    grid-column: label-s/label-e;
+  }
+
+  &__student-name-label, &__student-name {
+    grid-row: name-s/name-e;
+  }
+
+  &__student-name {
+    grid-column: info-s/info-e;
   }
 }
