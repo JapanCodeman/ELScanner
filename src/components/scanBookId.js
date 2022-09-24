@@ -14,7 +14,7 @@ function ScanBookId() {
       publisher : "",
       author : "",
       wordCount : 0,
-      status : "",
+      checkedOut : "",
       currentHolder : ""
     });
 
@@ -34,12 +34,12 @@ function ScanBookId() {
   }
 
   const checkBookIn = () => {
+    navigate('/scan-student-id', {state: {...book}})
     axios
     .patch(`http://127.0.0.1:5000/${book.upc}`)
   }
 
   const checkBookOut = () => {
-    console.log('checkBooktOut clicked');
     navigate('/scan-student-id', {state: {...book}});
   }
 

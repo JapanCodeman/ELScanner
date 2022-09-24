@@ -64,7 +64,7 @@ function ScanStudentId () {
           <div className='checkout-confirmation__student-checkout-status'>#Fill in later</div>
         </div>
 
-        {checkOutStatus === false ? 
+        {book.status === "Checked Out" ? 
           <button className='checkout-confirmation__message' onClick={checkOutBook}>
             Check out title: {book.title} to {student.first} {student.last}?
           </button>

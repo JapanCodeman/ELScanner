@@ -11,6 +11,7 @@ import Register from './components/register';
 import RegisterNewBook from './components/registerNewBook';
 import ScanStudentID from './components/scanStudentId';
 import ScanBookID from './components/scanBookId';
+import PageNotFound from './components/pageNotFound';
 
 export default class App extends Component {
   constructor() {
@@ -39,6 +40,7 @@ export default class App extends Component {
               <Route path = '/register-new-book' element={<RegisterNewBook />} />
               <Route path = '/scan-book-id' element={<ScanBookID />} />
               <Route path = '/scan-student-id' element={<ScanStudentID />} />
+              <Route path = '*' element={<PageNotFound />} />
             </Routes>
           </Router>
         </header>
