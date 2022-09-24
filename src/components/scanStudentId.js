@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
@@ -8,13 +8,13 @@ import Scanner from './scanner';
 
 function ScanStudentId () {
   const location = useLocation()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const [book] = useState({
     ...location.state
   })
 
-  const [checkOutStatus, updateStatus] = useState(false);
+  // const [checkOutStatus, updateStatus] = useState(false);
 
   const [student, updateInfo] = useState({
     _id: "",
@@ -36,7 +36,7 @@ function ScanStudentId () {
     .catch(error => {
       console.log("error in checkOutBook function", error)
     })
-    updateStatus(true)
+    // updateStatus(true)
   }
 
   const lookupUser = (public_id) => {
