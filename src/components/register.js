@@ -24,7 +24,7 @@ function Register() {
     }
     const newUser = {...user}
     console.log(newUser)
-    axios.post('http://127.0.0.1:5000/register-new-user/', newUser)
+    axios.post('http://127.0.0.1:5000/register-new-user', newUser)
     .then(response => console.log("registered", response))
     .catch(error => 
       console.log("Error in register.js:handleSubmit()", error))
