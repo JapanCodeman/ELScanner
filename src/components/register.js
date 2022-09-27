@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import axios from 'axios';
 
@@ -7,25 +8,34 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
 
 function Register() {
 
-    const [user, setUser] = useState({
-      first: '',
-      last: '',
-      email: '',
-      password: '',
-      registrationCode: '',
-      confirmPass: ''
-    })
+  const navigate = useNavigate()
+
+  const [user, setUser] = useState({
+    first: '',
+    last: '',
+    email: '',
+    password: '',
+    registrationCode: ''
+  })
+
+  const [confirm, setConfirmPass] = useState({
+    confirmPass: ''
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit clicked")
-    if (user.password !== user.confirmPass) {
+    if (user.password !== confirm.confirmPass) {
       window.alert("Passwords do not match - reenter")
+      return
     }
     const newUser = {...user}
-    console.log(newUser)
     axios.post('http://127.0.0.1:5000/register-new-user', newUser)
-    .then(response => console.log("registered", response))
+    .then(response => {
+      if (response.status === 200) {
+        navigate('/login')
+      }
+    })
     .catch(error => 
       console.log("Error in register.js:handleSubmit()", error))
   }
@@ -34,8 +44,13 @@ function Register() {
     setUser({...user, [event.target.name] : event.target.value})
   }
 
+  const handleUpdate = (event) => {
+    setConfirmPass({...confirm, [event.target.name] : event.target.value})
+  }
+
   const handleRedirect = () => {
-    this.props.navigate('/')
+    console.log("handleRedirect clicked")
+    navigate('/')
   }
 
   return (
@@ -51,12 +66,12 @@ function Register() {
         <label className='register-page__form__password-label'>Password</label>
         <input className='register-page__form__password-input' type='password' autoComplete='new-password' name='password' value={user.password} onChange={handleChange}/>
         <label className='register-page__form__confirm-password-label'>Confirm Password</label>
-        <input className='register-page__form__confirm-password-input' type='password' autoComplete='new-password' name='confirmPass' value={user.confirmPass} onChange={handleChange}/>
+        <input className='register-page__form__confirm-password-input' type='password' autoComplete='new-password' name='confirmPass' value={confirm.confirmPass} onChange={handleUpdate}/>
         <label className='register-page__form__registration-code-label'>Registration Code</label>
         <input className='register-page__form__registration-code-input' type='text' name='registrationCode' autoComplete='one-time-code' value={user.registrationCode} onChange={handleChange}/>
         <div className='register-page__buttons'>
-          <SmallerGreenButton className='green-button' text='Register' type='submit' onClick={e => handleSubmit(e)}/>
-          <SmallerGreenButton className='green-button' text='Return to Title' type='button' clickHandler={handleRedirect}/>
+          <SmallerGreenButton className='smaller-green-button' text='Register' typeSet='submit' clickHandler={e => handleSubmit(e)}/>
+          <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
         </div>
       </form>
     </div>

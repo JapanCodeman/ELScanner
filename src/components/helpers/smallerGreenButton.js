@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class SmallerGreenButton extends Component {
-  render () {
+function SmallerGreenButton(props) {
     return (
-        <button className='smaller-green-button' text={this.props.text} onClick={this.props.clickHandler}>{this.props.text}</button> 
+        <button className={props.className} text={props.text} type={props.typeSet} onClick={props.clickHandler}>{props.text}</button> 
     );
   }
-}
+
+export default SmallerGreenButton

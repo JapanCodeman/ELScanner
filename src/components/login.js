@@ -1,37 +1,46 @@
-import React, { Component } from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import PageTitler from './helpers/pageTitler';
+import SmallerGreenButton from './helpers/smallerGreenButton';
 
-export default class Login extends Component {
-  constructor() {
-    super() 
+  function Login() {
 
-    this.state = {
+    const [user, setUser] = useState({
       username: '',
       password: ''
-    }
-    
-    this.handleChange = this.handleChange.bind(this)
+    })
+
+  const handleChange = (event) => {
+    setUser({...user, [event.target.name] : event.target.value})
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.value]: event.target.name
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({...user})
+    axios
+    .post('http://127.0.0.1:5000/login', {...user})
+    .then(response => {
+      console.log(response, {...user})
+    })
+    .catch(error => {
+      console.log('There was an error in handleSubmit in login.js', error)
     })
   }
 
-  render () {
-    return (
-      <div className='login-page'>
-        <PageTitler pagetitle='Login' />
-        <div className='login-page__input-wrapper'>
-          <form>
-            <label className='login-page__username-label'>Username</label>
-            <input className='login-page__username-input' type='text' name='username' autoComplete='username' onChange={this.handleChange} />
-            <label className='login-page__password-label'>Password</label>
-            <input className='login-page__password-input' type='password' name='password' autoComplete='current-password' onChange={this.handleChange}/>
-          </form>
-        </div>
+  return (
+    <div className='login-page'>
+      <PageTitler pagetitle='Login' />
+      <div className='login-page__input-wrapper'>
+        <form>
+          <label className='login-page__username-label'>Email</label>
+          <input className='login-page__username-input' type='text' name='username' autoComplete='email' onChange={handleChange} />
+          <label className='login-page__password-label'>Password</label>
+          <input className='login-page__password-input' type='password' name='password' autoComplete='current-password' onChange={handleChange} />
+          <SmallerGreenButton className='login-page__login-button' text='Login' typeSet='submit' clickHandler={(e) => handleSubmit(e)} />
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+export default Login
