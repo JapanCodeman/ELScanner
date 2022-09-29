@@ -11,6 +11,7 @@ import Register from './components/register';
 import RegisterNewBook from './components/registerNewBook';
 import ScanStudentID from './components/scanStudentId';
 import ScanBookID from './components/scanBookId';
+import Title from './components/title.js';
 import PageNotFound from './components/pageNotFound';
 
 export default class App extends Component {
@@ -33,8 +34,9 @@ export default class App extends Component {
           <Router history = {history}>
             <Header />
             <Routes>
-              <Route exact path = '/' element={<Home/>} />
+              <Route exact path = '/' element={<Title/>} />
               <Route path = '/await' element={<Await/>} />
+              <Route path = '/home' element={<Home/>} />
               <Route path = '/login' element={<Login/>} />
               <Route path = '/register' element={<Register />} />
               <Route path = '/register-new-book' element={<RegisterNewBook />} />
