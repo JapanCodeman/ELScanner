@@ -32,7 +32,7 @@ function ScanStudentId () {
 
   const checkOutBook = () => {
     axios
-    .patch(`http://127.0.0.1:5000/check-book-out/${book.upc}/${student.public_id}`)
+    .patch(`https://elscanner-backend.herokuapp.com//check-book-out/${book.upc}/${student.public_id}`)
     .catch(error => {
       console.log("error in checkOutBook function", error)
     })
@@ -41,7 +41,7 @@ function ScanStudentId () {
 
   const lookupUser = (public_id) => {
     axios
-    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
+    .get(`https://elscanner-backend.herokuapp.com//lookup-user/${public_id}`)
     .then(response => {
       updateInfo({...response.data}) 
     })
@@ -72,7 +72,7 @@ function ScanStudentId () {
         :
           <div className='checkout-confirmation-wrapper'>
             <div className='checkout-confirmation__confirmed'>{book.title} checked out to {student.first} {student.last}</div>
-            <SmallerGreenButton text='Checkout another title?' clickHandler={window.location('http://127.0.0.1:5000/scan-book-id')} /> 
+            <SmallerGreenButton text='Checkout another title?' clickHandler={window.location('https://elscanner-backend.herokuapp.com//scan-book-id')} /> 
           </div>}
       </div>
     </div>
