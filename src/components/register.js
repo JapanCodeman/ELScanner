@@ -30,7 +30,7 @@ function Register() {
       return
     }
     const newUser = {...user}
-    axios.post('https://elscanner-backend.herokuapp.com//register-new-user', newUser)
+    axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
     .then(response => {
       if (response.status === 200) {
         navigate('/login')

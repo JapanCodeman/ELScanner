@@ -28,7 +28,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-    .post('https://elscanner-backend.herokuapp.com//login', {
+    .post('https://elscanner-backend.herokuapp.com/login', {
       ...user
     },
     { withCredentials: true },

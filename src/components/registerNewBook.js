@@ -20,7 +20,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
     const handleSubmit = (event) => {
       event.preventDefault();
       axios
-      .post(`https://elscanner-backend.herokuapp.com//register-new-book/${bookInfo.upc}`, {...bookInfo})
+      .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
         console.log(response)
       })

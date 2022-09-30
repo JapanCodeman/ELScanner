@@ -16,7 +16,7 @@ function Home() {
     const userPublicId = decoded.sub.user
     console.log(userPublicId)
     axios
-    .get(`https://elscanner-backend.herokuapp.com//lookup-user/${userPublicId}`)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${userPublicId}`)
     .then(response => {
       setUser({...response.data})
     })
