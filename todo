@@ -1,0 +1,15 @@
+Get RegisterNewBook component up and running online as soon as possible
+  to start populating database
+
+Change Await component to AdminAwait and all references
+
+Change app.js from class to functional component? (leaning towards class)
+
+Setup authorized routing (research best practices on JWT storage/usage)
+
+Look for good graphing module to keep track of class/student words read
+
+Move authentication to app.js and pass props down? Or use a callback from login.js to change state of app.js? map user to state in app.js?
+
+Write routes for:
+  updating student's word count

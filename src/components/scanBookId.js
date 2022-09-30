@@ -24,9 +24,14 @@ function ScanBookId() {
     axios
     .get(`http://127.0.0.1:5000/retrieve-book-info/${bookID}`)
     .then(book => {
+      console.log(book)
+      if (book.data !== 'Book not registered') {
       updateBook({
         ...book.data
-      })
+      })}
+      else {
+        navigate('/register-new-book', {state: {upc: bookID}})
+      }
     })
     .catch(error => {
       console.log("There was an error in updateBookId function", error)

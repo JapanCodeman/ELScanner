@@ -14,21 +14,25 @@ function Home() {
     const token = window.sessionStorage.getItem('token')
     const decoded = jwtDecode(token)
     const userPublicId = decoded.sub.user
+    console.log(userPublicId)
     axios
     .get(`http://127.0.0.1:5000/lookup-user/${userPublicId}`)
     .then(response => {
-      setUser(...response.data)
+      setUser({...response.data})
     })
     .catch(error => {
       console.log('error in useEffect on mount in home.js', error)
     })
-  }, [user])
+  }, [user.public_id])
 
   return (
     <div className='home'>
       <PageTitler pagetitle='Home' />
       <div className='home__welcome'>
-        Welcome back {user.name} 
+        Welcome back {user.first}
+      </div>
+      <div className='home__word-count'>
+        Your total word count so far is: {user.totalWordCount}
       </div>
     </div>
   );

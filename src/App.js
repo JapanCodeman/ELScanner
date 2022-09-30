@@ -20,13 +20,22 @@ export default class App extends Component {
 
     this.state = {
       logged_status: 'NOT_LOGGED_IN',
-      isAdmin: 'NOT_ADMIN',
+      isAdmin: true,
       id: '',
       isLoading: false,
       bookId: '',
       studentId: ''
     }
   }
+
+  adminAuthorizedPages() {
+    return [
+      <Route path = '/register-new-book' element={<RegisterNewBook />} key='register-new-book'/>,
+      <Route path = '/scan-book-id' element={<ScanBookID />} key='scan-book-id'/>,
+      <Route path = '/scan-student-id' element={<ScanStudentID key='scan-student-id'/>} />
+    ]
+  }
+
   render() {
     return (
       <div className="App">
@@ -34,14 +43,13 @@ export default class App extends Component {
           <Router history = {history}>
             <Header />
             <Routes>
+              {this.state.isAdmin === true ?
+              this.adminAuthorizedPages() : null}
               <Route exact path = '/' element={<Title/>} />
               <Route path = '/await' element={<Await/>} />
               <Route path = '/home' element={<Home/>} />
               <Route path = '/login' element={<Login/>} />
               <Route path = '/register' element={<Register />} />
-              <Route path = '/register-new-book' element={<RegisterNewBook />} />
-              <Route path = '/scan-book-id' element={<ScanBookID />} />
-              <Route path = '/scan-student-id' element={<ScanStudentID />} />
               <Route path = '*' element={<PageNotFound />} />
             </Routes>
           </Router>
