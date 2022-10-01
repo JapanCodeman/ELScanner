@@ -30,9 +30,10 @@ export default class App extends Component {
 
   adminAuthorizedPages() {
     return [
-      <Route path = '/register-new-book' element={<RegisterNewBook />} key='register-new-book'/>,
-      <Route path = '/scan-book-id' element={<ScanBookID />} key='scan-book-id'/>,
-      <Route path = '/scan-student-id' element={<ScanStudentID key='scan-student-id'/>} />
+      <Route path = '/await' element={<Await/>} key={'await'} />,
+      <Route path = '/register-new-book' element={<RegisterNewBook />} key={'register-new-book'}/>,
+      <Route path = '/scan-book-id' element={<ScanBookID />} key={'scan-book-id'}/>,
+      <Route path = '/scan-student-id' element={<ScanStudentID />} key={'scan-student-id'} />
     ]
   }
 
@@ -46,7 +47,6 @@ export default class App extends Component {
               {this.state.isAdmin === true ?
               this.adminAuthorizedPages() : null}
               <Route exact path = '/' element={<Title/>} />
-              <Route path = '/await' element={<Await/>} />
               <Route path = '/home' element={<Home/>} />
               <Route path = '/login' element={<Login/>} />
               <Route path = '/register' element={<Register />} />
