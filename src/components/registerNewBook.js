@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 
   function RegisterNewBook() {
     const location = useLocation()
+    const navigate = useNavigate()
     
     const [bookInfo, setBookInfo] = useState({
       ...location.state,
@@ -20,9 +21,12 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
     const handleSubmit = (event) => {
       event.preventDefault();
       axios
-      .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
+      .post(`http://127.0.0.1:5000/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
-        console.log(response)
+        if (response.status === 200) {
+          window.alert(`${bookInfo.title} registered to database - redirecting to await`)
+          navigate('/await')
+        }
       })
       .catch(error => {
         console.log('There was an error in the handleSubmit of registerNewBook.js', error)
