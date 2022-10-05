@@ -22,6 +22,12 @@ function Register() {
     confirmPass: ''
   })
 
+  const [adminCode, setAdminCode] = useState(false)
+
+  const handleAdminCode = () => {
+    setAdminCode(!adminCode)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit clicked")
@@ -29,16 +35,38 @@ function Register() {
       window.alert("Passwords do not match - reenter")
       return
     }
-    const newUser = {...user}
-    axios.post('http://127.0.0.1:5000/register-new-user', newUser)
-    .then(response => {
-      if (response.status === 200) {
-        navigate('/login')
-      }
-    })
-    .catch(error => 
-      console.log("Error in register.js:handleSubmit()", error))
+    if (user.registrationCode === '') {
+      const newUser = {...user}
+      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
+      .then(response => {
+        if (response.status === 200) {
+          navigate('/login')
+        }
+      })
+      .catch(error => 
+        console.log("Error in register.js:handleSubmit()", error))
+    }
+
+    else {
+      const newAdmin = {...user}
+      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
+      .then(response => {
+        console.log(response.status)
+        if (response.status === 200) {
+          window.alert(response.data)
+          navigate('/login')
+        } else if (response.status !== 200) {
+          window.alert('Administrator code not found')
+        }
+      })
+      .catch(error => {
+        console.log('There was an error in registering the user as admin', error)
+        window.alert('Invalid Admin Registration Code')
+      })
+    }
   }
+
+  
 
   const handleChange = (event) => {
     setUser({...user, [event.target.name] : event.target.value})
@@ -47,6 +75,7 @@ function Register() {
   const handleUpdate = (event) => {
     setConfirmPass({...confirm, [event.target.name] : event.target.value})
   }
+
 
   const handleRedirect = () => {
     console.log("handleRedirect clicked")
@@ -66,9 +95,27 @@ function Register() {
         <label className='register-page__form__password-label'>Password</label>
         <input className='register-page__form__password-input' type='password' autoComplete='new-password' name='password' value={user.password} onChange={handleChange}/>
         <label className='register-page__form__confirm-password-label'>Confirm Password</label>
+        {user.password === confirm.confirmPass ? 
+          <div className='register-page__form__confirm-password-nomatch' />
+          :
+          <div className='register-page__form__confirm-password-nomatch'>Passwords must match</div>}
         <input className='register-page__form__confirm-password-input' type='password' autoComplete='new-password' name='confirmPass' value={confirm.confirmPass} onChange={handleUpdate}/>
-        <label className='register-page__form__registration-code-label'>Registration Code</label>
-        <input className='register-page__form__registration-code-input' type='text' name='registrationCode' autoComplete='one-time-code' value={user.registrationCode} onChange={handleChange}/>
+        {adminCode === true ? 
+        <div className='register-page__form__admin-checkbox'>
+          <label className='register-page__form__registration-code-label'>Registration Code</label>
+          <input className='register-page__form__registration-code-input' type='text' name='registrationCode' autoComplete='one-time-code' value={user.registrationCode} onChange={handleChange}/>
+          <input className='register-page__form__is-admin-checkbox' type='checkbox' name='adminCode' checked={adminCode} value={adminCode} onChange={handleAdminCode} />
+        </div>
+
+          :
+          
+        <div className='register-page__form__admin-checkbox'>
+          <label className='register-page__form__is-admin-checkbox-label'>Create Admin Account?</label>
+          <input className='register-page__form__is-admin-checkbox' type='checkbox' name='adminCode' checked={adminCode} value={adminCode} onChange={handleAdminCode} />
+        </div>
+      }
+
+
         <div className='register-page__buttons'>
           <SmallerGreenButton className='smaller-green-button' text='Register' typeSet='submit' clickHandler={e => handleSubmit(e)}/>
           <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
