@@ -64,10 +64,18 @@ componentDidMount() {
   };
 
   var html5QrcodeScanner = new Html5QrcodeScanner(
-  "qr-reader", config);
+  "qr-reader", { facingMode: "environment" }, config);
   
   html5QrcodeScanner.render(onScanSuccess)
-  
+  }
+
+  componentWillUnmount() {
+    const html5QrCode = new Html5Qrcode("qr-reader");
+    html5QrCode.stop().then((ignore) => {
+      // QR Code scanning is stopped.
+    }).catch((err) => {
+      // Stop failed, handle it.
+    });
   }
 
   render () {

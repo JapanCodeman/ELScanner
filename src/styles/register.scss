@@ -64,31 +64,32 @@
       grid-row: confirm-password-input-s/confirm-password-input-e;
     }
 
-    &__admin-checkbox {
-      display: flex;
+    &__admin-field {
       grid-column: input-field-s/input-field-e;
       grid-row: registration-code-label-s/registration-code-label-e;
+      display: flex;
+      flex-direction: column;
     }
 
     &__registration-code-label {
       grid-column: input-field-s/input-field-e;
       grid-row: registration-code-label-s/registration-code-label-e;
-    }
+    
 
-    &__registration-code-input {
-      grid-column: input-field-s/input-field-e;
-      grid-row: registration-code-input-s/registration-code-input-e;
-    }
+      &__registration-code-input {
+        grid-column: input-field-s/input-field-e;
+        grid-row: registration-code-input-s/registration-code-input-e;
+      }
 
-    &__is-admin-checkbox-label {
-      grid-column: input-field-s/input-field-e;
-      grid-row: registration-code-label-s/registration-code-label-e;
-      display: flex;
-    }
+      &__is-admin-checkbox-label {
+        grid-column: input-field-s/input-field-e;
+        grid-row: registration-code-label-s/registration-code-label-e;
+      }
 
-    &__is-admin-checkbox {
-      grid-column: input-field-s/input-field-e;
-      grid-row: registration-code-input-s/registration-code-input-e;
+      &__is-admin-checkbox {
+        grid-column: input-field-s/input-field-e;
+        grid-row: registration-code-input-s/registration-code-input-e;
+      }
     }
   }
 
@@ -96,6 +97,7 @@
     color: green;
     font-family: 'Edu TAS Beginner', cursive;
     font-size: 32px;
+    margin-bottom: 1vh;
   }
 
   input {

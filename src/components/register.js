@@ -101,17 +101,15 @@ function Register() {
           <div className='register-page__form__confirm-password-nomatch'>Passwords must match</div>}
         <input className='register-page__form__confirm-password-input' type='password' autoComplete='new-password' name='confirmPass' value={confirm.confirmPass} onChange={handleUpdate}/>
         {adminCode === true ? 
-        <div className='register-page__form__admin-checkbox'>
-          <label className='register-page__form__registration-code-label'>Registration Code</label>
-          <input className='register-page__form__registration-code-input' type='text' name='registrationCode' autoComplete='one-time-code' value={user.registrationCode} onChange={handleChange}/>
-          <input className='register-page__form__is-admin-checkbox' type='checkbox' name='adminCode' checked={adminCode} value={adminCode} onChange={handleAdminCode} />
+        <div className='register-page__form__admin-field'>
+          <label className='register-page__form__admin-field__registration-code-label' onClick={handleAdminCode}>Registration Code</label>
+          <input className='register-page__form__admin-field__registration-code-input' type='text' name='registrationCode' autoComplete='one-time-code' value={user.registrationCode} onChange={handleChange}/>
         </div>
 
           :
           
-        <div className='register-page__form__admin-checkbox'>
-          <label className='register-page__form__is-admin-checkbox-label'>Create Admin Account?</label>
-          <input className='register-page__form__is-admin-checkbox' type='checkbox' name='adminCode' checked={adminCode} value={adminCode} onChange={handleAdminCode} />
+        <div className='register-page__form__admin-field'>
+          <label className='register-page__form__admin-field__is-admin-checkbox-label' htmlFor='adminCode' onClick={handleAdminCode}>Create Admin Account?</label>
         </div>
       }
 
