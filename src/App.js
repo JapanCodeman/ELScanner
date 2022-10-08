@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import history from './components/history';
+import jwtDecode from 'jwt-decode';
 import './styles/main.scss';
 
 import Await from './components/await';
@@ -14,21 +16,18 @@ import ScanBookID from './components/scanBookId';
 import Title from './components/title.js';
 import PageNotFound from './components/pageNotFound';
 
-export default class App extends Component {
-  constructor() {
-    super()
+  function App() {
 
-    this.state = {
+    const [user, setUser] = useState({
       logged_status: 'NOT_LOGGED_IN',
       isAdmin: true,
       id: '',
       isLoading: false,
       bookId: '',
       studentId: ''
-    }
-  }
+    })
 
-  adminAuthorizedPages() {
+  const adminAuthorizedPages = () => {
     return [
       <Route path = '/await' element={<Await/>} key={'await'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key={'register-new-book'}/>,
@@ -37,24 +36,45 @@ export default class App extends Component {
     ]
   }
 
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <Router history = {history}>
-            <Header />
-            <Routes>
-              {this.state.isAdmin === true ?
-              this.adminAuthorizedPages() : null}
-              <Route exact path = '/' element={<Title/>} />
-              <Route path = '/home' element={<Home/>} />
-              <Route path = '/login' element={<Login/>} />
-              <Route path = '/register' element={<Register />} />
-              <Route path = '*' element={<PageNotFound />} />
-            </Routes>
-          </Router>
-        </header>
-      </div>
-    );
+  const handleSuccessfulLogin = () => {
+    const token = window.sessionStorage.getItem('token')
+    const decoded = jwtDecode(token)
+    console.log('decoded token from app.js', decoded)
+    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`)
+    .then(response => {
+      setUser({
+        logged_status: 'LOGGED_IN',
+        ...response.data
+    })})
+    .catch(error => {
+      console.log('error in handleSuccessfulLogin in root App', error)
+    })
   }
+
+  const handleSuccessfulLogout = () => {
+    setUser({
+      logged_status: 'NOT_LOGGED_IN'
+    })
+  }
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Router history = {history}>
+          <Header />
+          <Routes>
+            {user.isAdmin === true ?
+            adminAuthorizedPages() : null}
+            <Route exact path = '/' element={<Title/>} />
+            <Route path = '/home' element = {<Home {...user}/>} />
+            <Route path = '/login' element={<Login loginHandler = {handleSuccessfulLogin}/>} />
+            <Route path = '/register' element={<Register />} />
+            <Route path = '*' element={<PageNotFound />} />
+          </Routes>
+        </Router>
+      </header>
+    </div>
+  );
 }
+
+export default App

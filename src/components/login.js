@@ -1,46 +1,47 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 
-  function Login() {
+  function Login(props) {
 
     const navigate = useNavigate()
+
+
 
     const [user, setUser] = useState({
       email: '',
       password: ''
     })
 
-  const handleChange = (event) => {
-    setUser({...user, [event.target.name] : event.target.value})
-  }
+    const handleChange = (event) => {
+      setUser({...user, [event.target.name] : event.target.value})
+    }
 
-  let config = {
-    headers: {
-      "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': '*'
-      // "Authorization" : `Bearer ${token}`
-      }
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-    .post('http://127.0.0.1:5000/login', {
-      ...user
-    },
-    { withCredentials: true },
-    config)
-    .then(response => {
-      window.sessionStorage.setItem('token', response.data.token)
-      navigate('/home')
-    })
-    .catch(error => {
-      console.log('There was an error in handleSubmit in login.js', error)
-    })
-  }
+    const handleSubmit = (e) => {
+      e.preventDefault();
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*'
+            }
+        }
+        axios
+        .post('http://127.0.0.1:5000/login', {
+          ...user
+        },
+        { withCredentials: true },
+        config)
+        .then(response => {
+          window.sessionStorage.setItem('token', response.data.token)
+          props.loginHandler()
+        })
+        .catch(error => {
+          console.log('There was an error in handleSubmit in login.js', error)
+        })
+        navigate('/home')
+    }
 
   return (
     <div className='login-page'>

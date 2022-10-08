@@ -9,6 +9,18 @@ export default class Scanner extends Component {
     this.state = {
       availableCameras: []
     }
+
+    function unMountCamera() {
+      const html5QrCode = Html5Qrcode("qr-reader");
+      html5QrCode.stop().then(ignore => {
+        // QR Code scanning is stopped.
+      }).catch(err => {
+        // Stop failed, handle it.
+        console.log("Unable to stop scanning.", err);
+      });
+    }
+
+   this.unMountCamera = unMountCamera.bind(this)
   }
   
 componentDidMount() {
@@ -48,12 +60,6 @@ componentDidMount() {
         // }
       }).catch(error => {
         console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
-        
-      
-
-  function onScanSuccess(decodedResult) {
-    
-  }
 
     let config = {
       fps: 10,
@@ -64,19 +70,14 @@ componentDidMount() {
   };
 
   var html5QrcodeScanner = new Html5QrcodeScanner(
-  "qr-reader", { facingMode: "environment" }, config);
+  "qr-reader", config);
   
-  html5QrcodeScanner.render(onScanSuccess)
+  html5QrcodeScanner.render()
   }
 
-  componentWillUnmount() {
-    const html5QrCode = new Html5Qrcode("qr-reader");
-    html5QrCode.stop().then((ignore) => {
-      // QR Code scanning is stopped.
-    }).catch((err) => {
-      // Stop failed, handle it.
-    });
-  }
+  // componentWillUnmount() {
+  //   this.unMountCamera()
+  // }
 
   render () {
     return (
