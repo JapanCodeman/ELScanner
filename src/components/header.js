@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class Header extends Component {
-  render () {
-    return (
-      <div className='header-wrapper'>
-        <Link className='header' to='/'>ELScanner</Link>
-      </div>
-    );
-  }
+function Header(props) {
+  return (
+    <div className='header-wrapper'>
+      <Link className='header' to='/'>ELScanner</Link>
+      {props.logged_status === 'LOGGED_IN' ? <button className='logout-button'>logout</button> : null}
+    </div>
+  );
 }
+
+export default Header

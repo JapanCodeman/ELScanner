@@ -61,7 +61,7 @@ import PageNotFound from './components/pageNotFound';
     <div className="App">
       <header className="App-header">
         <Router history = {history}>
-          <Header />
+          <Header {...user}/>
           <Routes>
             {user.isAdmin === true ?
             adminAuthorizedPages() : null}
