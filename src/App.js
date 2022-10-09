@@ -20,7 +20,7 @@ import PageNotFound from './components/pageNotFound';
 
     const [user, setUser] = useState({
       logged_status: 'NOT_LOGGED_IN',
-      isAdmin: true,
+      isAdmin: false,
       id: '',
       isLoading: false,
       bookId: '',
@@ -30,9 +30,16 @@ import PageNotFound from './components/pageNotFound';
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/await' element={<Await/>} key={'await'} />,
-      <Route path = '/register-new-book' element={<RegisterNewBook />} key={'register-new-book'}/>,
-      <Route path = '/scan-book-id' element={<ScanBookID />} key={'scan-book-id'}/>,
+      <Route path = '/home' element = {<Home {...user} />} key = {'home'} />,
+      <Route path = '/register-new-book' element={<RegisterNewBook />} key= {'register-new-book'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID />} key={'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID />} key={'scan-student-id'} />
+    ]
+  }
+
+  const userAuthorizedPages = () => {
+    return [
+      <Route path = '/home' element = {<Home {...user} />} key = {'home'} />
     ]
   }
 
@@ -61,12 +68,13 @@ import PageNotFound from './components/pageNotFound';
     <div className="App">
       <header className="App-header">
         <Router history = {history}>
-          <Header {...user}/>
+          <Header {...user} logoutHandler={handleSuccessfulLogout}/>
           <Routes>
-            {user.isAdmin === true ?
+            {user.isAdmin === true && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
-            <Route exact path = '/' element={<Title/>} />
-            <Route path = '/home' element = {<Home {...user}/>} />
+            {user.logged_status === 'LOGGED_IN' ?
+            userAuthorizedPages() : null}
+            <Route exact path = '/' element={<Title />} />
             <Route path = '/login' element={<Login loginHandler = {handleSuccessfulLogin}/>} />
             <Route path = '/register' element={<Register />} />
             <Route path = '*' element={<PageNotFound />} />

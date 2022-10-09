@@ -8,8 +8,6 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
 
     const navigate = useNavigate()
 
-
-
     const [user, setUser] = useState({
       email: '',
       password: ''

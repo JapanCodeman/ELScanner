@@ -13,3 +13,7 @@ Move authentication to app.js and pass props down? Or use a callback from login.
 
 Write routes for:
   updating student's word count
+
+bugs:
+  logged in as user (student) - navigate away from page to get 404 and 
+  can no longer see logout button in header
