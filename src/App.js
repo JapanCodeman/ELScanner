@@ -16,8 +16,8 @@ import ScanStudentID from './components/scanStudentId';
 import ScanBookID from './components/scanBookId';
 import Title from './components/title.js';
 import PageNotFound from './components/pageNotFound';
-
-// library.add(faSpinner)
+import ViewClassProgress from './components/viewClassProgress';
+import ViewStudents from './components/viewStudents';
 
   function App() {
 
@@ -38,7 +38,9 @@ import PageNotFound from './components/pageNotFound';
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key= {'register-new-book'} />,
       <Route path = '/scan-book-id' element={<ScanBookID />} key={'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID />} key={'scan-student-id'} />
+      <Route path = '/scan-student-id' element={<ScanStudentID />} key={'scan-student-id'} />,
+      <Route path = '/view-class-progress' element={<ViewClassProgress />} key={'view-class-progress'} />,
+      <Route path = '/view-students' element={<ViewStudents />} key={'view-students'} />
     ]
   }
 

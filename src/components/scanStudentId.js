@@ -16,7 +16,7 @@ function ScanStudentId () {
 
   // const [checkOutStatus, updateStatus] = useState(false);
 
-  const [student, updateInfo] = useState({
+  const [student, setStudent] = useState({
     _id: "",
     first: "",
     last: "",
@@ -43,7 +43,7 @@ function ScanStudentId () {
     axios
     .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(response => {
-      updateInfo({...response.data}) 
+      setStudent({...response.data}) 
     })
     .catch(error => {
       console.log("There was an error in lookupUser function", error)
@@ -70,6 +70,7 @@ function ScanStudentId () {
           </button>
           
         :
+        
           <div className='checkout-confirmation-wrapper'>
             <div className='checkout-confirmation__confirmed'>{book.title} checked out to {student.first} {student.last}</div>
             <SmallerGreenButton text='Checkout another title?' clickHandler={window.location('http://127.0.0.1:5000/scan-book-id')} /> 

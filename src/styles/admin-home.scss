@@ -5,7 +5,11 @@
   justify-content: space-between;
   align-items: center;
 
-  &__spacer {
-    height: 20vh;
+  &__buttons {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 10vh;
   }
 }
