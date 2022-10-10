@@ -29,7 +29,7 @@ componentDidMount() {
       availableCameras: devices
     })
     // if (devices && devices.length) {
-      var cameraId = devices[0].id;
+      var cameraId = devices[1].id;
       const html5QrCode = new Html5Qrcode("qr-reader");
 
   html5QrCode.start(

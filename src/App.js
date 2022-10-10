@@ -43,7 +43,7 @@ import ViewStudents from './components/viewStudents';
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID handleSetBook={setBook} />} key={'scan-book-id'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID handleSetBook={setBook} {...student} />} key={'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...book} />} key={'scan-student-id'} />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key={'view-class-progress'} />,
       <Route path = '/view-students' element={<ViewStudents />} key={'view-students'} />
@@ -57,8 +57,7 @@ import ViewStudents from './components/viewStudents';
   }
 
   const handleLoading = () => {
-    setPage(prevPage => !prevPage
-    )
+    setPage(prevPage => !prevPage)
   }
 
   const handleSuccessfulLogin = () => {

@@ -58,6 +58,10 @@ function ScanBookId(props) {
     <div className='scan-book-wrapper'>
       <PageTitler pagetitle='Scan Book' />
       <Scanner returnedInfo = {(bookID) => updateBookId(bookID)}/>
+      {props.student ? 
+      <div className='checking-out-to'>Checking out to: {props.student.first} {props.student.last}</div>
+      :
+      null}
       {book.upc !== null ? 
       <div className='scan-result-table'>
         <button onClick={rescan} className='scan-result__restart'>Wrong title?</button>

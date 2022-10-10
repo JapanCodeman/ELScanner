@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 // import { useLocation } from 'react-router';
 
 import PageTitler from './helpers/pageTitler';
@@ -8,7 +9,7 @@ import Scanner from './scanner';
 
 function ScanStudentId (props) {
   // const location = useLocation()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   // const [book] = useState({
   //   ...location.state
@@ -17,17 +18,7 @@ function ScanStudentId (props) {
   // const [checkOutStatus, updateStatus] = useState(false);
 
   const [student, setStudent] = useState({
-    // _id: "",
-    // first: "",
-    // last: "",
-    // role: "Student",
-    // class: "",
-    // public_id: "",
-    // email: "",
-    // password: "",
-    // checkedOutBooks: [],
-    // loggedStatus: "",
-    // isAdmin: "NOT_ADMIN"
+
   })
 
   const checkOutBook = () => {
@@ -53,6 +44,10 @@ function ScanStudentId (props) {
     <div>
       <PageTitler pagetitle="Student Id" />
       <Scanner returnedInfo = {(public_id) => lookupUser(public_id)} />
+      {props.title ? 
+      <div className='book-checkout-info'>Checking out {props.title}</div>
+      :
+      null}
       <div className='checkout-confirmation'>
       {student.public_id ? 
         <div className='checkout-confirmation__student-info'>
@@ -62,21 +57,20 @@ function ScanStudentId (props) {
           <div className='checkout-confirmation__student-class'>{student.class}</div>
           <label className='checkout-confirmation__student-checkout-status-label'>Currently Checked Out Books: </label>
           <div className='checkout-confirmation__student-checkout-status'>#Fill in later</div>
-        </div>
-        :
-        null}
-
-        {/* {props.book.status === "Checked Out" ? 
-          <button className='checkout-confirmation__message' onClick={checkOutBook}>
-            Check out title: {props.book.title} to {student.first} {student.last}?
-          </button>
+          {props.status === "Checked Out" ? 
+            <button className='checkout-confirmation__message' onClick={checkOutBook}>
+              Check out title: {props.title} to {student.first} {student.last}?
+            </button>
           
         :
 
           <div className='checkout-confirmation-wrapper'>
-            <div className='checkout-confirmation__confirmed'>{props.book.title} checked out to {student.first} {student.last}</div>
-            <SmallerGreenButton text='Checkout another title?' clickHandler={window.location('http://127.0.0.1:5000/scan-book-id')} /> 
-          </div>} */}
+            <div className='checkout-confirmation__confirmed'>{props.title} checked out to {student.first} {student.last}</div>
+            <SmallerGreenButton text='Checkout another title?' clickHandler={() => navigate('/scan-book-id')} /> 
+          </div>}
+        </div>
+        :
+        null}
       </div>
     </div>
   );
