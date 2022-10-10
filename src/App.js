@@ -6,7 +6,6 @@ import jwtDecode from 'jwt-decode';
 import './styles/main.scss';
 
 import AdminHome from './components/adminHome';
-import Await from './components/await';
 import Header from './components/header';
 import Home from './components/home.js';
 import Loading from './components/helpers/loading';
@@ -30,13 +29,12 @@ import PageNotFound from './components/pageNotFound';
       studentId: ''
     })
 
-    const [page] = useState({
+    const [page, setPage] = useState({
       isLoading: false
     })
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/await' element={<Await/>} key={'await'} />,
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key= {'register-new-book'} />,
       <Route path = '/scan-book-id' element={<ScanBookID />} key={'scan-book-id'} />,
@@ -51,7 +49,7 @@ import PageNotFound from './components/pageNotFound';
   }
 
   const handleLoading = () => {
-    setUser(prevPage => !prevPage
+    setPage(prevPage => !prevPage
     )
   }
 

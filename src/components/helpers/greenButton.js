@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class GreenButton extends Component {
-  render () {
+function GreenButton(props) {
     return (
-        <Link className='green-button' to={this.props.toPage} text={this.props.text}>{this.props.text}</Link> 
+      <Link className='green-button' to={props.toPage} text={props.text}>{props.text}</Link> 
     );
   }
-}
+
+export default GreenButton
