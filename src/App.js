@@ -65,7 +65,7 @@ import ViewStudents from './components/viewStudents';
     const token = window.sessionStorage.getItem('token')
     const decoded = jwtDecode(token)
     console.log('decoded token from app.js', decoded)
-    axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decoded.sub.user}`)
+    axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decoded.sub.public_id}`)
     .then(response => {
       setUser({
         logged_status: 'LOGGED_IN',
