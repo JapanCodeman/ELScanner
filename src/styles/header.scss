@@ -17,9 +17,12 @@
   .logout-button {
     display: flex;
     align-content: center;
-    height: 20px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
     padding: 3px 5px;
     margin-left: auto;
+    border: none;
     position: absolute;
     transform: translateX(150px);
   }

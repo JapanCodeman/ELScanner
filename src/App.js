@@ -5,6 +5,7 @@ import history from './components/history';
 import jwtDecode from 'jwt-decode';
 import './styles/main.scss';
 
+import AdminHome from './components/adminHome';
 import Await from './components/await';
 import Header from './components/header';
 import Home from './components/home.js';
@@ -36,7 +37,7 @@ import PageNotFound from './components/pageNotFound';
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/await' element={<Await/>} key={'await'} />,
-      <Route path = '/home' element = {<Home {...user} />} key = {'home'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key= {'register-new-book'} />,
       <Route path = '/scan-book-id' element={<ScanBookID />} key={'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID />} key={'scan-student-id'} />

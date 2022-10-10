@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
+import jwtDecode from 'jwt-decode';
 
   function Login(props) {
 
@@ -17,7 +18,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
       setUser({...user, [event.target.name] : event.target.value})
     }
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
       e.preventDefault();
         let config = {
           headers: {
@@ -25,7 +26,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
             'Access-Control-Allow-Origin': '*'
             }
         }
-        axios
+        await axios
         .post('http://127.0.0.1:5000/login', {
           ...user
         },
@@ -38,7 +39,16 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
         .catch(error => {
           console.log('There was an error in handleSubmit in login.js', error)
         })
-        navigate('/home')
+        const token = jwtDecode(window.sessionStorage.getItem('token'))
+        console.log(token)
+        if (token.sub.userRole === "Administrator") {
+        navigate('/admin-home')
+        } else if (token.sub.userRole === "Student") {
+          navigate('/home')
+        }
+        else {
+          window.alert("There was an error logging in - have you registered yet?")
+        }
     }
 
   return (
