@@ -6,17 +6,17 @@ import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 import Scanner from './scanner';
 
-function ScanBookId() {
+function ScanBookId(props) {
 
-    const [book, updateBook] = useState({
-      upc : "",
-      title : "",
-      publisher : "",
-      author : "",
-      wordCount : 0,
-      checkedOut : "",
-      currentHolder : ""
-    });
+  const [book, updateBook] = useState({
+    upc : "",
+    title : "",
+    publisher : "",
+    author : "",
+    wordCount : 0,
+    checkedOut : "",
+    currentHolder : ""
+  });
 
   const navigate = useNavigate()
   
@@ -28,7 +28,9 @@ function ScanBookId() {
       if (book.data !== 'Book not registered') {
       updateBook({
         ...book.data
-      })}
+      })
+      props.handleSetBook({...book.data})
+    }
       else {
         navigate('/register-new-book', {state: {upc: bookID}})
       }
@@ -45,11 +47,10 @@ function ScanBookId() {
   }
 
   const checkBookOut = () => {
-    navigate('/scan-student-id', {state: {...book}});
+    navigate('/scan-student-id');
   }
 
   const rescan = () => {
-    // eslint-disable-next-line no-unused-expressions
     window.location.reload()
   }
 

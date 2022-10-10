@@ -12,6 +12,7 @@ function AdminHome() {
         <GreenButton className='green-button' toPage='/scan-book-id' text='Scan Book ID' />
         <GreenButton className='green-button' toPage='/view-students' text='View Students' />
         <GreenButton className='green-button' toPage='/view-class-progress' text='View Class Progress' />
+        <GreenButton className='green-button' toPage='/register-students' text='Register Students' />
       </div>
     </div>
   );
