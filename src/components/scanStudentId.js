@@ -33,11 +33,18 @@ function ScanStudentId (props) {
     axios
     .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(response => {
-      setStudent({...response.data}) 
+      console.log(response)
+      props.handleSetStudent({...response.data})
+      // setStudent({...response.data}) 
     })
     .catch(error => {
       console.log("There was an error in lookupUser function", error)
     })
+    if (props.author !== null) {
+      navigate('/checkout-confirm')
+    } else {
+      navigate('admin-home')
+    }
   }
 
   return (

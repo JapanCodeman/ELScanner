@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import './styles/main.scss';
 
 import AdminHome from './components/adminHome';
+import CheckoutConfirm from './components/checkoutConfirm';
 import Header from './components/header';
 import Home from './components/home.js';
 import Loading from './components/helpers/loading';
@@ -24,7 +25,6 @@ import ViewStudents from './components/viewStudents';
 
     const [user, setUser] = useState({
       logged_status: 'NOT_LOGGED_IN',
-      isAdmin: false,
       id: '',
       bookId: '',
       studentId: ''
@@ -41,12 +41,13 @@ import ViewStudents from './components/viewStudents';
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
+      <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} />} key = {'checkout-confirm'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID handleSetBook={setBook} {...student} />} key={'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...book} />} key={'scan-student-id'} />,
-      <Route path = '/view-class-progress' element={<ViewClassProgress />} key={'view-class-progress'} />,
-      <Route path = '/view-students' element={<ViewStudents />} key={'view-students'} />
+      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
+      <Route path = '/view-students' element={<ViewStudents />} key = {'view-students'} />
     ]
   }
 
@@ -89,9 +90,9 @@ import ViewStudents from './components/viewStudents';
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
           <Routes>
-            {user.isAdmin === true && user.logged_status === 'LOGGED_IN' ?
+            {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
-            {user.logged_status === 'LOGGED_IN' ?
+            {user.userRole === 'Student' ?
             userAuthorizedPages() : null}
             {page.isLoading === true ? <Route element={<Loading />} /> : null}
             <Route exact path = '/' element={<Title />} />

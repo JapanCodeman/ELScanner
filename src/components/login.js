@@ -40,7 +40,7 @@ import jwtDecode from 'jwt-decode';
           console.log('There was an error in handleSubmit in login.js', error)
         })
         const token = jwtDecode(window.sessionStorage.getItem('token'))
-        console.log(token)
+        console.log("token response from login.js", token)
         if (token.sub.userRole === "Administrator") {
         navigate('/admin-home')
         } else if (token.sub.userRole === "Student") {

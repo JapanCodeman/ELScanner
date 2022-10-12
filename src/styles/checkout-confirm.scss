@@ -1,0 +1,17 @@
+.checkout-confirm-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+
+  .checkout-confirm {
+    color: green;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 24px;
+    margin: 2vh 5vw;
+
+    &__button-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

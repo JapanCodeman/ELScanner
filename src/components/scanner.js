@@ -29,7 +29,7 @@ componentDidMount() {
       availableCameras: devices
     })
     // if (devices && devices.length) {
-      var cameraId = devices[1].id;
+      var cameraId = devices[0].id;
       const html5QrCode = new Html5Qrcode("qr-reader");
 
   html5QrCode.start(
@@ -41,13 +41,13 @@ componentDidMount() {
     },
     qrCodeMessage => {
       // do something when code is read. For example:
-      this.props.returnedInfo(qrCodeMessage);
       html5QrCode.stop().then(ignore => {
         // QR Code scanning is stopped.
       }).catch(err => {
         // Stop failed, handle it.
         console.log("Unable to stop scanning.", err);
       });
+      this.props.returnedInfo(qrCodeMessage);
     },
     errorMessage => {
       // parse error, ideally ignore it. For example:
