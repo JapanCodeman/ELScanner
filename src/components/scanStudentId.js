@@ -17,7 +17,7 @@ function ScanStudentId (props) {
 
   // const [checkOutStatus, updateStatus] = useState(false);
 
-  const [student, setStudent] = useState({
+  const [student] = useState({
 
   })
 
@@ -32,10 +32,9 @@ function ScanStudentId (props) {
   const lookupUser = (public_id) => {
     axios
     .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
-    .then(response => {
-      console.log(response)
-      props.handleSetStudent({...response.data})
-      // setStudent({...response.data}) 
+    .then(student => {
+      console.log(student)
+      props.handleSetStudent({student : {...student.data}})
     })
     .catch(error => {
       console.log("There was an error in lookupUser function", error)

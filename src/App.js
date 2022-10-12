@@ -20,6 +20,7 @@ import Title from './components/title.js';
 import PageNotFound from './components/pageNotFound';
 import ViewClassProgress from './components/viewClassProgress';
 import ViewStudents from './components/viewStudents';
+import BookInfo from './components/bookInfo';
 
   function App() {
 
@@ -41,6 +42,7 @@ import ViewStudents from './components/viewStudents';
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
+      <Route path = '/book-info' element = {<BookInfo {...book} />} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} />} key = {'checkout-confirm'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,

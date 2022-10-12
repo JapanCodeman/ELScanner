@@ -11,7 +11,6 @@ function CheckoutConfirm(props) {
 
   function checkout() {
     const publicid = JSON.stringify({ public_id : props.public_id })
-    console.log(publicid)
     const customConfig = {
       headers: {
       'Content-Type': 'application/json'

@@ -26,11 +26,12 @@ function ScanBookId(props) {
     .then(book => {
       console.log(book)
       if (book.data !== 'Book not registered') {
-      updateBook({
-        ...book.data
-      })
-      props.handleSetBook({...book.data})
-    }
+        updateBook({
+          ...book.data
+        })
+        props.handleSetBook({book :{...book.data}})
+        navigate('/book-info')
+      } 
       else {
         navigate('/register-new-book', {state: {upc: bookID}})
       }
@@ -41,9 +42,12 @@ function ScanBookId(props) {
   }
 
   const checkBookIn = () => {
-    navigate('/scan-student-id', {state: {...book}})
+    navigate('/scan-student-id')
     axios
     .patch(`http://127.0.0.1:5000/${book.upc}`)
+    .catch(error => {
+      console.log('Error in checkBookIn() in scanBookId.js', error)
+    })
   }
 
   const checkBookOut = () => {
