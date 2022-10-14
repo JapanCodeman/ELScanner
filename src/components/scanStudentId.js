@@ -39,11 +39,7 @@ function ScanStudentId (props) {
     .catch(error => {
       console.log("There was an error in lookupUser function", error)
     })
-    if (props.author !== null) {
-      navigate('/checkout-confirm')
-    } else {
-      navigate('admin-home')
-    }
+    navigate('/student-profile', )
   }
 
   return (

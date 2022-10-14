@@ -17,3 +17,5 @@ Write routes for:
 bugs:
   logged in as user (student) - navigate away from page to get 404 and 
   can no longer see logout button in header
+
+  Cannot refresh PAGE!!!! <-- Annoying - how to fix using flask catchall?

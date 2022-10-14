@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import './styles/main.scss';
 
 import AdminHome from './components/adminHome';
+import BookInfo from './components/bookInfo';
 import CheckoutConfirm from './components/checkoutConfirm';
 import Header from './components/header';
 import Home from './components/home.js';
@@ -16,11 +17,11 @@ import RegisterNewBook from './components/registerNewBook';
 import RegisterStudents from './components/registerStudents';
 import ScanStudentID from './components/scanStudentId';
 import ScanBookID from './components/scanBookId';
+import StudentProfile from './components/studentProfile';
 import Title from './components/title.js';
 import PageNotFound from './components/pageNotFound';
 import ViewClassProgress from './components/viewClassProgress';
 import ViewStudents from './components/viewStudents';
-import BookInfo from './components/bookInfo';
 
   function App() {
 
@@ -32,7 +33,8 @@ import BookInfo from './components/bookInfo';
     })
 
     const [page, setPage] = useState({
-      isLoading: false
+      isLoading: false,
+      scanning: false
     })
 
     const [book, setBook] = useState()
@@ -47,7 +49,8 @@ import BookInfo from './components/bookInfo';
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} {...page.scanning} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/student-profile' element={<StudentProfile {...student}/>} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-students' element={<ViewStudents />} key = {'view-students'} />
     ]

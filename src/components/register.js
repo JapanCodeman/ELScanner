@@ -87,6 +87,15 @@ function Register() {
       <PageTitler pagetitle='Register' />
       <form className='register-page__form' onSubmit={(e) => handleSubmit(e)}>
         <label className='register-page__form__first-name-label'>First Name</label>
+        <label className='register-page__form__class-select-label'>Class</label>
+        <select className='register-page__form__class-select' name='class' onChange={handleChange}>
+          <option value='1-1'>1-1</option>
+          <option value='1-2'>1-2</option>
+          <option value='2-1'>2-1</option>
+          <option value='2-2'>2-2</option>
+          <option value='3-1'>3-1</option>
+          <option value={null}>N/A</option>
+        </select>
         <input className='register-page__form__first-name-input' type='text' name='first' value={user.first} autoComplete='given-name' onChange={handleChange}/>
         <label className='register-page__form__last-name-label'>Last Name</label>
         <input className='register-page__form__last-name-input' type='text' autoComplete='family-name' name='last' value={user.last} onChange={handleChange}/>

@@ -2,16 +2,36 @@
   &__form {
     height: 60vh;
     display: grid;
-    grid-template-columns: 10vw [input-field-s] 80vw [input-field-e] 20vw;
+    grid-template-columns: 10vw [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e] 20vw;
     grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 5vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 5vh [last-name-input-e email-label-s] 5vh [email-label-e email-input-s] 5vh [email-input-e password-label-s] 5vh [password-label-e password-input-s] 5vh [password-input-e confirm-password-label-s] 5vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 5vh [confirm-password-input-e registration-code-label-s] 5vh [registration-code-label-e registration-code-input-s] 5vh [registration-code-input-e buttons-s] 5vh [buttons-e];
 
     &__first-name-label {
-      grid-column: input-field-s/input-field-e;
+      grid-column: first-label-s/first-label-e;
       grid-row: first-name-label-s/first-name-label-e;
+    }
+    
+    &__class-select-label {
+      grid-column: select-s/select-e;
+      grid-row: first-name-label-s/first-name-label-e;
+      justify-self: end;
+    }
+
+    &__class-select, select {
+      grid-column: select-s/select-e;
+      grid-row: first-name-input-s/first-name-input-e;
+      display: grid;
+      justify-self: end;
+      text-align: center;
+      height: 5vh;
+      width: 50%;
+      color: green;
+      font-family: 'Edu TAS Beginner', cursive;
+      font-size: 24px;
+      border-radius: 25px;
     }
 
     &__first-name-input {
-      grid-column: input-field-s/input-field-e;
+      grid-column: input-field-s/first-label-e;
       grid-row: first-name-input-s/first-name-input-e;
     }
 
