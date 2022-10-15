@@ -32,8 +32,7 @@ import ViewStudents from './components/viewStudents';
       studentId: ''
     })
 
-    const [page, setPage] = useState({
-      isLoading : false})
+    const [loading, setLoading] = useState(false)
 
     const [book, setBook] = useState()
 
@@ -47,7 +46,7 @@ import ViewStudents from './components/viewStudents';
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} {...page.scanning} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student}/>} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-students' element={<ViewStudents />} key = {'view-students'} />
@@ -61,7 +60,7 @@ import ViewStudents from './components/viewStudents';
   }
 
   const handleLoading = () => {
-    setPage(prevPage => !prevPage)
+    setLoading(prevLoading => !prevLoading)
   }
 
   const handleSuccessfulLogin = () => {
@@ -91,11 +90,11 @@ import ViewStudents from './components/viewStudents';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
+          {loading === true ? <Loading /> : null}
           <Routes>
-            {page.isLoading === true ? <Loading /> : null}
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
-            {user.userRole === 'Student' ?
+            {user.userRole === 'Student' && user.logged_status === "LOGGED_IN" ?
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
             <Route path = '/login' element={<Login handleLoading = {handleLoading} loginHandler = {handleSuccessfulLogin}/>} />

@@ -19,7 +19,6 @@ import jwtDecode from 'jwt-decode';
     }
 
     async function handleSubmit(e) {
-      props.handleLoading()
       e.preventDefault();
         let config = {
           headers: {
@@ -27,6 +26,7 @@ import jwtDecode from 'jwt-decode';
             'Access-Control-Allow-Origin': '*'
             }
         }
+        props.handleLoading()
         await axios
         .post('http://127.0.0.1:5000/login', {
           ...user
