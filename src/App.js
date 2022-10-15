@@ -9,8 +9,8 @@ import AdminHome from './components/adminHome';
 import BookInfo from './components/bookInfo';
 import CheckoutConfirm from './components/checkoutConfirm';
 import Header from './components/header';
-import Home from './components/home.js';
-import Loading from './components/helpers/loading';
+import Home from './components/home';
+import Loading from './components/helpers/loading.js';
 import Login from './components/login';
 import Register from './components/register';
 import RegisterNewBook from './components/registerNewBook';
@@ -18,7 +18,7 @@ import RegisterStudents from './components/registerStudents';
 import ScanStudentID from './components/scanStudentId';
 import ScanBookID from './components/scanBookId';
 import StudentProfile from './components/studentProfile';
-import Title from './components/title.js';
+import Title from './components/title';
 import PageNotFound from './components/pageNotFound';
 import ViewClassProgress from './components/viewClassProgress';
 import ViewStudents from './components/viewStudents';
@@ -33,9 +33,7 @@ import ViewStudents from './components/viewStudents';
     })
 
     const [page, setPage] = useState({
-      isLoading: false,
-      scanning: false
-    })
+      isLoading : false})
 
     const [book, setBook] = useState()
 
@@ -67,7 +65,6 @@ import ViewStudents from './components/viewStudents';
   }
 
   const handleSuccessfulLogin = () => {
-    handleLoading()
     const token = window.sessionStorage.getItem('token')
     const decoded = jwtDecode(token)
     console.log('decoded token from app.js', decoded)
@@ -95,13 +92,13 @@ import ViewStudents from './components/viewStudents';
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
           <Routes>
+            {page.isLoading === true ? <Loading /> : null}
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
             {user.userRole === 'Student' ?
             userAuthorizedPages() : null}
-            {page.isLoading === true ? <Route element={<Loading />} /> : null}
             <Route exact path = '/' element={<Title />} />
-            <Route path = '/login' element={<Login loginHandler = {handleSuccessfulLogin}/>} />
+            <Route path = '/login' element={<Login handleLoading = {handleLoading} loginHandler = {handleSuccessfulLogin}/>} />
             <Route path = '/register' element={<Register />} />
             <Route path = '*' element={<PageNotFound />} />
           </Routes>

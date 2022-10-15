@@ -35,11 +35,11 @@ function ScanStudentId (props) {
     .then(student => {
       console.log(student)
       props.handleSetStudent({student : {...student.data}})
+      navigate('/student-profile')
     })
     .catch(error => {
       console.log("There was an error in lookupUser function", error)
     })
-    navigate('/student-profile', )
   }
 
   return (
@@ -78,4 +78,4 @@ function ScanStudentId (props) {
   );
 }
 
-export default ScanStudentId
+export default ScanStudentId;

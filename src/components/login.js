@@ -19,6 +19,7 @@ import jwtDecode from 'jwt-decode';
     }
 
     async function handleSubmit(e) {
+      props.handleLoading()
       e.preventDefault();
         let config = {
           headers: {
@@ -67,4 +68,4 @@ import jwtDecode from 'jwt-decode';
   );
 }
 
-export default Login
+export default Login;
