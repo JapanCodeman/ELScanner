@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 import jwtDecode from 'jwt-decode';
+import Loading from './helpers/loading';
 
   function Login(props) {
 
@@ -14,11 +15,14 @@ import jwtDecode from 'jwt-decode';
       password: ''
     })
 
+    const [loading, setLoading] = useState(false)
+
     const handleChange = (event) => {
       setUser({...user, [event.target.name] : event.target.value})
     }
 
     async function handleSubmit(e) {
+      setLoading()
       e.preventDefault();
         let config = {
           headers: {
@@ -26,20 +30,19 @@ import jwtDecode from 'jwt-decode';
             'Access-Control-Allow-Origin': '*'
             }
         }
-        props.handleLoading()
         await axios
-        .post('http://127.0.0.1:5000/login', {
+        .post('https://elscanner-backend.herokuapp.com/users/login', {
           ...user
         },
         { withCredentials: true },
         config)
         .then(response => {
           window.sessionStorage.setItem('token', response.data.token)
-          props.loginHandler()
         })
         .catch(error => {
           console.log('There was an error in handleSubmit in login.js', error)
         })
+        props.loginHandler()
         const token = jwtDecode(window.sessionStorage.getItem('token'))
         console.log("token response from login.js", token)
         if (token.sub.userRole === "Administrator") {
@@ -54,6 +57,7 @@ import jwtDecode from 'jwt-decode';
 
   return (
     <div className='login-page'>
+      {loading === true ? <Loading /> : null}
       <PageTitler pagetitle='Login' />
       <div className='login-page__input-wrapper'>
         <form>

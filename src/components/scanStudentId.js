@@ -23,7 +23,7 @@ function ScanStudentId (props) {
 
   const checkOutBook = () => {
     axios
-    .patch(`http://127.0.0.1:5000/check-book-out/${props.book.upc}/${student.public_id}`)
+    .patch(`https://elscanner-backend.herokuapp.com/users/check-book-out/${props.book.upc}/${student.public_id}`)
     .catch(error => {
       console.log("error in checkOutBook function", error)
     })
@@ -31,7 +31,7 @@ function ScanStudentId (props) {
 
   const lookupUser = (public_id) => {
     axios
-    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
+    .get(`https://elscanner-backend.herokuapp.com/users/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
       props.handleSetStudent({student : {...student.data}})

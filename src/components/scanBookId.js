@@ -22,7 +22,7 @@ function ScanBookId(props) {
   
   const updateBookId = (bookID) => {
     axios
-    .get(`http://127.0.0.1:5000/retrieve-book-info/${bookID}`)
+    .get(`https://elscanner-backend.herokuapp.com/users/retrieve-book-info/${bookID}`)
     .then(book => {
       console.log(book)
       if (book.data !== 'Book not registered') {
@@ -44,7 +44,7 @@ function ScanBookId(props) {
   const checkBookIn = () => {
     navigate('/scan-student-id')
     axios
-    .patch(`http://127.0.0.1:5000/${book.upc}`)
+    .patch(`https://elscanner-backend.herokuapp.com/users/${book.upc}`)
     .catch(error => {
       console.log('Error in checkBookIn() in scanBookId.js', error)
     })

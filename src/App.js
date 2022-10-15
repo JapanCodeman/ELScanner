@@ -60,23 +60,24 @@ import ViewStudents from './components/viewStudents';
   }
 
   const handleLoading = () => {
-    setLoading(prevLoading => !prevLoading)
+    setLoading(!loading) 
   }
 
   const handleSuccessfulLogin = () => {
     const token = window.sessionStorage.getItem('token')
     const decoded = jwtDecode(token)
     console.log('decoded token from app.js', decoded)
-    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`)
+    handleLoading()
+    axios.get(`https://elscanner-backend.herokuapp.com/users/lookup-user/${decoded.sub.public_id}`)
     .then(response => {
       setUser({
         logged_status: 'LOGGED_IN',
         ...response.data
-    })})
+    })},
+    handleLoading())
     .catch(error => {
       console.log('error in handleSuccessfulLogin in root App', error)
     })
-    handleLoading()
   }
 
   const handleSuccessfulLogout = () => {

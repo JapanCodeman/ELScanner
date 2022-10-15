@@ -17,7 +17,7 @@ function CheckoutConfirm(props) {
       }
   };
     axios
-    .post(`http://127.0.0.1:5000/check-book-out/${props.upc}`, publicid, customConfig)
+    .post(`https://elscanner-backend.herokuapp.com/users/check-book-out/${props.upc}`, publicid, customConfig)
     .catch(error => {
       console.log('There was an error in checkout()', error)
     })
