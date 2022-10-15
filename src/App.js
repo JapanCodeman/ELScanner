@@ -108,4 +108,4 @@ import ViewStudents from './components/viewStudents';
   );
 }
 
-export default App
+export default App;
