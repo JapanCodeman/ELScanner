@@ -31,7 +31,7 @@ import Loading from './helpers/loading';
             }
         }
         await axios
-        .post('https://elscanner-backend.herokuapp.com/users/login', {
+        .post('https://elscanner-backend.herokuapp.com/login', {
           ...user
         },
         { withCredentials: true },
