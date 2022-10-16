@@ -42,7 +42,6 @@ import Loading from './helpers/loading';
         .catch(error => {
           console.log('There was an error in handleSubmit in login.js', error)
         })
-        props.loginHandler()
         const token = jwtDecode(window.sessionStorage.getItem('token'))
         console.log("token response from login.js", token)
         if (token.sub.userRole === "Administrator") {
@@ -53,6 +52,7 @@ import Loading from './helpers/loading';
         else {
           window.alert("There was an error logging in - have you registered yet?")
         }
+        props.loginHandler()
     }
 
   return (

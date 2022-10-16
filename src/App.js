@@ -67,14 +67,21 @@ import ViewStudents from './components/viewStudents';
     const token = window.sessionStorage.getItem('token')
     const decoded = jwtDecode(token)
     console.log('decoded token from app.js', decoded)
-    handleLoading()
-    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`)
+    // handleLoading()
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*'
+        }
+    }
+    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`, config)
     .then(response => {
       setUser({
         logged_status: 'LOGGED_IN',
         ...response.data
     })},
-    handleLoading())
+    // handleLoading()
+    )
     .catch(error => {
       console.log('error in handleSuccessfulLogin in root App', error)
     })
@@ -91,7 +98,7 @@ import ViewStudents from './components/viewStudents';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
-          {loading === true ? <Loading /> : null}
+          {/* {loading === true ? <Loading /> : null} */}
           <Routes>
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
