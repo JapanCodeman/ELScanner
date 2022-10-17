@@ -35,7 +35,7 @@ componentDidMount() {
       availableCameras: devices
     })
     // if (devices && devices.length) {
-      var cameraId = devices[0].id;
+      var cameraId = this.state.camera.id  // devices[0].id;
       const html5QrCode = new Html5Qrcode("qr-reader");
 
   html5QrCode.start(
@@ -91,7 +91,7 @@ componentDidMount() {
         <div id="qr-reader" />
         <select className="camera-select" name="camera" onChange={this.handleChange}>
           {this.state.availableCameras ? this.state.availableCameras.map(camera => 
-            <option value={camera.index}>{camera.label}</option>)
+            <option value={camera.index} key={camera.index}>{camera.label}</option>)
             :
             null}
         </select>
