@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 // import { useLocation } from 'react-router';
 
 import PageTitler from './helpers/pageTitler';
-import SmallerGreenButton from './helpers/smallerGreenButton';
+// import SmallerGreenButton from './helpers/smallerGreenButton';
 import Scanner from './scanner';
 
 function ScanStudentId (props) {
@@ -17,21 +17,21 @@ function ScanStudentId (props) {
 
   // const [checkOutStatus, updateStatus] = useState(false);
 
-  const [student] = useState({
+  // const [student] = useState({
 
-  })
+  // })
 
-  const checkOutBook = () => {
-    axios
-    .patch(`http://127.0.0.1:5000/check-book-out/${props.book.upc}/${student.public_id}`)
-    .catch(error => {
-      console.log("error in checkOutBook function", error)
-    })
-  }
+  // const checkOutBook = () => {
+  //   axios
+  //   .patch(`https://elscanner-backend.herokuapp.com/check-book-out/${props.book.upc}/${student.public_id}`)
+  //   .catch(error => {
+  //     console.log("error in checkOutBook function", error)
+  //   })
+  // }
 
   const lookupUser = (public_id) => {
     axios
-    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
       props.handleSetStudent({student : {...student.data}})
@@ -46,7 +46,8 @@ function ScanStudentId (props) {
     <div>
       <PageTitler pagetitle="Student Id" />
       <Scanner returnedInfo = {(public_id) => lookupUser(public_id)} />
-      {props.title ? 
+
+      {/* {props.title ? 
       <div className='book-checkout-info'>Checking out {props.title}</div>
       :
       null}
@@ -73,7 +74,7 @@ function ScanStudentId (props) {
         </div>
         :
         null}
-      </div>
+      </div> */}
     </div>
   );
 }

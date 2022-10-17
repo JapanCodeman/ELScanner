@@ -20,8 +20,14 @@ export default class Scanner extends Component {
       });
     }
 
-   this.unMountCamera = unMountCamera.bind(this)
+    this.unMountCamera = unMountCamera.bind(this)
   }
+
+handleChange(event) {
+  this.setState({
+  [event.target.name] : event.target.value
+  });
+}
   
 componentDidMount() {
   Html5Qrcode.getCameras().then(devices => {
@@ -81,7 +87,15 @@ componentDidMount() {
 
   render () {
     return (
+      <div className='scanner-wrapper'>
         <div id="qr-reader" />
+        <select className="camera-select" name="camera" onChange={this.handleChange}>
+          {this.state.availableCameras ? this.state.availableCameras.map(camera => 
+            <option value={camera.index}>{camera.label}</option>)
+            :
+            null}
+        </select>
+      </div>
     );
   }
 }

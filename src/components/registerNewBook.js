@@ -21,7 +21,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
     const handleSubmit = (event) => {
       event.preventDefault();
       axios
-      .post(`http://127.0.0.1:5000/register-new-book/${bookInfo.upc}`, {...bookInfo})
+      .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
         if (response.status === 200) {
           window.alert(`${bookInfo.title} registered to database - redirecting to await`)

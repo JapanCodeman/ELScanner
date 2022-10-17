@@ -10,7 +10,7 @@ import BookInfo from './components/bookInfo';
 import CheckoutConfirm from './components/checkoutConfirm';
 import Header from './components/header';
 import Home from './components/home';
-import Loading from './components/helpers/loading.js';
+// import Loading from './components/helpers/loading.js';
 import Login from './components/login';
 import Register from './components/register';
 import RegisterNewBook from './components/registerNewBook';
@@ -74,7 +74,7 @@ import ViewStudents from './components/viewStudents';
         'Access-Control-Allow-Origin': '*'
         }
     }
-    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`, config)
+    axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decoded.sub.public_id}`, config)
     .then(response => {
       setUser({
         logged_status: 'LOGGED_IN',
