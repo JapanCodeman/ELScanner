@@ -4,30 +4,10 @@ import { useNavigate } from 'react-router';
 // import { useLocation } from 'react-router';
 
 import PageTitler from './helpers/pageTitler';
-// import SmallerGreenButton from './helpers/smallerGreenButton';
 import Scanner from './scanner';
 
 function ScanStudentId (props) {
-  // const location = useLocation()
   const navigate = useNavigate()
-
-  // const [book] = useState({
-  //   ...location.state
-  // })
-
-  // const [checkOutStatus, updateStatus] = useState(false);
-
-  // const [student] = useState({
-
-  // })
-
-  // const checkOutBook = () => {
-  //   axios
-  //   .patch(`https://elscanner-backend.herokuapp.com/check-book-out/${props.book.upc}/${student.public_id}`)
-  //   .catch(error => {
-  //     console.log("error in checkOutBook function", error)
-  //   })
-  // }
 
   const lookupUser = (public_id) => {
     axios
@@ -35,6 +15,7 @@ function ScanStudentId (props) {
     .then(student => {
       console.log(student)
       props.handleSetStudent({student : {...student.data}})
+      // ReactDOM.unmountComponentAtNode(document.getElementById('qr-reader'))
       navigate('/student-profile')
     })
     .catch(error => {

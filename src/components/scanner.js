@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Html5Qrcode, Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 
 
 export default class Scanner extends Component {
@@ -9,18 +9,6 @@ export default class Scanner extends Component {
     this.state = {
       availableCameras: []
     }
-
-    function unMountCamera() {
-      const html5QrCode = Html5Qrcode("qr-reader");
-      html5QrCode.stop().then(ignore => {
-        // QR Code scanning is stopped.
-      }).catch(err => {
-        // Stop failed, handle it.
-        console.log("Unable to stop scanning.", err);
-      });
-    }
-
-    this.unMountCamera = unMountCamera.bind(this)
   }
 
 handleChange(event) {
@@ -32,16 +20,23 @@ handleChange(event) {
 componentDidMount() {
   Html5Qrcode.getCameras().then(devices => {
     this.setState({
-      availableCameras: devices
+      availableCameras: devices,
+      cameraToBeUsed: ''
     })
     // if (devices && devices.length) {
-      var cameraId = this.state.camera.id  // devices[0].id;
+      // var cameraId = devices[0].id 
       const html5QrCode = new Html5Qrcode("qr-reader");
 
+  if (this.state.availableCameras.length > 0) {
+    this.setState({cameraToBeUsed : devices[0]})
+  } else {
+    this.setState({cameraToBeUsed : {facingMode: "environment"}})
+  }
+
   html5QrCode.start(
-    cameraId,     // retrieved in the previous step.
+    { facingMode: "environment" },     // retrieved in the previous step.
     {
-      fps: 10,    // sets the framerate to 10 frame per second
+      fps: 2,    // sets the framerate to 10 frame per second
       qrbox: 250  // sets only 250 X 250 region of viewfinder to
                   // scannable, rest shaded.
     },
@@ -62,40 +57,15 @@ componentDidMount() {
   .catch(err => {
     // Start failed, handle it. For example,
     console.log(`Unable to start scanning, error: ${err}`);
-  });
-        // }
-      }).catch(error => {
-        console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
 
-    let config = {
-      fps: 10,
-      qrbox: {width: 350, height: 300},
-      rememberLastUsedCamera: true,
-      // Only support camera scan type.
-      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-  };
-
-  var html5QrcodeScanner = new Html5QrcodeScanner(
-  "qr-reader", config);
-  
-  html5QrcodeScanner.render()
-  }
-
-  // componentWillUnmount() {
-  //   this.unMountCamera()
-  // }
+  }).catch(error => {
+    console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
+  })
+}
 
   render () {
     return (
-      <div className='scanner-wrapper'>
-        <div id="qr-reader" />
-        <select className="camera-select" name="camera" onChange={this.handleChange}>
-          {this.state.availableCameras ? this.state.availableCameras.map(camera => 
-            <option value={camera.index} key={camera.index}>{camera.label}</option>)
-            :
-            null}
-        </select>
-      </div>
+      <div id="qr-reader" />
     );
   }
 }
