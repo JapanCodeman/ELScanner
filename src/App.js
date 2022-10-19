@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import history from './components/history';
@@ -30,6 +30,12 @@ import ViewStudents from './components/viewStudents';
       id: '',
       bookId: '',
       studentId: ''
+    })
+
+    useEffect(() => {
+      if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
+        handleSuccessfulLogin()
+      }
     })
 
     const [loading, setLoading] = useState(false)
@@ -74,7 +80,7 @@ import ViewStudents from './components/viewStudents';
         'Access-Control-Allow-Origin': '*'
         }
     }
-    axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decoded.sub.public_id}`, config)
+    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`, config)
     .then(response => {
       setUser({
         logged_status: 'LOGGED_IN',

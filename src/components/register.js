@@ -37,7 +37,7 @@ function Register() {
     }
     if (user.registrationCode === '') {
       const newUser = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
       .then(response => {
         if (response.status === 200) {
           navigate('/login')
@@ -49,7 +49,7 @@ function Register() {
 
     else {
       const newAdmin = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-admin', newAdmin)
+      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
       .then(response => {
         console.log(response.status)
         if (response.status === 200) {

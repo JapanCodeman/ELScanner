@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 
 
@@ -61,6 +62,10 @@ componentDidMount() {
   }).catch(error => {
     console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
   })
+}
+
+componentWillUnmount() {
+  unmountComponentAtNode(document.getElementById('qr-reader'))
 }
 
   render () {
