@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 // import { useLocation } from 'react-router';
 
@@ -9,13 +9,18 @@ import Scanner from './scanner';
 function ScanStudentId (props) {
   const navigate = useNavigate()
 
+  const [scanning, setScanning] = useState(true)
+
   const lookupUser = (public_id) => {
     axios
     .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
-      props.handleSetStudent({student : {...student.data}})
-      // ReactDOM.unmountComponentAtNode(document.getElementById('qr-reader'))
+      props.handleSetStudent({...student.data})
+      setScanning(false)
+      if (props.book) {
+        navigate('/checkout-confirm')
+      } else
       navigate('/student-profile')
     })
     .catch(error => {
@@ -26,8 +31,12 @@ function ScanStudentId (props) {
   return (
     <div>
       <PageTitler pagetitle="Student Id" />
+      {scanning === true ? 
       <Scanner returnedInfo = {(public_id) => lookupUser(public_id)} />
 
+      :
+
+      null}
       {/* {props.title ? 
       <div className='book-checkout-info'>Checking out {props.title}</div>
       :

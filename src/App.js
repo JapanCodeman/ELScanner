@@ -10,7 +10,7 @@ import BookInfo from './components/bookInfo';
 import CheckoutConfirm from './components/checkoutConfirm';
 import Header from './components/header';
 import Home from './components/home';
-// import Loading from './components/helpers/loading.js';
+import Loading from './components/helpers/loading.js';
 import Login from './components/login';
 import Register from './components/register';
 import RegisterNewBook from './components/registerNewBook';
@@ -27,36 +27,56 @@ import ViewStudents from './components/viewStudents';
 
     const [user, setUser] = useState({
       logged_status: 'NOT_LOGGED_IN',
-      id: '',
-      bookId: '',
-      studentId: ''
+      userRole: ''
     })
 
     useEffect(() => {
       if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
-        handleSuccessfulLogin()
-      }
-    })
-
-    const [loading, setLoading] = useState(false)
+          const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
+            let config = {
+            headers: {
+              "Content-Type": "application/json",
+              'Access-Control-Allow-Origin': '*'
+              }
+          }
+          axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
+          .then(response => {
+            setUser({
+              logged_status: 'LOGGED_IN',
+              ...response.data
+          })},
+          )
+          .catch(error => {
+            console.log('error in handleSuccessfulLogin in root App', error)
+          })
+        }
+    }, [user.logged_status])
 
     const [book, setBook] = useState()
 
+    const [loading, setLoading] = useState(false)
+
     const [student, setStudent] = useState()
+
+    const [scanning, setScanning] = useState(false)
 
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
       <Route path = '/book-info' element = {<BookInfo {...book} />} key = {'book-info'} />,
-      <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} />} key = {'checkout-confirm'} />,
+      <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook = {clearBook}/>} key = {'checkout-confirm'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleScanning = {setScanning} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleScanning = {!setScanning} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student}/>} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-students' element={<ViewStudents />} key = {'view-students'} />
     ]
+  }
+
+  const clearBook = () => {
+    setBook()
   }
 
   const userAuthorizedPages = () => {
@@ -67,30 +87,6 @@ import ViewStudents from './components/viewStudents';
 
   const handleLoading = () => {
     setLoading(!loading) 
-  }
-
-  const handleSuccessfulLogin = () => {
-    const token = window.sessionStorage.getItem('token')
-    const decoded = jwtDecode(token)
-    console.log('decoded token from app.js', decoded)
-    // handleLoading()
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
-        }
-    }
-    axios.get(`http://127.0.0.1:5000/lookup-user/${decoded.sub.public_id}`, config)
-    .then(response => {
-      setUser({
-        logged_status: 'LOGGED_IN',
-        ...response.data
-    })},
-    // handleLoading()
-    )
-    .catch(error => {
-      console.log('error in handleSuccessfulLogin in root App', error)
-    })
   }
 
   const handleSuccessfulLogout = () => {
@@ -104,14 +100,14 @@ import ViewStudents from './components/viewStudents';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
-          {/* {loading === true ? <Loading /> : null} */}
+          {loading === true ? <Loading /> : null}
           <Routes>
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
             {user.userRole === 'Student' && user.logged_status === "LOGGED_IN" ?
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
-            <Route path = '/login' element={<Login handleLoading = {handleLoading} loginHandler = {handleSuccessfulLogin}/>} />
+            <Route path = '/login' element={<Login handleLoading = {handleLoading} loginHandler = {setUser}/>} />
             <Route path = '/register' element={<Register />} />
             <Route path = '*' element={<PageNotFound />} />
           </Routes>

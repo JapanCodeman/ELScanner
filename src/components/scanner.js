@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { unmountComponentAtNode } from 'react-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 
 
@@ -19,6 +18,7 @@ handleChange(event) {
 }
   
 componentDidMount() {
+  console.log(window.location) // "/scan-student-id"
   Html5Qrcode.getCameras().then(devices => {
     this.setState({
       availableCameras: devices,
@@ -64,9 +64,14 @@ componentDidMount() {
   })
 }
 
-componentWillUnmount() {
-  unmountComponentAtNode(document.getElementById('qr-reader'))
-}
+// componentWillUnmount() {
+//   const html5QrCode = Html5Qrcode("qr-reader")
+//   html5QrCode.stop().then((ignore) => {
+//     // QR Code scanning is stopped.
+//   }).catch((err) => {
+//     console.log("Unmounting scanner failed", err)
+//   });
+// }
 
   render () {
     return (

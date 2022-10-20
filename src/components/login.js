@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 import jwtDecode from 'jwt-decode';
-import Loading from './helpers/loading';
 
   function Login(props) {
 
@@ -15,14 +14,11 @@ import Loading from './helpers/loading';
       password: ''
     })
 
-    const [loading, setLoading] = useState(false)
-
     const handleChange = (event) => {
       setUser({...user, [event.target.name] : event.target.value})
     }
 
     async function handleSubmit(e) {
-      setLoading()
       e.preventDefault();
         let config = {
           headers: {
@@ -43,7 +39,16 @@ import Loading from './helpers/loading';
           console.log('There was an error in handleSubmit in login.js', error)
         })
         const token = jwtDecode(window.sessionStorage.getItem('token'))
-        console.log("token response from login.js", token)
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${token.sub.public_id}`, config)
+        .then(response => {
+          props.loginHandler({
+            logged_status: 'LOGGED_IN',
+            ...response.data
+        })},
+        )
+        .catch(error => {
+          console.log('error in handleSuccessfulLogin in root App', error)
+        })
         if (token.sub.userRole === "Administrator") {
         navigate('/admin-home')
         } else if (token.sub.userRole === "Student") {
@@ -52,12 +57,10 @@ import Loading from './helpers/loading';
         else {
           window.alert("There was an error logging in - have you registered yet?")
         }
-        props.loginHandler()
     }
 
   return (
     <div className='login-page'>
-      {loading === true ? <Loading /> : null}
       <PageTitler pagetitle='Login' />
       <div className='login-page__input-wrapper'>
         <form>
