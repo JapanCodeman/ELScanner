@@ -13,7 +13,7 @@ function ScanStudentId (props) {
 
   const lookupUser = (public_id) => {
     axios
-    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
       props.handleSetStudent({...student.data})

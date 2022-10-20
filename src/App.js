@@ -39,7 +39,7 @@ import ViewStudents from './components/viewStudents';
               'Access-Control-Allow-Origin': '*'
               }
           }
-          axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
+          axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
           .then(response => {
             setUser({
               logged_status: 'LOGGED_IN',
