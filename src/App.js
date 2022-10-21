@@ -12,6 +12,7 @@ import Header from './components/header';
 import Home from './components/home';
 import Loading from './components/helpers/loading.js';
 import Login from './components/login';
+import MyClass from './components/myClass';
 import Register from './components/register';
 import RegisterNewBook from './components/registerNewBook';
 import RegisterStudents from './components/registerStudents';
@@ -30,31 +31,13 @@ import ViewStudents from './components/viewStudents';
       userRole: ''
     })
 
-    useEffect(() => {
-      if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
-          const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
-            let config = {
-            headers: {
-              "Content-Type": "application/json",
-              'Access-Control-Allow-Origin': '*'
-              }
-          }
-          axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
-          .then(response => {
-            setUser({
-              logged_status: 'LOGGED_IN',
-              ...response.data
-          })},
-          )
-          .catch(error => {
-            console.log('error in handleSuccessfulLogin in root App', error)
-          })
-        }
-    }, [user.logged_status])
+    const [loading, setLoading] = useState(false)
+
+    // useEffect(() => {
+
+    // }, [user.logged_status, user.userRole])
 
     const [book, setBook] = useState()
-
-    const [loading, setLoading] = useState(false)
 
     const [student, setStudent] = useState()
 
@@ -81,13 +64,39 @@ import ViewStudents from './components/viewStudents';
 
   const userAuthorizedPages = () => {
     return [
-      <Route path = '/home' element = {<Home {...user} />} key = {'home'} />
+      <Route path = '/home' element = {<Home {...user} />} key = {'home'} />,
+      <Route path = '/my-class' element = {<MyClass {...user}/>} key = {'my-class'} />
     ]
   }
 
-  const handleLoading = () => {
-    setLoading(!loading) 
-  }
+  const loadingOnRefresh = async () => {
+      if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
+        const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
+        console.log(decodedToken)
+          let config = {
+          headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*'
+            }
+        }
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
+        .then(response => {
+          setUser({
+            logged_status: 'LOGGED_IN',
+            ...response.data
+        })},
+        )
+        .catch(error => {
+          console.log('error in useEffect() in root App', error)
+        })
+        setLoading(true)
+      }
+    }
+
+    useEffect(() => {
+      loadingOnRefresh();
+    }, [])
+  
 
   const handleSuccessfulLogout = () => {
     setUser({
@@ -100,14 +109,14 @@ import ViewStudents from './components/viewStudents';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
-          {loading === true ? <Loading /> : null}
+          {loading ? null : <Loading /> }
           <Routes>
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
             {user.userRole === 'Student' && user.logged_status === "LOGGED_IN" ?
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
-            <Route path = '/login' element={<Login handleLoading = {handleLoading} loginHandler = {setUser}/>} />
+            <Route path = '/login' element={<Login {...user} handleLoading = {loadingOnRefresh} loginHandler = {setUser}/>} />
             <Route path = '/register' element={<Register />} />
             <Route path = '*' element={<PageNotFound />} />
           </Routes>

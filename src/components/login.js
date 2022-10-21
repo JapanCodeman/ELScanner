@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
@@ -14,6 +14,14 @@ import jwtDecode from 'jwt-decode';
       password: ''
     })
 
+    useEffect(() => {
+      if (props.userRole === 'Student') {
+        navigate('/home')
+      } else if (props.userRole === 'Administrator') {
+        navigate('/admin-home')
+      } 
+    }, [props, navigate])
+
     const handleChange = (event) => {
       setUser({...user, [event.target.name] : event.target.value})
     }
@@ -27,7 +35,7 @@ import jwtDecode from 'jwt-decode';
             }
         }
         await axios
-        .post('https://elscanner-backend.herokuapp.com/login', {
+        .post('http://127.0.0.1:5000/login', {
           ...user
         },
         { withCredentials: true },
@@ -39,7 +47,7 @@ import jwtDecode from 'jwt-decode';
           console.log('There was an error in handleSubmit in login.js', error)
         })
         const token = jwtDecode(window.sessionStorage.getItem('token'))
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${token.sub.public_id}`, config)
         .then(response => {
           props.loginHandler({
             logged_status: 'LOGGED_IN',
@@ -47,7 +55,7 @@ import jwtDecode from 'jwt-decode';
         })},
         )
         .catch(error => {
-          console.log('error in handleSuccessfulLogin in root App', error)
+          console.log('error in login function in login.js', error)
         })
         if (token.sub.userRole === "Administrator") {
         navigate('/admin-home')
