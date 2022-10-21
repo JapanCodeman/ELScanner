@@ -23,6 +23,7 @@ import Title from './components/title';
 import PageNotFound from './components/pageNotFound';
 import ViewClassProgress from './components/viewClassProgress';
 import ViewStudents from './components/viewStudents';
+import PasswordReset from './components/passwordReset';
 
   function App() {
 
@@ -37,8 +38,6 @@ import ViewStudents from './components/viewStudents';
 
     const [student, setStudent] = useState()
 
-    const [scanning, setScanning] = useState(false)
-
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
@@ -46,8 +45,8 @@ import ViewStudents from './components/viewStudents';
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook = {clearBook}/>} key = {'checkout-confirm'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleScanning = {setScanning} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleScanning = {!setScanning} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student}/>} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-students' element={<ViewStudents />} key = {'view-students'} />
@@ -66,6 +65,7 @@ import ViewStudents from './components/viewStudents';
   }
 
   const loadingOnRefresh = async () => {
+      setLoading(true)
       if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
         const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
         console.log(decodedToken)
@@ -75,7 +75,7 @@ import ViewStudents from './components/viewStudents';
             'Access-Control-Allow-Origin': '*'
             }
         }
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
         .then(response => {
           setUser({
             logged_status: 'LOGGED_IN',
@@ -113,6 +113,7 @@ import ViewStudents from './components/viewStudents';
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
             <Route path = '/login' element={<Login {...user} handleLoading = {loadingOnRefresh} loginHandler = {setUser}/>} />
+            <Route path = '/password-reset' element={<PasswordReset />} />
             <Route path = '/register' element={<Register />} />
             <Route path = '*' element={<PageNotFound />} />
           </Routes>

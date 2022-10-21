@@ -2,6 +2,14 @@ Look for good graphing module to keep track of class/student words read
 
 Rewrite axios calls that render info to be asynchronous and use callBack to render loading screen
 
+create adminStudentProfile for viewing students in a class (add Update/Delete functionality to these)
+
+Add password reset feature (on login if !user.password, redirect to "set password" page)
+
+Fix backend to not output user information to non JWT holders
+
 bugs:
   logged in as user (student) - navigate away from page to get 404 and 
   can no longer see logout button in header
+
+  critical - scanner.js not stopping scanning on "back"/navigating to new page - only stops on changing page and refresh or correctly reading a code

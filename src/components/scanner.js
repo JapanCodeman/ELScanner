@@ -18,21 +18,20 @@ handleChange(event) {
 }
   
 componentDidMount() {
-  console.log(window.location) // "/scan-student-id"
+  console.log(window.location.pathname) // "/scan-student-id"
+  console.log(this.props.scanning)
   Html5Qrcode.getCameras().then(devices => {
     this.setState({
       availableCameras: devices,
       cameraToBeUsed: ''
     })
-    // if (devices && devices.length) {
-      // var cameraId = devices[0].id 
-      const html5QrCode = new Html5Qrcode("qr-reader");
+    const html5QrCode = new Html5Qrcode("qr-reader");
 
-  if (this.state.availableCameras.length > 0) {
-    this.setState({cameraToBeUsed : devices[0]})
-  } else {
-    this.setState({cameraToBeUsed : {facingMode: "environment"}})
-  }
+  // if (this.state.availableCameras.length > 0) {
+  //   this.setState({cameraToBeUsed : devices[0]})
+  // } else {
+  //   this.setState({cameraToBeUsed : {facingMode: "environment"}})
+  // }
 
   html5QrCode.start(
     { facingMode: "environment" },     // retrieved in the previous step.
@@ -64,14 +63,12 @@ componentDidMount() {
   })
 }
 
-// componentWillUnmount() {
-//   const html5QrCode = Html5Qrcode("qr-reader")
-//   html5QrCode.stop().then((ignore) => {
-//     // QR Code scanning is stopped.
-//   }).catch((err) => {
-//     console.log("Unmounting scanner failed", err)
-//   });
-// }
+componentWillUnmount() {
+  const html5QrCode = Html5Qrcode("qr-reader")
+  html5QrCode.stop.then(ignore => {
+  }).catch(error =>
+    console.log("Unable to unmount scanner", error))
+}
 
   render () {
     return (

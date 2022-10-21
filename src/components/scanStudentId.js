@@ -13,7 +13,7 @@ function ScanStudentId (props) {
 
   const lookupUser = (public_id) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
       props.handleSetStudent({...student.data})
@@ -32,39 +32,11 @@ function ScanStudentId (props) {
     <div>
       <PageTitler pagetitle="Student Id" />
       {scanning === true ? 
-      <Scanner returnedInfo = {(public_id) => lookupUser(public_id)} />
+      <Scanner scanning = {scanning} returnedInfo = {(public_id) => lookupUser(public_id)} />
 
       :
 
       null}
-      {/* {props.title ? 
-      <div className='book-checkout-info'>Checking out {props.title}</div>
-      :
-      null}
-      <div className='checkout-confirmation'>
-      {student.public_id ? 
-        <div className='checkout-confirmation__student-info'>
-          <label className='checkout-confirmation__student-name-label'>Student Name: </label>
-          <div className='checkout-confirmation__student-name'>{student.first} {student.last}</div>
-          <label className='checkout-confirmation__student-class-label'>Class: </label>
-          <div className='checkout-confirmation__student-class'>{student.class}</div>
-          <label className='checkout-confirmation__student-checkout-status-label'>Currently Checked Out Books: </label>
-          <div className='checkout-confirmation__student-checkout-status'>#Fill in later</div>
-          {props.status === "Checked Out" ? 
-            <button className='checkout-confirmation__message' onClick={checkOutBook}>
-              Check out title: {props.title} to {student.first} {student.last}?
-            </button>
-          
-        :
-
-          <div className='checkout-confirmation-wrapper'>
-            <div className='checkout-confirmation__confirmed'>{props.title} checked out to {student.first} {student.last}</div>
-            <SmallerGreenButton text='Checkout another title?' clickHandler={() => navigate('/scan-book-id')} /> 
-          </div>}
-        </div>
-        :
-        null}
-      </div> */}
     </div>
   );
 }
