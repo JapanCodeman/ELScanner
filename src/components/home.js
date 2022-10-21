@@ -22,6 +22,7 @@ function Home(props) {
         className='qr-code'
         title="GeeksForGeeks"
         value={props.public_id}
+        size={150}
       />
       <div className='your-word-count'>
         Your total word count so far is: {props.wordsRead} words!
