@@ -66,7 +66,7 @@ import PasswordReset from './components/passwordReset';
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student} handleLoading = {handleLoading} />} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
-      <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} />} key = {'view-students'} />
+      <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} handleSetStudent = {setStudent} />} key = {'view-students'} />
     ]
   }
 

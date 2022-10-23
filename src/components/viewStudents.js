@@ -4,8 +4,11 @@ import PageTitler from './helpers/pageTitler';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro' // <-- import styles to be used
 import SmallerGreenButton from './helpers/smallerGreenButton';
+import { useNavigate } from 'react-router';
 
 function ViewStudents(props) {
+
+  const navigate = useNavigate()
 
   const [thisClass, setThisClass] = useState({
     class : '0-0'
@@ -14,6 +17,19 @@ function ViewStudents(props) {
 
   const handleChange = (event) => {
     setThisClass({[event.target.name] : event.target.value})
+  }
+
+  const toStudentProfile = (public_id) => {
+    axios
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
+    .then(student => {
+      console.log(student)
+      props.handleSetStudent({...student.data})
+      navigate('/student-profile')
+    })
+    .catch(error => {
+      console.log("There was an error in lookupUser function", error)
+    })
   }
 
   useEffect(() => {
@@ -51,7 +67,7 @@ function ViewStudents(props) {
       </div>
 
       <div className='student-results-wrapper'>
-        {students ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} />) : null}
+        {students ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) : null}
       </div>
     </div>
   );
