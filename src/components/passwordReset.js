@@ -33,7 +33,7 @@ function PasswordReset() {
     .catch(error => {
       console.log("error in password reset", error)
     })
-    window.alert('New Password Set')
+    window.alert('New Password Set - please login')
     navigate('/login')
   }
 

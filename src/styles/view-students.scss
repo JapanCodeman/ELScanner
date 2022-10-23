@@ -1,0 +1,32 @@
+.view-students-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .class-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+    select {
+      height: 5vh;
+      width: 50%;
+      color: green;
+      font-family: 'Edu TAS Beginner', cursive;
+      font-size: 24px;
+      border-radius: 25px;
+      text-align: center;
+    }
+  }
+}
+
+.student-results-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  color: green;
+  font-family: 'Edu TAS Beginner', cursive;
+  font-size: 32px;
+}

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import GreenButton from './helpers/greenButton';
 import PageTitler from './helpers/pageTitler';
 
-function AdminHome() {
+function AdminHome(props) {
+
+  useEffect(() => {
+    props.handleLoading(false)
+  }, [props])
+
   return (
     <div className='admin-home'>
       <PageTitler pagetitle = 'Administrator' />

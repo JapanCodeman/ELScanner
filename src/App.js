@@ -32,24 +32,41 @@ import PasswordReset from './components/passwordReset';
       userRole: ''
     })
 
-    const [loading, setLoading] = useState(false)
-
+    const [loading, setLoading] = useState(true)
     const [book, setBook] = useState()
-
     const [student, setStudent] = useState()
+    const [classes, setClasses] = useState()
+
+    useEffect(() => {
+      if (user.userRole === "Administrator") {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*'
+          }
+      }
+      axios
+      .get('http://127.0.0.1:5000/get-all-classes', config)
+      .then(response => {
+        setClasses(response.data)
+      })
+      .catch(error => {
+        console.log("Error in getting classes", error)
+      })
+      }}, [user])
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/admin-home' element = {<AdminHome {...user} />} key = {'admin-home'} />,
-      <Route path = '/book-info' element = {<BookInfo {...book} />} key = {'book-info'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading = {handleLoading} />} key = {'admin-home'} />,
+      <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading = {handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook = {clearBook}/>} key = {'checkout-confirm'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
-      <Route path = '/student-profile' element={<StudentProfile {...student}/>} key = 'student-profile' />,
+      <Route path = '/student-profile' element={<StudentProfile {...student} handleLoading = {handleLoading} />} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
-      <Route path = '/view-students' element={<ViewStudents />} key = {'view-students'} />
+      <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} />} key = {'view-students'} />
     ]
   }
 
@@ -59,16 +76,14 @@ import PasswordReset from './components/passwordReset';
 
   const userAuthorizedPages = () => {
     return [
-      <Route path = '/home' element = {<Home {...user} />} key = {'home'} />,
-      <Route path = '/my-class' element = {<MyClass {...user}/>} key = {'my-class'} />
+      <Route path = '/home' element = {<Home {...user} handleLoading = {handleLoading} />} key = {'home'} />,
+      <Route path = '/my-class' element = {<MyClass {...user} handleLoading = {handleLoading} />} key = {'my-class'} />
     ]
   }
 
   const loadingOnRefresh = async () => {
-      setLoading(true)
       if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
         const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
-        console.log(decodedToken)
           let config = {
           headers: {
             "Content-Type": "application/json",
@@ -85,14 +100,17 @@ import PasswordReset from './components/passwordReset';
         .catch(error => {
           console.log('error in useEffect() in root App', error)
         })
-        setLoading(false)
       }
+      setLoading(false)
     }
 
     useEffect(() => {
       loadingOnRefresh();
     }, [])
   
+  const handleLoading = (bool) => {
+    setLoading(bool)
+  }
 
   const handleSuccessfulLogout = () => {
     setUser({
@@ -105,14 +123,14 @@ import PasswordReset from './components/passwordReset';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
-          {loading ? <Loading /> : null }
+          {loading === true ? (<Loading />) : (null)}
           <Routes>
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
             {user.userRole === 'Student' && user.logged_status === "LOGGED_IN" ?
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
-            <Route path = '/login' element={<Login {...user} handleLoading = {loadingOnRefresh} loginHandler = {setUser}/>} />
+            <Route path = '/login' element={<Login {...user} handleLoading = {handleLoading} loginHandler = {setUser}/>} />
             <Route path = '/password-reset' element={<PasswordReset />} />
             <Route path = '/register' element={<Register />} />
             <Route path = '*' element={<PageNotFound />} />

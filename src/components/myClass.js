@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MyClass() {
+function MyClass(props) {
   return (
     <div>
       My class info...

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 
-
 export default class Scanner extends Component {
   constructor(props) {
     super(props)
@@ -19,11 +18,9 @@ handleChange(event) {
   
 componentDidMount() {
   console.log(window.location.pathname) // "/scan-student-id"
-  console.log(this.props.scanning)
   Html5Qrcode.getCameras().then(devices => {
     this.setState({
-      availableCameras: devices,
-      cameraToBeUsed: ''
+      availableCameras: devices
     })
     const html5QrCode = new Html5Qrcode("qr-reader");
 
@@ -57,22 +54,19 @@ componentDidMount() {
   .catch(err => {
     // Start failed, handle it. For example,
     console.log(`Unable to start scanning, error: ${err}`);
-
-  }).catch(error => {
+  })
+  .catch(error => {
     console.log("There was an error in Html5Qrcode component in componentDidMount", error)})
   })
 }
 
 componentWillUnmount() {
-  const html5QrCode = Html5Qrcode("qr-reader")
-  html5QrCode.stop.then(ignore => {
-  }).catch(error =>
-    console.log("Unable to unmount scanner", error))
+  console.log("camera unmounted")
 }
 
   render () {
     return (
-      <div id="qr-reader" />
+        <div id="qr-reader" />
     );
   }
 }

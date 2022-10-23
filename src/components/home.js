@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import QRCode from 'react-qr-code';
 
@@ -12,6 +12,10 @@ function Home(props) {
   const toClass = () => {
     navigate('/my-class')
   }
+
+  useEffect(() => {
+    props.handleLoading(false)
+  }, [props])
 
   return (
     <div className='home'>

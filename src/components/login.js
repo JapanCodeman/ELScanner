@@ -28,6 +28,7 @@ import jwtDecode from 'jwt-decode';
 
     async function handleSubmit(e) {
       e.preventDefault();
+      props.handleLoading(true)
         let config = {
           headers: {
             "Content-Type": "application/json",
@@ -59,20 +60,13 @@ import jwtDecode from 'jwt-decode';
         })},
         )
         .catch(error => {
-          console.log('error in login function in login.js', error)
+          window.alert(`There was an error logging in - ${error}`)
         })
-        if (token.sub.userRole === "Administrator") {
-        navigate('/admin-home')
-        } else if (token.sub.userRole === "Student") {
-          navigate('/home')
-        }
-        else {
-          window.alert("There was an error logging in - have you registered yet?")
-        }
-    }
+      }
 
   return (
     <div className='login-page'>
+      <React.StrictMode>
       <PageTitler pagetitle='Login' />
       <div className='login-page__input-wrapper'>
         <form>
@@ -83,6 +77,7 @@ import jwtDecode from 'jwt-decode';
           <SmallerGreenButton className='login-page__login-button' text='Login' typeSet='submit' clickHandler={handleSubmit} />
         </form>
       </div>
+      </React.StrictMode>
     </div>
   );
 }
