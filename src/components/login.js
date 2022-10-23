@@ -36,7 +36,7 @@ import jwtDecode from 'jwt-decode';
             }
         }
         await axios
-        .post('http://127.0.0.1:5000/login', {
+        .post('https://elscanner-backend.herokuapp.com/login', {
           ...user
         },
         { withCredentials: true },
@@ -52,7 +52,7 @@ import jwtDecode from 'jwt-decode';
           console.log('There was an error in handleSubmit in login.js', error)
         })
         const token = jwtDecode(window.sessionStorage.getItem('token'))
-        await axios.get(`http://127.0.0.1:5000/lookup-user/${token.sub.public_id}`, config)
+        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
         .then(response => {
           props.loginHandler({
             logged_status: 'LOGGED_IN',
