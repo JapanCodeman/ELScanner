@@ -8,6 +8,8 @@ Add password reset feature (on login if !user.password, redirect to "set passwor
 
 Fix backend to not output user information to non JWT holders
 
+$push data to listOfReadBooks array in users collection
+
 bugs:
   logged in as user (student) - navigate away from page to get 404 and 
   can no longer see logout button in header

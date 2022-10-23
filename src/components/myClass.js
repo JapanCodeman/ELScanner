@@ -10,13 +10,13 @@ function MyClass(props) {
     const getClassWordCounts = async () => {
       await axios.get('https://elscanner-backend.herokuapp.com/get-all-classes-info')
       .then(response => {
-        console.log(response)
+        console.log(response.data)
         setClassInfo({
-          labels: response.data.map((classes) => classes.class),
+          labels: response.data?.map((classes) => classes.class),
           datasets: [
             {
               label: "Class",
-              data: response.data.map(classes => classes.classWordsRead),
+              data: response.data?.map((classes) => classes.classWordsRead),
               backgroundColor: [
                 "#ffbb11",
                 "#ecf0f1",
@@ -35,7 +35,10 @@ function MyClass(props) {
     getClassWordCounts()
   }, []);
 
-  const [classInfo, setClassInfo] = useState({})
+  const [classInfo, setClassInfo] = useState({
+    labels: [],
+    datasets: []
+  })
 
   return (
     <div className='my-class-wrapper'>
