@@ -36,6 +36,7 @@ import PasswordReset from './components/passwordReset';
     const [book, setBook] = useState()
     const [student, setStudent] = useState()
     const [classes, setClasses] = useState()
+    // const [classInfo, setClassInfo] = useState()
 
     useEffect(() => {
       if (user.userRole === "Administrator") {
@@ -54,6 +55,35 @@ import PasswordReset from './components/passwordReset';
         console.log("Error in getting classes", error)
       })
       }}, [user])
+
+    // useEffect(() => {
+    //   const getClassWordCounts = async () => {
+    //     await axios.get('http://127.0.0.1:5000/get-all-classes-info')
+    //     .then(response => {
+    //       console.log(response)
+    //       setClassInfo({
+    //         labels: response.data.map((classes) => classes.class),
+    //         datasets: [
+    //           {
+    //             label: "Class",
+    //             data: response.data.map(classes => classes.classWordsRead),
+    //             backgroundColor: [
+    //               "#ffbb11",
+    //               "#ecf0f1",
+    //               "#50AF95",
+    //               "#f3ba2f",
+    //               "#2a71d0"
+    //             ] 
+    //           }
+    //         ]
+    //       })
+    //     })
+    //     .catch(error => {
+    //       console.log("There was an error in getClassWordCounts()", error)
+    //     })
+    //   }
+    //   getClassWordCounts()
+    // }, []);
 
   const adminAuthorizedPages = () => {
     return [

@@ -60,8 +60,8 @@ function ViewStudents(props) {
       <PageTitler pagetitle='View Students' />
       <div className='class-selector'>
         <label className='select-class-label'>Select Class</label>
-        {/* {props[0] ? console.log(props[0]) : null} */}
         <select className='select-class' name='class' onChange={handleChange}>
+          <option disabled selected value style={{display:"none"}}>select class</option>
           {props[0] ? props[0].map(thisClass => <option className='selected-class' key={thisClass.public_id} value={thisClass.class}>{thisClass.class}</option>) : null}
         </select>
       </div>
