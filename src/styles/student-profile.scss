@@ -10,13 +10,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 3vh;
     margin-left: -5vw;
   }
 
   .no-checked-out-books {
-    background-color: darkgreen;
-    color: white;
+    margin-top: 3vh;
+    align-self: center;
+    color: black;
     border-radius: 5px;
     font-family: 'Edu TAS Beginner', cursive;
     font-size: 24px;
@@ -28,8 +28,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: -5vw;
 
     .reset-password-button {
+      height: 5vh;
+      width: 65vw;
+      align-content: center;
       background: none;
       background-color: red;
       color: white;

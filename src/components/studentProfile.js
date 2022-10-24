@@ -7,7 +7,9 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
 
 function StudentProfile(props) {
 
-  const [holdingBooks, setHoldingBooks] = useState()
+  const [holdingBooks, setHoldingBooks] = useState({
+    holdingBooks: []
+  })
 
   const navigate = useNavigate()
 
@@ -21,15 +23,14 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
         }
     }        
-      axios.post('http://127.0.0.1:5000/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+      axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
       .then(response => {
         setHoldingBooks(response.data)
       })
       .catch(error => {
         console.log("error in useEffect on studentProfile.js", error)
       })
-    }
-  }, [props.checkedOutBooks, props.student, navigate])
+    }}, [props.checkedOutBooks, props.student, navigate])
 
 
   function checkBookIn(book) {
@@ -46,14 +47,19 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
+    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       window.alert(`${book.title} checked back in from ${props.first} ${props.last} to Onomichi Gakuen English Library.`)
+      props.clearStudent()
       navigate('/admin-home')
     })
     .catch(error => {
       console.log("Error in checkBookIn() in studentProfile.js", error)
     })
+  }
+
+  function checkBookOut() {
+    navigate('/scan-book-id')
   }
 
   function resetPassword() {
@@ -64,7 +70,7 @@ function StudentProfile(props) {
         }
     }
     axios
-    .post('http://127.0.0.1:5000/delete-password', {"public_id" : props.public_id}, config)
+    .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
     .then(response => {
       console.log(response)
     })
@@ -83,7 +89,7 @@ function StudentProfile(props) {
       <div className='total-books-read'>{props.totalBooksRead}</div>
       <label className='checked-out-books-label'>Checked Out List:</label>
       <div className='checked-out-books-wrapper'>
-      {holdingBooks ? holdingBooks.map(book => 
+      {holdingBooks[0] !== undefined ? holdingBooks.map(book => 
         <SmallerGreenButton 
           className='smaller-green-button'
           text={book.title}
@@ -98,6 +104,12 @@ function StudentProfile(props) {
       </div>
 
       <div className='other-options'>
+        <SmallerGreenButton
+          className='smaller-green-button'
+          text={`Check Book out to ${props.first} ${props.last}`}
+          typeSet='button'
+          clickHandler={checkBookOut}
+          />
         <SmallerGreenButton 
           className='reset-password-button'
           text='Reset Password'

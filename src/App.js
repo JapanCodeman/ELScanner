@@ -36,7 +36,6 @@ import PasswordReset from './components/passwordReset';
     const [book, setBook] = useState()
     const [student, setStudent] = useState()
     const [classes, setClasses] = useState()
-    // const [classInfo, setClassInfo] = useState()
 
     useEffect(() => {
       if (user.userRole === "Administrator") {
@@ -47,7 +46,7 @@ import PasswordReset from './components/passwordReset';
           }
       }
       axios
-      .get('http://127.0.0.1:5000/get-all-classes', config)
+      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
         setClasses(response.data)
       })
@@ -63,8 +62,8 @@ import PasswordReset from './components/passwordReset';
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook = {clearBook}/>} key = {'checkout-confirm'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} handleSetStudent = {setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student} handleLoading = {handleLoading} />} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} handleSetStudent = {setStudent} />} key = {'view-students'} />
@@ -73,6 +72,10 @@ import PasswordReset from './components/passwordReset';
 
   const clearBook = () => {
     setBook()
+  }
+
+  const clearStudent = () => {
+    setStudent()
   }
 
   const userAuthorizedPages = () => {
@@ -91,7 +94,7 @@ import PasswordReset from './components/passwordReset';
             'Access-Control-Allow-Origin': '*'
             }
         }
-        await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
+        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
         .then(response => {
           setUser({
             logged_status: 'LOGGED_IN',

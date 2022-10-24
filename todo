@@ -10,6 +10,8 @@ page for admin to CRUD classes
 
 Fix backend to not output user information to non JWT holders (and not just random JWT)
 
+Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in sessionStorage?
+
 Students' listOfReadBooks should only update for unique books read - use "if UPC in student["listOfReadBooks"] approach 
 
 bugs:
