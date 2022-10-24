@@ -1,5 +1,3 @@
-incorporate chart.js to admin options
-
 create adminStudentProfile for viewing students in a class (add Update/Delete functionality to these)
 
 Add password reset feature (on login if !user.password, redirect to "set password" page) - add this to student-profile as red button - delete user's password on backend
@@ -11,8 +9,6 @@ page for admin to CRUD classes
 Fix backend to not output user information to non JWT holders (and not just random JWT)
 
 Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in sessionStorage?
-
-Students' listOfReadBooks should only update for unique books read - use "if UPC in student["listOfReadBooks"] approach 
 
 bugs:
 

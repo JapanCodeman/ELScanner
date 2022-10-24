@@ -21,6 +21,7 @@ import ScanBookID from './components/scanBookId';
 import StudentProfile from './components/studentProfile';
 import Title from './components/title';
 import PageNotFound from './components/pageNotFound';
+import ViewClasses from './viewClasses';
 import ViewClassProgress from './components/viewClassProgress';
 import ViewStudents from './components/viewStudents';
 import PasswordReset from './components/passwordReset';
@@ -57,15 +58,16 @@ import PasswordReset from './components/passwordReset';
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading = {handleLoading} />} key = {'admin-home'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading = {handleLoading} clearBook={clearBook} clearStudent={clearStudent} />} key = {'admin-home'} />,
       <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading = {handleLoading} key = {'book-info'} />,
-      <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook = {clearBook}/>} key = {'checkout-confirm'} />,
-      <Route path = '/register-new-book' element={<RegisterNewBook />} key = {'register-new-book'} />,
+      <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
+      <Route path = '/register-new-book' element={<RegisterNewBook {...student} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} />} key = {'scan-student-id'} />,
-      <Route path = '/student-profile' element={<StudentProfile {...student} handleLoading = {handleLoading} />} key = 'student-profile' />,
+      <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading = {handleLoading} />} key = 'student-profile' />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
+      <Route path = '/view-classes' element={<ViewClasses />} key = {'view-classes'} />,
       <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} handleSetStudent = {setStudent} />} key = {'view-students'} />
     ]
   }
@@ -85,32 +87,31 @@ import PasswordReset from './components/passwordReset';
     ]
   }
 
-  const loadingOnRefresh = async () => {
-      if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
-        const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
-          let config = {
-          headers: {
-            "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': '*'
-            }
-        }
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
-        .then(response => {
-          setUser({
-            logged_status: 'LOGGED_IN',
-            ...response.data
-        })},
-        )
-        .catch(error => {
-          console.log('error in useEffect() in root App', error)
-        })
-      }
-      setLoading(false)
-    }
-
     useEffect(() => {
+      const loadingOnRefresh = async () => {
+        if (user.logged_status === 'NOT_LOGGED_IN' && window.sessionStorage.getItem('token')) {
+          const decodedToken = jwtDecode(window.sessionStorage.getItem('token'))
+            let config = {
+            headers: {
+              "Content-Type": "application/json",
+              'Access-Control-Allow-Origin': '*'
+              }
+          }
+          await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+          .then(response => {
+            setUser({
+              logged_status: 'LOGGED_IN',
+              ...response.data
+          })},
+          )
+          .catch(error => {
+            console.log('error in useEffect() in root App', error)
+          })
+        }
+        setLoading(false)
+      }
       loadingOnRefresh();
-    }, [])
+    }, [user.logged_status])
   
   const handleLoading = (bool) => {
     setLoading(bool)

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 
-  function RegisterNewBook() {
+  function RegisterNewBook(props) {
     const location = useLocation()
     const navigate = useNavigate()
     
@@ -23,9 +23,32 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
       axios
       .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
+        console.log(response)
         if (response.status === 200) {
-          window.alert(`${bookInfo.title} registered to database - redirecting to await`)
-          navigate('/await')
+          console.log(response)
+          if (props.userRole !== "Student") {
+          window.alert(`${bookInfo.title} registered to database`)
+          navigate('/admin-home')
+          }
+          else if (props.userRole === "Student") {
+            let config = {
+              headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+                }
+            }
+            let studentAndBookUPC = {
+              book_upc : bookInfo.upc,
+              public_id : props.public_id
+            }
+            axios
+            .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
+            .then(window.alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
+            .catch(error => {
+              console.log('There was an error in checkout()', error)
+            })
+            navigate('/admin-home')
+          }
         }
       })
       .catch(error => {

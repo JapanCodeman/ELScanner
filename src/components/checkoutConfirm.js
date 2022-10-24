@@ -27,6 +27,7 @@ function CheckoutConfirm(props) {
       console.log('There was an error in checkout()', error)
     })
     props.clearBook()
+    props.clearStudent()
     window.alert(`${props.book.title} checked out to ${props.first} ${props.last} - returning to admin-home`)
     navigate('/admin-home')
   }

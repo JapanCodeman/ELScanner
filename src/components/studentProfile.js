@@ -14,9 +14,6 @@ function StudentProfile(props) {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!props.checkedOutBooks) {
-      navigate('/scan-student-id')
-    } else {
     let config = {
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +27,10 @@ function StudentProfile(props) {
       .catch(error => {
         console.log("error in useEffect on studentProfile.js", error)
       })
-    }}, [props.checkedOutBooks, props.student, navigate])
+      if (!props.public_id) {
+        navigate('/scan-student-id')
+      }
+    }, [props.public_id, props.checkedOutBooks, props.student, navigate])
 
 
   function checkBookIn(book) {
@@ -51,11 +51,11 @@ function StudentProfile(props) {
     .then(response => {
       window.alert(`${book.title} checked back in from ${props.first} ${props.last} to Onomichi Gakuen English Library.`)
       props.clearStudent()
-      navigate('/admin-home')
     })
     .catch(error => {
       console.log("Error in checkBookIn() in studentProfile.js", error)
     })
+    navigate('/admin-home')
   }
 
   function checkBookOut() {
@@ -72,7 +72,7 @@ function StudentProfile(props) {
     axios
     .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
     .then(response => {
-      console.log(response)
+      window.alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
     })
     .catch(error => {
       console.log("Error in resetPassword()", error)

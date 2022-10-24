@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import SmallerGreenButton from './helpers/smallerGreenButton';
@@ -60,7 +60,7 @@ function BookInfo(props) {
           :
 
           <SmallerGreenButton text='Check this book back in' clickHandler={checkBookIn} />}
-      </div>
+        </div>
         
         : 
         

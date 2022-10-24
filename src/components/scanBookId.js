@@ -14,7 +14,7 @@ function ScanBookId(props) {
     .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
     .then(book => {
       console.log(book)
-      if (props.first) {
+      if (props.userRole === 'Student' && book.data !== 'Book not registered') {
         const config = {
           headers: {
           'Content-Type': 'application/json',
@@ -27,11 +27,10 @@ function ScanBookId(props) {
         }
         axios
         .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
+        .then(window.alert(`${book.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
         .catch(error => {
           console.log('There was an error in checkout()', error)
         })
-        props.clearBook()
-        window.alert(`${book.title} checked out to ${props.first} ${props.last} - returning to admin-home`)
         navigate('/admin-home')
       }
       else if (book.data !== 'Book not registered') {

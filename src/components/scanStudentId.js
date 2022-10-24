@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-// import { useLocation } from 'react-router';
 
 import PageTitler from './helpers/pageTitler';
 import Scanner from './scanner';
