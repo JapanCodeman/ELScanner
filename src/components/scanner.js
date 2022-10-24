@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
+import SmallerGreenButton from './helpers/smallerGreenButton';
 
 export default class Scanner extends Component {
   constructor(props) {
@@ -8,6 +9,8 @@ export default class Scanner extends Component {
     this.state = {
       availableCameras: []
     }
+
+    this.turnOffCamera = this.turnOffCamera.bind(this)
   }
 
 handleChange(event) {
@@ -23,12 +26,6 @@ componentDidMount() {
       availableCameras: devices
     })
     const html5QrCode = new Html5Qrcode("qr-reader");
-
-  // if (this.state.availableCameras.length > 0) {
-  //   this.setState({cameraToBeUsed : devices[0]})
-  // } else {
-  //   this.setState({cameraToBeUsed : {facingMode: "environment"}})
-  // }
 
   html5QrCode.start(
     { facingMode: "environment" },     // retrieved in the previous step.
@@ -60,13 +57,22 @@ componentDidMount() {
   })
 }
 
-componentWillUnmount() {
-  console.log("camera unmounted")
+
+turnOffCamera() {
+  console.log("clicked")
+  Html5Qrcode.stop().then(ignore => {
+  })
+  .catch(error => {
+    console.log("There was an error in shutting off the camera", error)
+  })
 }
 
   render () {
     return (
+      <div>
         <div id="qr-reader" />
+        {/* <SmallerGreenButton text={"turn off camera"} clickHandler={this.turnOffCamera} /> */}
+      </div>
     );
   }
 }

@@ -11,7 +11,7 @@ function ScanBookId(props) {
   
   const updateBookId = (bookID) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
+    .get(`http://127.0.0.1:5000/retrieve-book-info/${bookID}`)
     .then(book => {
       console.log(book)
       if (book.data !== 'Book not registered') {

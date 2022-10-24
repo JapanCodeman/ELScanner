@@ -8,9 +8,8 @@ function MyClass(props) {
 
   useEffect(() => {
     const getClassWordCounts = async () => {
-      await axios.get('https://elscanner-backend.herokuapp.com/get-all-classes-info')
+      await axios.get('http://127.0.0.1:5000/get-all-classes-info')
       .then(response => {
-        console.log(response.data)
         setClassInfo({
           labels: response.data?.map((classes) => classes.class),
           datasets: [
@@ -19,7 +18,7 @@ function MyClass(props) {
               data: response.data?.map((classes) => classes.classWordsRead),
               backgroundColor: [
                 "#ffbb11",
-                "#ecf0f1",
+                "#4FFF33",
                 "#50AF95",
                 "#f3ba2f",
                 "#2a71d0"
@@ -42,7 +41,8 @@ function MyClass(props) {
 
   return (
     <div className='my-class-wrapper'>
-      <PageTitler pagetitle={`My Class - ${props.class}`}  />
+      <PageTitler pagetitle={'My Class'} />
+      <PageTitler pagetitle={props.class} />
       <BarChart chartData={classInfo} />
     </div>
   );

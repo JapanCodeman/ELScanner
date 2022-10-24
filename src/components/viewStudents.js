@@ -21,9 +21,8 @@ function ViewStudents(props) {
 
   const toStudentProfile = (public_id) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(student => {
-      console.log(student)
       props.handleSetStudent({...student.data})
       navigate('/student-profile')
     })
@@ -40,9 +39,8 @@ function ViewStudents(props) {
         }
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/students-by-class', {...thisClass}, config)
+    .post('http://127.0.0.1:5000/students-by-class', {...thisClass}, config)
     .then(response => {
-      console.log(response)
     setStudents(response.data)
   }).catch(error => {
     console.log("There was an error retrieving students", error)
@@ -60,8 +58,8 @@ function ViewStudents(props) {
       <PageTitler pagetitle='View Students' />
       <div className='class-selector'>
         <label className='select-class-label'>Select Class</label>
-        <select className='select-class' name='class' onChange={handleChange}>
-          <option disabled selected value style={{display:"none"}}>select class</option>
+        <select className='select-class' defaultValue={thisClass.class} name='class' onChange={handleChange}>
+          <option value style={{display:"none"}}>select class</option>
           {props[0] ? props[0].map(thisClass => <option className='selected-class' key={thisClass.public_id} value={thisClass.class}>{thisClass.class}</option>) : null}
         </select>
       </div>

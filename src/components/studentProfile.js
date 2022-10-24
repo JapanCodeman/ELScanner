@@ -21,7 +21,7 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
         }
     }        
-      axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+      axios.post('http://127.0.0.1:5000/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
       .then(response => {
         setHoldingBooks(response.data)
       })
@@ -46,15 +46,31 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
-      console.log(response)
       window.alert(`${book.title} checked back in from ${props.first} ${props.last} to Onomichi Gakuen English Library.`)
+      navigate('/admin-home')
     })
     .catch(error => {
       console.log("Error in checkBookIn() in studentProfile.js", error)
     })
-    navigate('/admin-home')
+  }
+
+  function resetPassword() {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*'
+        }
+    }
+    axios
+    .post('http://127.0.0.1:5000/delete-password', {"public_id" : props.public_id}, config)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log("Error in resetPassword()", error)
+    })
   }
     
 
@@ -79,6 +95,15 @@ function StudentProfile(props) {
           : 
           
         <div className='no-checked-out-books'>No Books Checked Out</div>}
+      </div>
+
+      <div className='other-options'>
+        <SmallerGreenButton 
+          className='reset-password-button'
+          text='Reset Password'
+          typeSet='button'
+          clickHandler={resetPassword}
+          />
         <GreenButton toPage='/admin-home' text='Return to Admin Home' />
       </div>
     </div>

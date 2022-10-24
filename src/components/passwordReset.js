@@ -26,7 +26,7 @@ function PasswordReset() {
       }
   };
     axios
-    .post('https://elscanner-backend.herokuapp.com/password-reset', {...user}, config)
+    .post('http://127.0.0.1:5000/password-reset', {...user}, config)
     .then(response => {
       console.log("password reset response", response)
     })
@@ -45,7 +45,7 @@ function PasswordReset() {
         <input className='email' type='email' name='email' value={user.email} autoComplete='email' onChange={handleChange} />
         <label className='new-password-label'>New Password</label>
         <input className='new-password' type='password' name='password' value={user.password} autoComplete='new-password' onChange={handleChange} />
-        <SmallerGreenButton className='smaller-green-button' text='Set New Password' clickHandler={handleSubmit} />
+        <SmallerGreenButton className='set-new-password' text='Set New Password' clickHandler={handleSubmit} />
       </form>
     </div>
   );
