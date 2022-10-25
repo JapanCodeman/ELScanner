@@ -47,7 +47,7 @@ import PasswordReset from './components/passwordReset';
           }
       }
       axios
-      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
+      .get('http://127.0.0.1:5000/get-all-classes', config)
       .then(response => {
         setClasses(response.data)
       })
@@ -58,10 +58,10 @@ import PasswordReset from './components/passwordReset';
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading = {handleLoading} clearBook={clearBook} clearStudent={clearStudent} />} key = {'admin-home'} />,
-      <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading = {handleLoading} key = {'book-info'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} />} key = {'admin-home'} />,
+      <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
-      <Route path = '/register-new-book' element={<RegisterNewBook {...student} />} key = {'register-new-book'} />,
+      <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} />} key = {'scan-student-id'} />,
@@ -97,7 +97,7 @@ import PasswordReset from './components/passwordReset';
               'Access-Control-Allow-Origin': '*'
               }
           }
-          await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+          await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
           .then(response => {
             setUser({
               logged_status: 'LOGGED_IN',
@@ -137,7 +137,7 @@ import PasswordReset from './components/passwordReset';
             <Route exact path = '/' element={<Title />} />
             <Route path = '/login' element={<Login {...user} handleLoading = {handleLoading} loginHandler = {setUser}/>} />
             <Route path = '/password-reset' element={<PasswordReset />} />
-            <Route path = '/register' element={<Register />} />
+            <Route path = '/register' element={<Register handleLoading={handleLoading}/>} />
             <Route path = '*' element={<PageNotFound />} />
           </Routes>
         </Router>

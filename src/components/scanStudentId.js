@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 
 import PageTitler from './helpers/pageTitler';
@@ -8,15 +8,12 @@ import Scanner from './scanner';
 function ScanStudentId (props) {
   const navigate = useNavigate()
 
-  const [scanning, setScanning] = useState(true)
-
   const lookupUser = (public_id) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
       props.handleSetStudent({...student.data})
-      setScanning(false)
       if (props.book) {
         navigate('/checkout-confirm')
       } else
@@ -30,12 +27,7 @@ function ScanStudentId (props) {
   return (
     <div>
       <PageTitler pagetitle="Student Id" />
-      {scanning === true ? 
-      <Scanner scanning = {scanning} returnedInfo = {(public_id) => lookupUser(public_id)} />
-
-      :
-
-      null}
+      <Scanner returnedInfo = {(public_id) => lookupUser(public_id)} />
     </div>
   );
 }

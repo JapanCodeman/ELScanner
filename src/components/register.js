@@ -6,7 +6,7 @@ import axios from 'axios';
 import PageTitler from './helpers/pageTitler';
 import SmallerGreenButton from './helpers/smallerGreenButton';
 
-function Register() {
+function Register(props) {
 
   const navigate = useNavigate()
 
@@ -15,6 +15,7 @@ function Register() {
     last: '',
     email: '',
     password: '',
+    class:'',
     registrationCode: ''
   })
 
@@ -24,12 +25,30 @@ function Register() {
 
   const [adminCode, setAdminCode] = useState(false)
 
+  const validate = () => {
+    return user.first.length & 
+    user.last.length & 
+    user.email.length & 
+    user.password.length &
+    user.class.length;
+  };
+
+  const buttonText = () => {
+    if (validate()) {
+      return 'Register'
+    }
+    else {
+      return 'Complete Form'
+    }
+  }
+
   const handleAdminCode = () => {
     setAdminCode(!adminCode)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    props.handleLoading(true)
     console.log("handleSubmit clicked")
     if (user.password !== confirm.confirmPass) {
       window.alert("Passwords do not match - reenter")
@@ -37,7 +56,7 @@ function Register() {
     }
     if (user.registrationCode === '') {
       const newUser = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
       .then(response => {
         if (response.status === 200) {
           navigate('/login')
@@ -49,7 +68,7 @@ function Register() {
 
     else {
       const newAdmin = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-admin', newAdmin)
+      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
       .then(response => {
         console.log(response.status)
         if (response.status === 200) {
@@ -89,6 +108,7 @@ function Register() {
         <label className='register-page__form__first-name-label'>First Name</label>
         <label className='register-page__form__class-select-label'>Class</label>
         <select className='register-page__form__class-select' name='class' onChange={handleChange}>
+          <option value style={{display:"none", color:"red"}}>select class</option>
           <option value='1-1'>1-1</option>
           <option value='1-2'>1-2</option>
           <option value='2-1'>2-1</option>
@@ -124,7 +144,7 @@ function Register() {
 
 
         <div className='register-page__buttons'>
-          <SmallerGreenButton className='smaller-green-button' text='Register' typeSet='submit' clickHandler={e => handleSubmit(e)}/>
+          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={e => handleSubmit(e)} disabled={!validate()}/>
           <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
         </div>
       </form>

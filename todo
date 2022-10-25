@@ -13,3 +13,24 @@ Student profile page spits back to rescan scan-student-id on refresh...? Only re
 bugs:
 
   critical - scanner.js not stopping scanning on "back"/navigating to new page - only stops on changing page and refresh or correctly reading a code
+
+NOTES ON REAL TRIAL:
+
+  Student registration - multiple clicks resulted in students creating multiple MULTIPLE accounts - possible solutions:
+    one time use codes similar to administrator (may result in students submitting multiple registrations with the same OTUC)
+
+    disable "register" button onClick (effectively disable user's ability to fire register function while api call is being made)
+
+  Books must be registered before checking out
+    Due to an issue in routing?
+
+    input - "check book out to {student}" => navigate('/scan-book-id') => UPC read and callback; not found in database => navigate('/register-new-book') => fill information; register click
+
+    expected output - window.alert('${book} checked out to ${student}); navigate('/admin-home')
+
+    actual output - stays on register page; registers book; no checkout
+
+  Make select drop downs for publisher/author - tedious when registering many books - register publishers component? authors component?
+
+  @jwt_required() currently blocking routes completely; how to configure?
+
