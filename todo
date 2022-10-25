@@ -16,11 +16,6 @@ bugs:
 
 NOTES ON REAL TRIAL:
 
-  Student registration - multiple clicks resulted in students creating multiple MULTIPLE accounts - possible solutions:
-    one time use codes similar to administrator (may result in students submitting multiple registrations with the same OTUC)
-
-    disable "register" button onClick (effectively disable user's ability to fire register function while api call is being made)
-
   Books must be registered before checking out
     Due to an issue in routing?
 

@@ -138,7 +138,7 @@ import PasswordReset from './components/passwordReset';
             <Route path = '/login' element={<Login {...user} handleLoading = {handleLoading} loginHandler = {setUser}/>} />
             <Route path = '/password-reset' element={<PasswordReset />} />
             <Route path = '/register' element={<Register handleLoading={handleLoading}/>} />
-            <Route path = '*' element={<PageNotFound />} />
+            <Route path = '*' element={<PageNotFound {...user} />} />
           </Routes>
         </Router>
       </header>

@@ -65,9 +65,9 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
           <label className='register-book-form__book-title-label'>Book Title</label>
           <input className='register-book-form__book-title' type='text' name='title' onChange={handleChange} />
           <label className='register-book-form__book-pub-label'>Publisher</label>
-          <input className='register-book-form__book-pub' type='text' name='publisher' onChange={handleChange} />
+          <input className='register-book-form__book-pub' type='text' name='publisher' defaultValue='Oxford Reading Tree' onChange={handleChange} />
           <label className='register-book-form__book-auth-label'>Author</label>
-          <input className='register-book-form__book-auth' type='text' name='author' onChange={handleChange} />
+          <input className='register-book-form__book-auth' type='text' name='author' defaultValue='Hunt and Brychta' onChange={handleChange} />
           <label className='register-book-form__book-wordcount-label'>Word count</label>
           <input className='register-book-form__book-wordcount' type='number' name='wordCount' onChange={handleChange} />
           <SmallerGreenButton className='register-book-form__submit-button' text='Register New Book' typeSet='submit' clickHandler={handleSubmit} />
