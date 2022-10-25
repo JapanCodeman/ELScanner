@@ -21,7 +21,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
     const handleSubmit = (event) => {
       event.preventDefault();
       axios
-      .post(`http://127.0.0.1:5000/register-new-book/${bookInfo.upc}`, {...bookInfo})
+      .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
         console.log(response)
         if (response.status === 200) {
@@ -42,7 +42,7 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
               public_id : props.public_id
             }
             axios
-            .post("http://127.0.0.1:5000/check-book-out", studentAndBookUPC, config)
+            .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
             .then(window.alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
             .catch(error => {
               console.log('There was an error in checkout()', error)

@@ -12,8 +12,6 @@ bugs:
 
   critical - scanner.js not stopping scanning on "back"/navigating to new page - only stops on changing page and refresh or correctly reading a code
 
-  critical - incorrect password results in endless loading
-
 NOTES ON REAL TRIAL:
 
   Books must be registered before checking out
