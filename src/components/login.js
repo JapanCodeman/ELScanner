@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
   function Login(props) {
 
     const navigate = useNavigate()
-    props.handleLoading(false)
+    props.handleLoading(false) // this is causing an error
 
     const [user, setUser] = useState({
       email: '',
@@ -43,9 +43,11 @@ import jwtDecode from 'jwt-decode';
         { withCredentials: true },
         config)
         .then(response => {
-          console.log(response)
           if (response.data === 'password-reset') {
             navigate('/password-reset')
+          } 
+          else if (response.data === 'Invalid Password') {
+            window.alert('Email or Password Invalid')
           } else {
           window.sessionStorage.setItem('token', response.data.token)
         }})

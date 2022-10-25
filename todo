@@ -1,7 +1,5 @@
 create adminStudentProfile for viewing students in a class (add Update/Delete functionality to these)
 
-Add password reset feature (on login if !user.password, redirect to "set password" page) - add this to student-profile as red button - delete user's password on backend
-
 .pop() on .env one time use codes for admin registration
 
 page for admin to CRUD classes
@@ -13,6 +11,8 @@ Student profile page spits back to rescan scan-student-id on refresh...? Only re
 bugs:
 
   critical - scanner.js not stopping scanning on "back"/navigating to new page - only stops on changing page and refresh or correctly reading a code
+
+  critical - incorrect password results in endless loading
 
 NOTES ON REAL TRIAL:
 

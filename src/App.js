@@ -39,7 +39,7 @@ import PasswordReset from './components/passwordReset';
     const [classes, setClasses] = useState()
 
     useEffect(() => {
-      if (user.userRole === "Administrator") {
+      if (user.userRole === "Administrator" && user.logged_status === "LOGGED_IN") {
       let config = {
         headers: {
           "Content-Type": "application/json",
