@@ -2,15 +2,15 @@ import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router';
 
-import PageTitler from './helpers/pageTitler';
+import PageTitler from '../helpers/pageTitler';
 import Scanner from './scanner';
 
-function ScanStudentId (props) {
+function ScanStudentID (props) {
   const navigate = useNavigate()
 
   const lookupUser = (public_id) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(student => {
       console.log(student)
       props.handleSetStudent({...student.data})
@@ -32,4 +32,4 @@ function ScanStudentId (props) {
   );
 }
 
-export default ScanStudentId;
+export default ScanStudentID;

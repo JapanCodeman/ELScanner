@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import SmallerGreenButton from './helpers/smallerGreenButton';
-import PageTitler from './helpers/pageTitler';
+import SmallerGreenButton from '../helpers/smallerGreenButton';
+import PageTitler from '../helpers/pageTitler';
 
 function BookInfo(props) {
 
@@ -18,7 +18,7 @@ function BookInfo(props) {
   const checkBookIn = () => {
     navigate('/scan-student-id')
     axios
-    .patch(`https://elscanner-backend.herokuapp.com/${props.book.upc}`)
+    .patch(`http://127.0.0.1:5000/${props.book.upc}`)
     .catch(error => {
       console.log('Error in checkBookIn() in scanBookId.js', error)
     })

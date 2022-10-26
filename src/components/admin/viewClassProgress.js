@@ -1,14 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { BarChart } from './chart';
+import React, {useEffect, useState } from 'react';
+import { BarChart } from '../chart';
 
-import PageTitler from './helpers/pageTitler';
+import PageTitler from '../helpers/pageTitler';
 
-function MyClass(props) {
+function ViewClassProgress() {
 
   useEffect(() => {
     const getClassWordCounts = async () => {
-      await axios.get('https://elscanner-backend.herokuapp.com/get-all-classes-info')
+      await axios.get('http://127.0.0.1:5000/get-all-classes-info')
       .then(response => {
         setClassInfo({
           labels: response.data?.map((classes) => classes.class),
@@ -40,12 +40,11 @@ function MyClass(props) {
   })
 
   return (
-    <div className='my-class-wrapper'>
+    <div className='view-class-progress'>
       <PageTitler pagetitle={'My Class'} />
-      <PageTitler pagetitle={props.class} />
       <BarChart chartData={classInfo} />
     </div>
   );
 }
 
-export default MyClass;
+export default ViewClassProgress;

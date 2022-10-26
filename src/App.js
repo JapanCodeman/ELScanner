@@ -5,25 +5,25 @@ import history from './components/history';
 import jwtDecode from 'jwt-decode';
 import './styles/main.scss';
 
-import AdminHome from './components/adminHome';
-import BookInfo from './components/bookInfo';
-import CheckoutConfirm from './components/checkoutConfirm';
+import AdminHome from './components/admin/adminHome';
+import BookInfo from './components/admin/bookInfo';
+import CheckoutConfirm from './components/admin/checkoutConfirm';
 import Header from './components/header';
-import Home from './components/home';
+import Home from './components/student/home';
 import Loading from './components/helpers/loading.js';
 import Login from './components/login';
-import MyClass from './components/myClass';
+import MyClass from './components/student/myClass';
 import Register from './components/register';
-import RegisterNewBook from './components/registerNewBook';
-import RegisterStudents from './components/registerStudents';
-import ScanStudentID from './components/scanStudentId';
-import ScanBookID from './components/scanBookId';
-import StudentProfile from './components/studentProfile';
+import RegisterNewBook from './components/admin/registerNewBook';
+import RegisterStudents from './components/admin/registerStudents';
+import ScanStudentID from './components/admin/scanStudentId';
+import ScanBookID from './components/admin/scanBookId';
+import StudentProfile from './components/admin/studentProfile';
 import Title from './components/title';
 import PageNotFound from './components/pageNotFound';
 import ViewClasses from './viewClasses';
-import ViewClassProgress from './components/viewClassProgress';
-import ViewStudents from './components/viewStudents';
+import ViewClassProgress from './components/admin/viewClassProgress';
+import ViewStudents from './components/admin/viewStudents';
 import PasswordReset from './components/passwordReset';
 
   function App() {
@@ -47,7 +47,7 @@ import PasswordReset from './components/passwordReset';
           }
       }
       axios
-      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
+      .get('http://127.0.0.1:5000/get-all-classes', config)
       .then(response => {
         setClasses(response.data)
       })
@@ -97,7 +97,7 @@ import PasswordReset from './components/passwordReset';
               'Access-Control-Allow-Origin': '*'
               }
           }
-          await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+          await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
           .then(response => {
             setUser({
               logged_status: 'LOGGED_IN',

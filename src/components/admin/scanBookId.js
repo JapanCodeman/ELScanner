@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import PageTitler from './helpers/pageTitler';
+import PageTitler from '../helpers/pageTitler';
 import Scanner from './scanner';
 
 function ScanBookId(props) {
@@ -11,7 +11,7 @@ function ScanBookId(props) {
   
   const updateBookId = (bookID) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
+    .get(`http://127.0.0.1:5000/retrieve-book-info/${bookID}`)
     .then(book => {
       console.log(book)
       if (props.userRole === 'Student' && book.data !== 'Book not registered') {
@@ -26,7 +26,7 @@ function ScanBookId(props) {
           public_id : props.public_id
         }
         axios
-        .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
+        .post("http://127.0.0.1:5000/check-book-out", studentAndBookUPC, config)
         .then(window.alert(`${book.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
         .catch(error => {
           console.log('There was an error in checkout()', error)

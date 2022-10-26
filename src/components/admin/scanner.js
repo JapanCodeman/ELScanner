@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import SmallerGreenButton from './helpers/smallerGreenButton';
+import SmallerGreenButton from '../helpers/smallerGreenButton';
 
 export default class Scanner extends Component {
   constructor(props) {

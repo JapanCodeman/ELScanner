@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import GreenButton from './helpers/greenButton';
-import PageTitler from './helpers/pageTitler';
+import GreenButton from '../helpers/greenButton';
+import PageTitler from '../helpers/pageTitler';
 
 function AdminHome(props) {
 

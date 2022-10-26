@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import QRCode from 'react-qr-code';
 
-import PageTitler from './helpers/pageTitler';
-import SmallerGreenButton from './helpers/smallerGreenButton';
+import PageTitler from '../helpers/pageTitler';
+import SmallerGreenButton from '../helpers/smallerGreenButton';
 
 function Home(props) {
 
