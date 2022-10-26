@@ -26,10 +26,10 @@ function Register(props) {
   const [adminCode, setAdminCode] = useState(false)
 
   const validate = () => {
-    return user.first.length & 
-    user.last.length & 
-    user.email.length & 
-    user.password.length &
+    return user.first.length && 
+    user.last.length && 
+    user.email.length && 
+    user.password.length &&
     user.class.length;
   };
 
@@ -56,9 +56,12 @@ function Register(props) {
     }
     if (user.registrationCode === '') {
       const newUser = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
       .then(response => {
-        if (response.status === 200) {
+        if (response.data === "Email already registered") {
+          window.alert("That email is already registered - please enter a different email or request a password reset from an administrator")
+        }
+        if (response.data === "Registration successful") {
           navigate('/login')
         }
       })
@@ -68,7 +71,7 @@ function Register(props) {
 
     else {
       const newAdmin = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-admin', newAdmin)
+      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
       .then(response => {
         console.log(response.status)
         if (response.status === 200) {
@@ -94,7 +97,6 @@ function Register(props) {
   const handleUpdate = (event) => {
     setConfirmPass({...confirm, [event.target.name] : event.target.value})
   }
-
 
   const handleRedirect = () => {
     console.log("handleRedirect clicked")
@@ -144,12 +146,12 @@ function Register(props) {
 
 
         <div className='register-page__buttons'>
-          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={e => handleSubmit(e)} disabled={!validate()}/>
+          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={(e) => handleSubmit(e)} disabled={!validate()}/>
           <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
         </div>
       </form>
     </div>
   );
 }
-
 export default Register
+

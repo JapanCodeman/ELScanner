@@ -11,7 +11,7 @@ function ViewClasses() {
 
   useEffect(() => {
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-classes')
+    .get('http://127.0.0.1:5000/get-all-classes')
     .then(response => {
       setAllClasses(response.data)
     })

@@ -26,7 +26,7 @@ function PasswordReset() {
       }
   };
     axios
-    .post('https://elscanner-backend.herokuapp.com/password-reset', {...user}, config)
+    .post('http://127.0.0.1:5000/password-reset', {...user}, config)
     .then(response => {
       console.log("password reset response", response)
     })

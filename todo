@@ -8,6 +8,13 @@ Fix backend to not output user information to non JWT holders (and not just rand
 
 Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in sessionStorage?
 
+delete student function in studentProfile.js needs a warning before execution
+
+Checking book back in from studentProfile.js properly works, but:
+  Maybe redirect back to viewStudents.js? (would be useful in reading class for checking many books in quickly)
+
+  window.alert displays "undefined returned..." instead of the proper book title
+
 bugs:
 
   critical - scanner.js not stopping scanning on "back"/navigating to new page - only stops on changing page and refresh or correctly reading a code

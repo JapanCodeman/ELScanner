@@ -7,11 +7,14 @@ import SmallerGreenButton from './helpers/smallerGreenButton';
 
 function StudentProfile(props) {
 
+  const navigate = useNavigate()
+
   const [holdingBooks, setHoldingBooks] = useState({
     holdingBooks: []
   })
-
-  const navigate = useNavigate()
+  const [storeClass] = useState({
+    class : props.class
+  })
 
   useEffect(() => {
     let config = {
@@ -20,7 +23,7 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
         }
     }        
-      axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+      axios.post('http://127.0.0.1:5000/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
       .then(response => {
         setHoldingBooks(response.data)
       })
@@ -47,7 +50,7 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       window.alert(`${book.title} checked back in from ${props.first} ${props.last} to Onomichi Gakuen English Library.`)
       props.clearStudent()
@@ -62,6 +65,22 @@ function StudentProfile(props) {
     navigate('/scan-book-id')
   }
 
+  function deleteStudentAccount() {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*'
+        }
+    }
+    axios
+    .delete(`http://127.0.0.1:5000/delete-a-user/${props.public_id}`, config)
+    .then(window.alert('Student Deleted - back to view students'))
+    .catch(error => {
+      console.log("Error deleting student", error)
+    })
+    navigate('/view-students', {class : storeClass.class})
+  }
+
   function resetPassword() {
     let config = {
       headers: {
@@ -70,7 +89,7 @@ function StudentProfile(props) {
         }
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
+    .post('http://127.0.0.1:5000/delete-password', {"public_id" : props.public_id}, config)
     .then(response => {
       window.alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
     })
@@ -115,6 +134,13 @@ function StudentProfile(props) {
           text='Reset Password'
           typeSet='button'
           clickHandler={resetPassword}
+          />
+
+        <SmallerGreenButton
+          className='delete-student-account'
+          text='Delete Account'
+          typeSet='button'
+          clickHandler={deleteStudentAccount}
           />
         <GreenButton toPage='/admin-home' text='Return to Admin Home' />
       </div>
