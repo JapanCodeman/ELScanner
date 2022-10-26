@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
   function Login(props) {
 
     const navigate = useNavigate()
-    props.handleLoading(false) // this is causing an error
+    // props.handleLoading(false) // this is causing an error
 
     const [user, setUser] = useState({
       email: '',

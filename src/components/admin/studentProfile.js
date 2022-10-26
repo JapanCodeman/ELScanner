@@ -52,7 +52,7 @@ function StudentProfile(props) {
     axios
     .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
-      window.alert(`${book.title} checked back in from ${props.first} ${props.last} to Onomichi Gakuen English Library.`)
+      window.alert(`${response.data}`)
       props.clearStudent()
     })
     .catch(error => {
