@@ -56,7 +56,7 @@ function Register(props) {
     }
     if (user.registrationCode === '') {
       const newUser = {...user}
-      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
+      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
       .then(response => {
         if (response.data === "Email already registered") {
           window.alert("That email is already registered - please enter a different email or request a password reset from an administrator")
@@ -71,7 +71,7 @@ function Register(props) {
 
     else {
       const newAdmin = {...user}
-      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
+      axios.post('https://elscanner-backend.herokuapp.com/register-new-admin', newAdmin)
       .then(response => {
         console.log(response.status)
         if (response.status === 200) {
