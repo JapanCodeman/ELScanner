@@ -107,9 +107,11 @@ import PasswordReset from './components/passwordReset';
           .catch(error => {
             console.log('error in useEffect() in root App', error)
           })
+        } else if (!window.localStorage.getItem('token')) {
+          window.alert('THIS IS THE REFRESH PROBLEM')
         }
         setLoading(false)
-      }
+      } 
       loadingOnRefresh();
     }, [user.logged_status])
   
