@@ -67,24 +67,27 @@ function Register(props) {
       })
       .catch(error => 
         console.log("Error in register.js:handleSubmit()", error))
+      props.handleLoading(false)
     }
 
     else {
       const newAdmin = {...user}
       axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
       .then(response => {
-        console.log(response.status)
-        if (response.status === 200) {
+        console.log(response.data)
+        if (response.data === 'admin registration successful') {
           window.alert(response.data)
           navigate('/login')
-        } else if (response.status !== 200) {
-          window.alert('Administrator code not found')
+        } else if (response.data === 'admin registration failed') {
+          console.log(response)
+          window.alert('admin registration failed')
         }
       })
       .catch(error => {
         console.log('There was an error in registering the user as admin', error)
         window.alert('Invalid Admin Registration Code')
       })
+      props.handleLoading(false)
     }
   }
 
