@@ -48,13 +48,14 @@ import jwtDecode from 'jwt-decode';
           } 
           else if (response.data === 'Invalid Password') {
             window.alert('Email or Password Invalid')
+            props.handleLoading(false)
           } else {
-          window.sessionStorage.setItem('token', response.data.token)
+          window.localStorage.setItem('token', response.data.token)
         }})
         .catch(error => {
           console.log('There was an error in handleSubmit in login.js', error)
         })
-        const token = jwtDecode(window.sessionStorage.getItem('token'))
+        const token = jwtDecode(window.localStorage.getItem('token'))
         await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
         .then(response => {
           props.loginHandler({

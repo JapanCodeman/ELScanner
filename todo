@@ -6,7 +6,7 @@ page for admin to CRUD classes
 
 Fix backend to not output user information to non JWT holders (and not just random JWT)
 
-Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in sessionStorage?
+Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in localStorage?
 
 delete student function in studentProfile.js needs a warning before execution
 
