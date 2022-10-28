@@ -12,10 +12,12 @@ delete student function in studentProfile.js needs a warning before execution
 
 add ability to view other admins to be able to reset their passwords for them or delete their accounts - user cannot delete themselves so one administrator; add safeguard that checks how many returns for users.find({admin search}). If this value == 1, delete request denied 
 
+Ended up with MANY duplicates of a single book somehow? (The Blue eye)
+
+Need to remove students from their class["classMembersList"] upon deleting their account - 2-1 currently has over 80 entries...
+
 Checking book back in from studentProfile.js properly works, but:
   Maybe redirect back to viewStudents.js? (would be useful in reading class for checking many books in quickly)
-
-  window.alert displays "undefined returned..." instead of the proper book title
 
 bugs:
 

@@ -56,7 +56,7 @@ function Register(props) {
     }
     if (user.registrationCode === '') {
       const newUser = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
       .then(response => {
         if (response.data === "Email already registered") {
           window.alert("That email is already registered - please enter a different email or request a password reset from an administrator")
@@ -72,7 +72,7 @@ function Register(props) {
 
     else {
       const newAdmin = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-admin', newAdmin)
+      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
       .then(response => {
         console.log(response.data)
         if (response.data === 'admin registration successful') {
@@ -90,8 +90,6 @@ function Register(props) {
       props.handleLoading(false)
     }
   }
-
-  
 
   const handleChange = (event) => {
     setUser({...user, [event.target.name] : event.target.value})
@@ -114,11 +112,7 @@ function Register(props) {
         <label className='register-page__form__class-select-label'>Class</label>
         <select className='register-page__form__class-select' name='class' onChange={handleChange}>
           <option value style={{display:"none", color:"red"}}>select class</option>
-          <option value='1-1'>1-1</option>
-          <option value='1-2'>1-2</option>
-          <option value='2-1'>2-1</option>
-          <option value='2-2'>2-2</option>
-          <option value='3-1'>3-1</option>
+          {props.classes?.map(_class => <option value={_class.class} key={_class.public_id}>{_class.class}</option>)}
           <option value={null}>N/A</option>
         </select>
         <input className='register-page__form__first-name-input' type='text' name='first' value={user.first} autoComplete='given-name' onChange={handleChange}/>

@@ -20,6 +20,7 @@ function AdminHome(props) {
         <GreenButton className='green-button' toPage='/view-students' text='View Students' />
         <GreenButton className='green-button' toPage='/view-class-progress' text='View Class Progress' />
         <GreenButton className='green-button' toPage='/view-classes' text='View or Edit Classes' />
+        <GreenButton className='green-button-admin' toPage='/view-administrators' text='View Administrators' />
         <GreenButton className='green-button' toPage='/register-students' text='Register Students' />
       </div>
     </div>

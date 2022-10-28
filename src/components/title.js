@@ -5,9 +5,9 @@ export default class Title extends Component {
   render () {
     return (
       <div className='home-wrapper'>
-        <GreenButton className='green-button__login' toPage='/login' text='Login' />
+        <GreenButton className='green-button' toPage='/login' text='Login' />
         <div className='home-wrapper__spacer' />
-        <GreenButton className='green-button__register' toPage='/register' text='Register' />
+        <GreenButton className='green-button' toPage='/register' text='Register' />
       </div>
     );
   }
