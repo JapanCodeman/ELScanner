@@ -24,8 +24,8 @@ function ViewClasses() {
     navigate('/create-class')
   }
 
-  const editClass = (classPublicId) => {
-    navigate('/edit-class', {state : {"public_id" : classPublicId}})
+  const editClass = (classInfo) => {
+    navigate('/edit-class', {state: [classInfo]})
   }
 
   return (
@@ -41,7 +41,7 @@ function ViewClasses() {
           <FunctionGreenButton
             className='green-button'
             text={thisClass.class}
-            onClick={editClass}
+            onClick={() => editClass(thisClass)}
             key={thisClass.public_id}
           />)} 
       </div>

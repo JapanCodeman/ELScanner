@@ -1,0 +1,61 @@
+.edit-class {
+  display: flex;
+  flex-direction: column;
+  margin: 0vh 10vw;
+
+  :nth-child(1) {
+    transform: translateX(-10vw)
+  }
+
+  .class-number-of-students, 
+  .class-total-books-read,
+  .class-reader-leaders,
+  .no-readers,
+  label {
+    color: green;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 32px;
+    margin-bottom: 1vh;
+  }
+
+  input {
+    border: none;
+    border-bottom: 2px solid green;
+    font-size: 24px;
+    margin-bottom: 3vh;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .reader-leaders-wrapper {
+    :nth-child(1) {
+      transform: translateX(0vw);
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .no-readers {
+    text-align: center;
+    color: black;
+  }
+
+  .delete-button {
+    height: 15vh;
+    width: 65vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: red;
+    color: black;
+    border-radius: 20px;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 32px;
+    text-decoration: none;
+    margin: 2vh;
+  }
+}

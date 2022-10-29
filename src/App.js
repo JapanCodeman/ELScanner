@@ -9,6 +9,7 @@ import AdminHome from './components/admin/adminHome';
 import BookInfo from './components/admin/bookInfo';
 import CheckoutConfirm from './components/admin/checkoutConfirm';
 import CreateClass from './components/admin/createClass';
+import EditClass from './components/admin/editClass';
 import Header from './components/header';
 import Home from './components/student/home';
 import Loading from './components/helpers/loading.js';
@@ -65,6 +66,7 @@ import AdminProfile from './components/admin/adminProfile';
       <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
       <Route path = '/create-class' element = {<CreateClass />} key = 'create-class' />,
+      <Route path = '/edit-class' element = {<EditClass />} key = 'edit-class' />,
       <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
