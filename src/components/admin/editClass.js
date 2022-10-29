@@ -23,7 +23,7 @@ function EditClass(props) {
           }
       }
       axios
-      .post('http://127.0.0.1:5000/get-reader-leaders', {"class" : thisClass.class}, config)
+      .post('https://elscanner-backend.herokuapp.com/get-reader-leaders', {"class" : thisClass.class}, config)
       .then(response => {
         setReaderLeaders(response.data)
       })
