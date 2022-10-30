@@ -36,6 +36,7 @@ function EditClass(props) {
   },[thisClass.class])
 
   const confirmClassChanges = async () => {
+    // eslint-disable-next-line no-restricted-globals
     if (confirm("Are you sure you want to change the class name? This will affect all students in the class.")) {
       await axios
       .post('https://elscanner-backend.herokuapp.com/update-class', {...thisClass})
@@ -51,6 +52,7 @@ function EditClass(props) {
   }
 
   const deleteThisClass = () => {
+    // eslint-disable-next-line no-restricted-globals
     if (confirm("CLASS WILL BE DELETED - THIS WILL AFFECT ALL STUDENTS IN THE CLASS AND CANNOT BE UNDONE - ARE YOU SURE?")) {
     axios
     .delete('https://elscanner-backend.herokuapp.com/delete-class', {data : {"class" : thisClass.class}})
