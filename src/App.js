@@ -97,10 +97,9 @@ import AdminProfile from './components/admin/adminProfile';
     ]
   }
 
-    useEffect((e) => {
-      e.preventDefault()
+    useEffect(() => {
       const loadingOnRefresh = async () => {
-        if (user.logged_status === 'NOT_LOGGED_IN' && window.localStorage.getItem('token')) {
+        if (window.localStorage.getItem('token')) {
           const decodedToken = jwtDecode(window.localStorage.getItem('token'))
             let config = {
             headers: {
@@ -118,13 +117,13 @@ import AdminProfile from './components/admin/adminProfile';
           .catch(error => {
             console.log('error in useEffect() in root App', error)
           })
-        } else if (user.logged_status === null && !window.localStorage.getItem('token')) {
+        } else if (!window.localStorage.getItem('token')) {
           alert('THIS IS THE REFRESH PROBLEM')
         }
         setLoading(false)
-      } 
+      }
       loadingOnRefresh();
-    }, [user, user.logged_status])
+    }, [])
   
   const handleLoading = (bool) => {
     setLoading(bool)
