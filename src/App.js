@@ -118,7 +118,7 @@ import AdminProfile from './components/admin/adminProfile';
             console.log('error in useEffect() in root App', error)
           })
         } else if (user.logged_status === null && !window.localStorage.getItem('token')) {
-          window.alert('THIS IS THE REFRESH PROBLEM')
+          alert('THIS IS THE REFRESH PROBLEM')
         }
         setLoading(false)
       } 

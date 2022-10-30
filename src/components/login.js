@@ -50,7 +50,7 @@ import jwtDecode from 'jwt-decode';
             navigate('/password-reset')
           } 
           else if (response.data === 'Invalid Password') {
-            window.alert('Email or Password Invalid')
+            alert('Email or Password Invalid')
             props.handleLoading(false)
           } else {
           window.localStorage.setItem('token', response.data.token)
@@ -67,7 +67,7 @@ import jwtDecode from 'jwt-decode';
         })},
         )
         .catch(error => {
-          window.alert(`There was an error logging in - ${error}`)
+          alert(`There was an error logging in - ${error}`)
         })
       }
 

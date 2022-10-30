@@ -51,7 +51,7 @@ function Register(props) {
     props.handleLoading(true)
     console.log("handleSubmit clicked")
     if (user.password !== confirm.confirmPass) {
-      window.alert("Passwords do not match - reenter")
+      alert("Passwords do not match - reenter")
       return
     }
     if (user.registrationCode === '') {
@@ -59,7 +59,7 @@ function Register(props) {
       axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
       .then(response => {
         if (response.data === "Email already registered") {
-          window.alert("That email is already registered - please enter a different email or request a password reset from an administrator")
+          alert("That email is already registered - please enter a different email or request a password reset from an administrator")
         }
         if (response.data === "Registration successful") {
           navigate('/login')
@@ -76,16 +76,16 @@ function Register(props) {
       .then(response => {
         console.log(response.data)
         if (response.data === 'admin registration successful') {
-          window.alert(response.data)
+          alert(response.data)
           navigate('/login')
         } else if (response.data === 'admin registration failed') {
           console.log(response)
-          window.alert('admin registration failed')
+          alert('admin registration failed')
         }
       })
       .catch(error => {
         console.log('There was an error in registering the user as admin', error)
-        window.alert('Invalid Admin Registration Code')
+        alert('Invalid Admin Registration Code')
       })
       props.handleLoading(false)
     }

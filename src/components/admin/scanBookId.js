@@ -29,7 +29,7 @@ function ScanBookId(props) {
         .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
         .then(response => {
           console.log(response)
-          window.alert(`${response.data} - returning to admin-home`)})
+          alert(`${response.data} - returning to admin-home`)})
         .catch(error => {
           console.log('There was an error in checkout()', error)
         })

@@ -36,11 +36,11 @@ function EditClass(props) {
   },[thisClass.class])
 
   const confirmClassChanges = async () => {
-    if (window.confirm("Are you sure you want to change the class name? This will affect all students in the class.")) {
+    if (confirm("Are you sure you want to change the class name? This will affect all students in the class.")) {
       await axios
       .post('https://elscanner-backend.herokuapp.com/update-class', {...thisClass})
       .then(response => {
-        window.alert(response.data)
+        alert(response.data)
       })
       .catch(error => {
         console.log("Error in confirming class name change", error)
@@ -51,15 +51,15 @@ function EditClass(props) {
   }
 
   const deleteThisClass = () => {
-    if (window.confirm("CLASS WILL BE DELETED - THIS WILL AFFECT ALL STUDENTS IN THE CLASS AND CANNOT BE UNDONE - ARE YOU SURE?")) {
+    if (confirm("CLASS WILL BE DELETED - THIS WILL AFFECT ALL STUDENTS IN THE CLASS AND CANNOT BE UNDONE - ARE YOU SURE?")) {
     axios
     .delete('https://elscanner-backend.herokuapp.com/delete-class', {data : {"class" : thisClass.class}})
     .then(response => {
       if (response.data === "CLASS_DELETED") {
-        window.alert("Class deleted - returning to View Classes")
+        alert("Class deleted - returning to View Classes")
         navigate('/view-classes')
       } else {
-        window.alert("Class could not be deleted")
+        alert("Class could not be deleted")
       }
     })
     .catch(error => {

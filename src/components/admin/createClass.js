@@ -27,7 +27,7 @@ function CreateClass() {
     axios
     .post('https://elscanner-backend.herokuapp.com/create-new-class', {...ClassName}, config)
     .then(response => {
-      window.alert(response.data)
+      alert(response.data)
       navigate('/view-classes')
     })
     .catch(error => {

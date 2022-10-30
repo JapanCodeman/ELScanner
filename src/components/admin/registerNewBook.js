@@ -27,7 +27,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
         if (response.status === 200) {
           console.log(response)
           if (props.userRole !== "Student") {
-          window.alert(`${bookInfo.title} registered to database`)
+          alert(`${bookInfo.title} registered to database`)
           navigate('/admin-home')
           }
           if (props.userRole === "Student") {
@@ -43,7 +43,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
             }
             axios
             .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
-            .then(window.alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
+            .then(alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
             .catch(error => {
               console.log('There was an error in checkout()', error)
             })

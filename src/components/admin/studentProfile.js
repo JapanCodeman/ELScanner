@@ -52,7 +52,7 @@ function StudentProfile(props) {
     axios
     .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
-      window.alert(`${response.data}`)
+      alert(`${response.data}`)
       props.clearStudent()
     })
     .catch(error => {
@@ -74,7 +74,7 @@ function StudentProfile(props) {
     }
     axios
     .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
-    .then(window.alert('Student Deleted - back to view students'))
+    .then(alert('Student Deleted - back to view students'))
     .catch(error => {
       console.log("Error deleting student", error)
     })
@@ -91,7 +91,7 @@ function StudentProfile(props) {
     axios
     .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
     .then(response => {
-      window.alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
+      alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
     })
     .catch(error => {
       console.log("Error in resetPassword()", error)

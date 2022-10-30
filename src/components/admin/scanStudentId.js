@@ -14,7 +14,7 @@ function ScanStudentID (props) {
     .then(student => {
       console.log(student)
       if (student.data === 'User Not Found') {
-        window.alert('This QR code isn\'t registered - returning to home')
+        alert('This QR code isn\'t registered - returning to home')
         navigate('/admin-home')
       } else {
       props.handleSetStudent({...student.data})
