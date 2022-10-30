@@ -8,6 +8,7 @@ import './styles/main.scss';
 import AdminHome from './components/admin/adminHome';
 import BookInfo from './components/admin/bookInfo';
 import CheckoutConfirm from './components/admin/checkoutConfirm';
+import ClassReset from './components/student/classReset';
 import CreateClass from './components/admin/createClass';
 import EditClass from './components/admin/editClass';
 import Header from './components/header';
@@ -41,6 +42,7 @@ import AdminProfile from './components/admin/adminProfile';
     const [book, setBook] = useState()
     const [student, setStudent] = useState()
     const [classes, setClasses] = useState([])
+    const [updatesMade, setUpdatesMade] = useState(false)
 
     useEffect(() => {
       let config = {
@@ -57,7 +59,8 @@ import AdminProfile from './components/admin/adminProfile';
       .catch(error => {
         console.log("Error in getting classes", error)
       })
-      }, [])
+      setUpdatesMade(false)
+      }, [updatesMade])
 
   const adminAuthorizedPages = () => {
     return [
@@ -66,7 +69,7 @@ import AdminProfile from './components/admin/adminProfile';
       <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
       <Route path = '/create-class' element = {<CreateClass />} key = 'create-class' />,
-      <Route path = '/edit-class' element = {<EditClass />} key = 'edit-class' />,
+      <Route path = '/edit-class' element = {<EditClass setStudent={setStudent} setUpdatesMade={setUpdatesMade} />} key = 'edit-class' />,
       <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
@@ -144,6 +147,7 @@ import AdminProfile from './components/admin/adminProfile';
             {user.userRole === 'Student' && user.logged_status === "LOGGED_IN" ?
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
+            <Route path = '/class-reset' element={<ClassReset {...user} classes={classes} setLoading={setLoading} />} /> 
             <Route path = '/login' element={<Login {...user} handleLoading = {handleLoading} loginHandler = {setUser}/>} />
             <Route path = '/password-reset' element={<PasswordReset />} />
             <Route path = '/register' element={<Register classes={classes} handleLoading={handleLoading}/>} />

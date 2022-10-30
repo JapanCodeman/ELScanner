@@ -10,6 +10,7 @@
   .class-number-of-students, 
   .class-total-books-read,
   .class-reader-leaders,
+  .class-words-read,
   .no-readers,
   label {
     color: green;
@@ -57,5 +58,11 @@
     font-size: 32px;
     text-decoration: none;
     margin: 2vh;
+    box-shadow: 7px 6px 28px 5px rgba(255, 0, 0, 1);
+    transition: 0.5s;
+
+    &:active {
+      transform: scale(1.2)
+    }
   }
 }

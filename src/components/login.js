@@ -43,7 +43,10 @@ import jwtDecode from 'jwt-decode';
         { withCredentials: true },
         config)
         .then(response => {
-          if (response.data === 'password-reset') {
+          if (response.data === 'CLASS_RESET') {
+            navigate('/class-reset')
+          }
+          else if (response.data === 'password-reset') {
             navigate('/password-reset')
           } 
           else if (response.data === 'Invalid Password') {

@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import FunctionGreenButton from '../helpers/functionGreenButton';
 import PageTitler from '../helpers/pageTitler';
 
 function CreateClass() {
+
+  const navigate = useNavigate()
 
   const [ClassName, setClassName] = useState({
 
@@ -24,8 +27,8 @@ function CreateClass() {
     axios
     .post('http://127.0.0.1:5000/create-new-class', {...ClassName}, config)
     .then(response => {
-      console.log(response)
       window.alert(response.data)
+      navigate('/view-classes')
     })
     .catch(error => {
       console.log("Error creating class", error)

@@ -1,5 +1,9 @@
 create adminStudentProfile for viewing students in a class (add Update/Delete functionality to these)
 
+fix failed promise return on incorrect password on login
+
+refactor server responses to all caps in snake case
+
 .pop() on .env one time use codes for admin registration - NOT WORKING; currently unable to register administrators from web
 
 page for admin to CRUD classes
