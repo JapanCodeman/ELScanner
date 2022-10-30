@@ -97,33 +97,33 @@ import AdminProfile from './components/admin/adminProfile';
     ]
   }
 
-    useEffect(() => {
-      const loadingOnRefresh = async () => {
-        if (window.localStorage.getItem('token')) {
-          const decodedToken = jwtDecode(window.localStorage.getItem('token'))
-            let config = {
-            headers: {
-              "Content-Type": "application/json",
-              'Access-Control-Allow-Origin': '*'
-              }
-          }
-          await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
-          .then(response => {
-            setUser({
-              logged_status: 'LOGGED_IN',
-              ...response.data
-          })},
-          )
-          .catch(error => {
-            console.log('error in useEffect() in root App', error)
-          })
-        } else if (!window.localStorage.getItem('token')) {
-          alert('THIS IS THE REFRESH PROBLEM')
+  useEffect(() => {
+    const loadingOnRefresh = async () => {
+      if (window.localStorage.getItem('token')) {
+        const decodedToken = jwtDecode(window.localStorage.getItem('token'))
+          let config = {
+          headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*'
+            }
         }
-        setLoading(false)
+        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+        .then(response => {
+          setUser({
+            logged_status: 'LOGGED_IN',
+            ...response.data
+        })},
+        )
+        .catch(error => {
+          console.log('error in useEffect() in root App', error)
+        })
+      } else if (!window.localStorage.getItem('token')) {
+        window.location('https://elscanner.herokuapp.com')
       }
-      loadingOnRefresh();
-    }, [])
+      setLoading(false)
+    }
+    loadingOnRefresh();
+  }, [])
   
   const handleLoading = (bool) => {
     setLoading(bool)
