@@ -40,7 +40,6 @@ import jwtDecode from 'jwt-decode';
         .post('https://elscanner-backend.herokuapp.com/login', {
           ...user
         },
-        { withCredentials: true },
         config)
         .then(response => {
           if (response.data === 'CLASS_RESET') { // how to fix this?
