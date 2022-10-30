@@ -50,7 +50,7 @@ import AdminProfile from './components/admin/adminProfile';
           }
       }
       axios
-      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
+      .get('http://127.0.0.1:5000/get-all-classes', config)
       .then(response => {
         setClasses(response.data)
       })
@@ -104,7 +104,7 @@ import AdminProfile from './components/admin/adminProfile';
               'Access-Control-Allow-Origin': '*'
               }
           }
-          await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+          await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
           .then(response => {
             setUser({
               logged_status: 'LOGGED_IN',

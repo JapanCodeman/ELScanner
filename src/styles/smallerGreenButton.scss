@@ -13,11 +13,14 @@
   font-size: 24px;
   text-decoration: none;
   transition: 0.3s;
+  box-shadow: 7px 6px 28px 5px rgba(0, 0, 0, 0.30);
+  transition: 0.2s;
 }
 
 button, button:active, button:focus {
   border: none;
   border-style: outset;
   outline: none;
+  transform: scale(0.98);
   background-color: darkgreen;
 }

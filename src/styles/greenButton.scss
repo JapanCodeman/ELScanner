@@ -9,7 +9,13 @@
   color: white;
   border-radius: 20px;
   font-family: 'Edu TAS Beginner', cursive;
-  font-size: 48px;
+  font-size: 44px;
   text-decoration: none;
   margin: 2vh;
+  box-shadow: 7px 6px 28px 5px rgba(0, 0, 0, 0.24);
+  transition: 0.2s;
+
+  &:active {
+    transform: scale(0.98)
+  }
 }

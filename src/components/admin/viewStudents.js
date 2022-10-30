@@ -22,7 +22,7 @@ function ViewStudents(props) {
 
   const toStudentProfile = (public_id) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`)
     .then(student => {
       props.handleSetStudent({...student.data})
       navigate('/student-profile')
@@ -40,7 +40,7 @@ function ViewStudents(props) {
         }
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/students-by-class', {...thisClass}, config)
+    .post('http://127.0.0.1:5000/students-by-class', {...thisClass}, config)
     .then(response => {
     setStudents(response.data)
   }).catch(error => {
