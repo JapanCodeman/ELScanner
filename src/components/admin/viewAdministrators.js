@@ -12,7 +12,7 @@ function ViewAdministrators(props) {
 
   useEffect(() => {
     axios
-    .get('http://127.0.0.1:5000/get-all-administrators')
+    .get('https://elscanner-backend.herokuapp.com/get-all-administrators')
     .then(response => {
       console.log(response)
       setAdministrators(response.data)

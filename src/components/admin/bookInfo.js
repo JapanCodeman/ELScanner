@@ -18,7 +18,7 @@ function BookInfo(props) {
   const checkBookIn = () => {
     navigate('/scan-student-id')
     axios
-    .patch(`http://127.0.0.1:5000/${props.book.upc}`)
+    .patch(`https://elscanner-backend.herokuapp.com/${props.book.upc}`)
     .catch(error => {
       console.log('Error in checkBookIn() in scanBookId.js', error)
     })

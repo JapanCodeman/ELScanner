@@ -24,7 +24,7 @@ function EditClass(props) {
           }
       }
       axios
-      .post('http://127.0.0.1:5000/get-reader-leaders', {"class" : thisClass.class}, config)
+      .post('https://elscanner-backend.herokuapp.com/get-reader-leaders', {"class" : thisClass.class}, config)
       .then(response => {
         setReaderLeaders(response.data)
       })
@@ -38,7 +38,7 @@ function EditClass(props) {
   const confirmClassChanges = async () => {
     if (window.confirm("Are you sure you want to change the class name? This will affect all students in the class.")) {
       await axios
-      .post('http://127.0.0.1:5000/update-class', {...thisClass})
+      .post('https://elscanner-backend.herokuapp.com/update-class', {...thisClass})
       .then(response => {
         window.alert(response.data)
       })
@@ -53,7 +53,7 @@ function EditClass(props) {
   const deleteThisClass = () => {
     if (window.confirm("CLASS WILL BE DELETED - THIS WILL AFFECT ALL STUDENTS IN THE CLASS AND CANNOT BE UNDONE - ARE YOU SURE?")) {
     axios
-    .delete('http://127.0.0.1:5000/delete-class', {data : {"class" : thisClass.class}})
+    .delete('https://elscanner-backend.herokuapp.com/delete-class', {data : {"class" : thisClass.class}})
     .then(response => {
       if (response.data === "CLASS_DELETED") {
         window.alert("Class deleted - returning to View Classes")
