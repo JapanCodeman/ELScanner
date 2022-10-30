@@ -40,6 +40,7 @@ import jwtDecode from 'jwt-decode';
         .post('https://elscanner-backend.herokuapp.com/login', {
           ...user
         },
+        { withCredentials: true },
         config)
         .then(response => {
           if (response.data === 'CLASS_RESET') { // how to fix this?
@@ -49,7 +50,7 @@ import jwtDecode from 'jwt-decode';
             navigate('/password-reset')
           } 
           else if (response.data === 'Invalid Password') {
-            alert('Email or Password Invalid')
+            window.alert('Email or Password Invalid')
             props.handleLoading(false)
           } else {
           window.localStorage.setItem('token', response.data.token)
@@ -66,7 +67,7 @@ import jwtDecode from 'jwt-decode';
         })},
         )
         .catch(error => {
-          alert(`There was an error logging in - ${error}`)
+          window.alert(`There was an error logging in - ${error}`)
         })
       }
 
