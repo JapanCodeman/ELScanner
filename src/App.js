@@ -139,7 +139,7 @@ import AdminProfile from './components/admin/adminProfile';
   return (
     <div className="App">
       <header className="App-header">
-        <Router history = {history}>
+        <Router forceRefresh={true} history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
           {loading === true ? (<Loading />) : 
           <Routes>
