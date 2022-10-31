@@ -13,7 +13,8 @@ app.get('/ping', function (req, res) {
 });
 app.get('*', function (req, res) {
   // res.sendFile(__dirname + './public/index.html');
-  res.sendFile(path.resolve(__dirname, "index.html"));
-  // res.sendFile(path.resolve("./public", "index.html"));
+  res.sendFile(path.resolve("./build", "index.html"));
+  // res.sendFile(path.resolve(__dirname, "index.html")); // <-- not found
+  // res.sendFile(path.resolve("./public", "index.html")); // <-- white page
 })
 app.listen(port);
