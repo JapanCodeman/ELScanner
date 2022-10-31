@@ -141,7 +141,7 @@ import AdminProfile from './components/admin/adminProfile';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
-          {loading === true ? (<Loading />) : (null)}
+          {loading === true ? (<Loading />) : 
           <Routes>
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}
@@ -154,6 +154,7 @@ import AdminProfile from './components/admin/adminProfile';
             <Route path = '/register' element={<Register classes={classes} handleLoading={handleLoading}/>} />
             <Route path = '*' element={<PageNotFound {...user} />} />
           </Routes>
+          }
         </Router>
       </header>
     </div>

@@ -69,6 +69,7 @@ import jwtDecode from 'jwt-decode';
         .catch(error => {
           window.alert(`There was an error logging in - ${error}`)
         })
+        props.handleLoading(false)
       }
 
   return (
