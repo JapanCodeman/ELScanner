@@ -6,7 +6,6 @@ const app = express();
 app.use(favicon(__dirname + '/public/favicon.ico'));
 // the __dirname is the current directory from where the script is running
 app.use(express.static(__dirname));
-// app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.static(path.resolve(__dirname, 'build')));
 app.use(express.static(path.resolve(__dirname, 'public')))
 app.get('/ping', function (req, res) {
@@ -14,6 +13,7 @@ app.get('/ping', function (req, res) {
 });
 app.get('*', function (req, res) {
   // res.sendFile(__dirname + './public/index.html');
-  res.sendFile(path.resolve("./public", "index.html"));
+  res.sendFile(path.resolve(__dirname, "index.html"));
+  // res.sendFile(path.resolve("./public", "index.html"));
 })
 app.listen(port);
