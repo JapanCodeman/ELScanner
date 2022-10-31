@@ -46,10 +46,16 @@ import jwtDecode from 'jwt-decode';
           if (response.data === 'CLASS_RESET') { // how to fix this?
             navigate('/class-reset')
           }
-          else if (response.data === 'password-reset') {
+          else if (response.data === 'PASSWORD_RESET') {
+            window.alert('You have been granted a password reset - please set your new password')
+            props.handleLoading(false)
             navigate('/password-reset')
           } 
-          else if (response.data === 'Invalid Password') {
+          else if (response.data === 'USER_NOT_FOUND') {
+            window.alert('Email or Password Invalid')
+            props.handleLoading(false)
+          }
+          else if (response.data === 'INVALID_PASSWORD') {
             window.alert('Email or Password Invalid')
             props.handleLoading(false)
           } else {
@@ -79,7 +85,7 @@ import jwtDecode from 'jwt-decode';
       <div className='login-page__input-wrapper'>
         <form>
           <label className='login-page__username-label'>Email</label>
-          <input className='login-page__username-input' type='text' name='email' autoComplete='email' onChange={handleChange} />
+          <input className='login-page__username-input' type='email' name='email' autoComplete='email' onChange={handleChange} />
           <label className='login-page__password-label'>Password</label>
           <input className='login-page__password-input' type='password' name='password' autoComplete='current-password' onChange={handleChange} />
           <SmallerGreenButton className='login-page__login-button' text='Login' typeSet='submit' clickHandler={handleSubmit} />

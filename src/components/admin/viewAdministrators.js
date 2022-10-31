@@ -23,7 +23,7 @@ function ViewAdministrators(props) {
   }, [])
 
   const adminEdit = (administrator) => {
-    navigate('/admin-profile', {admin: administrator})
+    navigate('/admin-profile', {state: [administrator]})
   }
   
   return (

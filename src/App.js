@@ -65,7 +65,7 @@ import AdminProfile from './components/admin/adminProfile';
   const adminAuthorizedPages = () => {
     return [
       <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} />} key = {'admin-home'} />,
-      <Route path = '/admin-profile' element = {<AdminProfile />} key = {'admin-profile'} />,
+      <Route path = '/admin-profile' element = {<AdminProfile handleLoading={handleLoading} />} key = {'admin-profile'} />,
       <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
       <Route path = '/create-class' element = {<CreateClass />} key = 'create-class' />,
@@ -117,14 +117,14 @@ import AdminProfile from './components/admin/adminProfile';
         .catch(error => {
           console.log('error in useEffect() in root App', error)
         })
-      } else if (!window.localStorage.getItem('token')) {
+      } else if (user.status === "LOGGED_IN" && !window.localStorage.getItem('token')) {
         console.log("no token")
         // window.location.assign('http://localhost:3000')
       }
       setLoading(false)
     }
     loadingOnRefresh();
-  }, [])
+  }, [user.status])
   
   const handleLoading = (bool) => {
     setLoading(bool)

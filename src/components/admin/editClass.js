@@ -95,7 +95,8 @@ function EditClass(props) {
         <SmallerGreenButton 
           className='smaller-green-button' 
           text={`${student.first} ${student.last}`} 
-          clickHandler={() => viewReaderLeader({...student})} 
+          clickHandler={() => viewReaderLeader({...student})}
+          key={student.public_id} 
         />) : <div className='no-readers'>None yet... GET READING!!!</div>}
       <FunctionGreenButton className='green-button' text='Confirm Class Changes' onClick={confirmClassChanges} />
       <FunctionGreenButton className='delete-button' text='DELETE THIS CLASS' onClick={deleteThisClass} />
