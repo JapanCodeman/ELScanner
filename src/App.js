@@ -118,7 +118,8 @@ import AdminProfile from './components/admin/adminProfile';
           console.log('error in useEffect() in root App', error)
         })
       } else if (!window.localStorage.getItem('token')) {
-        window.location('https://elscanner.herokuapp.com')
+        console.log("no token")
+        // window.location.assign('http://localhost:3000')
       }
       setLoading(false)
     }
