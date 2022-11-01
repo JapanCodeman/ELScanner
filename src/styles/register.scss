@@ -1,9 +1,12 @@
 .register-page {
-  &__form {
-    height: 80vh;
+  display: flex;
+  flex-direction: column;
+
+  .register-page__form {
+    height: auto;
     display: grid;
-    grid-template-columns: 10vw [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e] 20vw;
-    grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 7vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 7vh [last-name-input-e email-label-s] 5vh [email-label-e email-input-s] 7vh [email-input-e password-label-s] 5vh [password-label-e password-input-s] 7vh [password-input-e confirm-password-label-s] 5vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 7vh [confirm-password-input-e registration-code-label-s] 5vh [registration-code-label-e registration-code-input-s] 7vh [registration-code-input-e buttons-s] 7vh [buttons-e];
+    grid-template-columns: 5vw [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e] 5vw;
+    grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 7vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 7vh [last-name-input-e email-label-s] 5vh [email-label-e email-input-s] 7vh [email-input-e password-label-s] 5vh [password-label-e password-input-s] 7vh [password-input-e confirm-password-label-s] 5vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 7vh [confirm-password-input-e];
 
     &__first-name-label {
       grid-column: first-label-s/first-label-e;
@@ -23,10 +26,10 @@
       justify-self: end;
       text-align: center;
       height: 5vh;
-      width: 90%;
+      width: 75%;
       color: green;
       font-family: 'Edu TAS Beginner', cursive;
-      font-size: 24px;
+      font-size: 18px;
       border-radius: 25px;
     }
 
@@ -130,7 +133,14 @@
     outline: none;
   }
 
-  &__buttons {
+
+  .register-page-admin-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-column: input-field-s/input-field-e;
+  }  
+
+  .register-page-buttons {
     height: 12vh;
     grid-column: input-field-s/input-field-e;
     grid-row: buttons-s/buttons-e;
@@ -138,7 +148,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-top: 2vh;
+    padding: 2vh 0vw 5vh 0vw;
   }
 }
 

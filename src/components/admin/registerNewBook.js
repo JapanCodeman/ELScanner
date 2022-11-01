@@ -24,7 +24,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
       .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
         console.log(response)
-        if (response.status === 200) {
+        if (response.data === 'BOOK_REGISTERED') {
           console.log(response)
           if (props.userRole !== "Student") {
           alert(`${bookInfo.title} registered to database`)

@@ -66,6 +66,8 @@ function StudentProfile(props) {
   }
 
   function deleteStudentAccount() {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm(`You are about to delete ${props.first} ${props.last}'s account. This action is irreversible. Continue?`)) {
     let config = {
       headers: {
         "Content-Type": "application/json",
@@ -74,12 +76,18 @@ function StudentProfile(props) {
     }
     axios
     .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
-    .then(alert('Student Deleted - back to view students'))
+    .then(response => {
+      console.log(response)
+      alert('Student Deleted - back to view students')
+    })
     .catch(error => {
       console.log("Error deleting student", error)
     })
     navigate('/view-students', {class : storeClass.class})
+  } else {
+    alert('Student account deletion cancelled.')
   }
+}
 
   function resetPassword() {
     let config = {

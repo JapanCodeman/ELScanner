@@ -26,3 +26,8 @@ button:active, button:focus {
   transform: scale(0.98);
   background-color: darkgreen;
 }
+
+button:disabled {
+  background-color: darkgray;
+  cursor: not-allowed;
+}
