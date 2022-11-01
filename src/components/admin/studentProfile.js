@@ -75,11 +75,11 @@ function StudentProfile(props) {
         }
     }
     axios
-    .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
+    .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, {config})
     .then(response => {
-      console.log(response)
+      if (response.data === 'USER_DELETED') {
       alert('Student Deleted - back to view students')
-    })
+    }})
     .catch(error => {
       console.log("Error deleting student", error)
     })
