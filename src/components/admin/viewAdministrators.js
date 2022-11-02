@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import Loading from '../helpers/loading';
 import PageTitler from '../helpers/pageTitler';
 import SmallerGreenButton from '../helpers/smallerGreenButton';
 
-function ViewAdministrators(props) {
+function ViewAdministrators() {
 
   const navigate = useNavigate()
 
@@ -38,7 +39,7 @@ function ViewAdministrators(props) {
             key={administrator.public_id} 
           />) 
           : 
-          null}
+          <Loading className='loader' />}
       </div>
     </div>
   );

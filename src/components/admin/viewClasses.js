@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+
+import Loading from '../helpers/loading';
 import FunctionGreenButton from '../helpers/functionGreenButton';
 import PageTitler from '../helpers/pageTitler';
 
@@ -37,13 +39,14 @@ function ViewClasses() {
           text='Create New Class'
           onClick={createNewClass}
         />
-        {allClasses?.map((thisClass) => 
+        {allClasses ? allClasses.map((thisClass) => 
           <FunctionGreenButton
             className='green-button'
             text={thisClass.class}
             onClick={() => editClass(thisClass)}
             key={thisClass.public_id}
-          />)} 
+          />) :
+          <Loading className='loader' />} 
       </div>
     </div>
   );

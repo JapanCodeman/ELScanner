@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 
 import GreenButton from '../helpers/greenButton';
@@ -9,6 +10,23 @@ function AdminHome(props) {
     props.handleLoading(false)
     props.clearBook()
     props.clearStudent()
+    const getAllClasses = () => {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*'
+          }
+      }
+      axios
+      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
+      .then(response => {
+        props.setClasses(response.data)
+      })
+      .catch(error => {
+        console.log("Error in getting classes", error)
+      })
+    }
+    getAllClasses()
   }, [props])
 
   return (

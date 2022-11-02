@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+
+import Loading from '../helpers/loading';
 import FunctionGreenButton from '../helpers/functionGreenButton';
 import PageTitler from '../helpers/pageTitler';
 import SmallerGreenButton from '../helpers/smallerGreenButton';
@@ -97,7 +99,7 @@ function EditClass(props) {
           text={`${student.first} ${student.last}`} 
           clickHandler={() => viewReaderLeader({...student})}
           key={student.public_id} 
-        />) : <div className='no-readers'>None yet... GET READING!!!</div>}
+        />) : <Loading className='mini-loader' />}
       <FunctionGreenButton className='green-button' text='Confirm Class Changes' onClick={confirmClassChanges} />
       <FunctionGreenButton className='delete-button' text='DELETE THIS CLASS' onClick={deleteThisClass} />
       </div>

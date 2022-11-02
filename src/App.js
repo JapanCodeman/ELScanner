@@ -42,40 +42,24 @@ import AdminProfile from './components/admin/adminProfile';
     const [book, setBook] = useState()
     const [student, setStudent] = useState()
     const [classes, setClasses] = useState([])
-    const [updatesMade, setUpdatesMade] = useState(false)
+    // const [updatesMade, setUpdatesMade] = useState(false)
 
-    useEffect(() => {
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*'
-          }
-      }
-      axios
-      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
-      .then(response => {
-        setClasses(response.data)
-      })
-      .catch(error => {
-        console.log("Error in getting classes", error)
-      })
-      setUpdatesMade(false)
-      }, [updatesMade])
+
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} />} key = {'admin-home'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} setClasses={setClasses} />} key = {'admin-home'} />,
       <Route path = '/admin-profile' element = {<AdminProfile handleLoading={handleLoading} />} key = {'admin-profile'} />,
       <Route path = '/book-info' element = {<BookInfo {...book} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
       <Route path = '/create-class' element = {<CreateClass />} key = 'create-class' />,
-      <Route path = '/edit-class' element = {<EditClass setStudent={setStudent} setUpdatesMade={setUpdatesMade} />} key = 'edit-class' />,
+      <Route path = '/edit-class' element = {<EditClass setStudent={setStudent} />} key = 'edit-class' />,
       <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents classes={[...classes]} handleLoading={handleLoading} />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
-      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} />} key = {'scan-student-id'} />,
+      <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} handleLoading={handleLoading} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading = {handleLoading} />} key = 'student-profile' />,
-      <Route path = '/view-administrators' element={<ViewAdministrators />} key = {'view-administrators'} />, 
+      <Route path = '/view-administrators' element={<ViewAdministrators handleLoading={handleLoading} />} key = {'view-administrators'} />, 
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-classes' element={<ViewClasses />} key = {'view-classes'} />,
       <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} handleSetStudent = {setStudent} />} key = {'view-students'} />
@@ -119,7 +103,6 @@ import AdminProfile from './components/admin/adminProfile';
         })
       } else if (user.status === "LOGGED_IN" && !window.localStorage.getItem('token')) {
         console.log("no token")
-        // window.location.assign('http://localhost:3000')
       }
       setLoading(false)
     }
@@ -141,7 +124,7 @@ import AdminProfile from './components/admin/adminProfile';
       <header className="App-header">
         <Router history = {history}>
           <Header {...user} logoutHandler={handleSuccessfulLogout}/>
-          {loading === true ? (<Loading />) : 
+          {loading === true ? (<Loading className='loading-page' />) : 
           <Routes>
             {user.userRole === 'Administrator' && user.logged_status === 'LOGGED_IN' ?
             adminAuthorizedPages() : null}

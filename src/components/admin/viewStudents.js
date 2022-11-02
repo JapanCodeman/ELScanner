@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import PageTitler from '../helpers/pageTitler';
+import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro' // <-- import styles to be used
+
+import Loading from '../helpers/loading';
+import PageTitler from '../helpers/pageTitler';
 import SmallerGreenButton from '../helpers/smallerGreenButton';
-import { useNavigate } from 'react-router';
+
 
 function ViewStudents(props) {
 
@@ -33,20 +36,22 @@ function ViewStudents(props) {
   }
 
   useEffect(() => {
+    setStudents([])
     let config = {
       headers: {
         "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*'
         }
-    }
+      }
     axios
     .post('https://elscanner-backend.herokuapp.com/students-by-class', {...thisClass}, config)
     .then(response => {
-    setStudents(response.data)
-  }).catch(error => {
-    console.log("There was an error retrieving students", error)
-  })
-}, [thisClass])
+      setStudents(response.data)
+    })
+    .catch(error => {
+      console.log("There was an error retrieving students", error)
+    })
+  }, [thisClass])
 
   if (props === undefined) {
     return (
@@ -61,12 +66,16 @@ function ViewStudents(props) {
         <label className='select-class-label'>Select Class</label>
         <select className='select-class' defaultValue={thisClass.class} name='class' onChange={handleChange}>
           <option value style={{display:"none"}}>select class</option>
-          {props[0] ? props[0].map(thisClass => <option className='selected-class' key={thisClass.public_id} value={thisClass.class}>{thisClass.class}</option>) : null}
+          {props[0] ? props[0].map(thisClass => <option className='selected-class' key={thisClass.public_id} value={thisClass.class}>{thisClass.class}</option>) 
+          : 
+          null}
         </select>
       </div>
 
       <div className='student-results-wrapper'>
-        {students ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) : null}
+        {students.length > 0 ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) 
+        : 
+        <Loading className='mini-loader' />}
       </div>
     </div>
   );

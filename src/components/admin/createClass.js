@@ -17,11 +17,13 @@ function CreateClass() {
   }
 
   const createClass = () => {
-    console.log(ClassName)
+    let token = window.localStorage.getItem("token")
+    console.log(token)
     let config = {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
+        "Access-Control-Allow-Origin": "*",
+        "Authorization" : `Bearer ${token}`
         }
     }
     axios

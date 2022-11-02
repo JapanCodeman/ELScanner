@@ -55,6 +55,8 @@ function Register(props) {
   const buttonText = () => {
     if (validate()) {
       return 'Register'
+    } else if (submitted) {
+      return 'Please Wait'
     }
     else {
       return 'Complete Form'
@@ -70,6 +72,7 @@ function Register(props) {
     if (submitted) {
       return
     }
+    setSubmitted(true)
     props.handleLoading(true)
     console.log("handleSubmit clicked")
     if (user.password !== confirm.confirmPass) {
@@ -140,7 +143,7 @@ function Register(props) {
         <label className='register-page__form__first-name-label'>First Name</label>
         <label className='register-page__form__class-select-label'>Class</label>
         <select className='register-page__form__class-select' name='class' onChange={handleChange}>
-          <option value style={{display:"none", color:"red"}}>select class</option>
+          <option value style={{display:"none"}}>select class</option>
           {props.classes?.map(_class => <option value={_class.class} key={_class.public_id}>{_class.class}</option>)}
           <option value='Administrator'>Administrator</option>
         </select>
@@ -170,7 +173,7 @@ function Register(props) {
         </div>
 
         <div className='register-page-buttons'>
-          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' onClick={() => setSubmitted(true)} clickHandler={(e) => handleSubmit(e)} disabled={!validate()}/>
+          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={(e) => handleSubmit(e)} disabled={!validate()}/>
           <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
         </div>
       </form>

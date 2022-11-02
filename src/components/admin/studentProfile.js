@@ -21,28 +21,27 @@ function StudentProfile(props) {
       headers: {
         "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*'
-        }
-    }        
-      axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
-      .then(response => {
-        setHoldingBooks(response.data)
-      })
-      .catch(error => {
-        console.log("error in useEffect on studentProfile.js", error)
-      })
-      if (!props.public_id) {
-        navigate('/scan-student-id')
       }
-    }, [props.public_id, props.checkedOutBooks, props.student, navigate])
+    }        
+    axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+    .then(response => {
+      setHoldingBooks(response.data)
+    })
+    .catch(error => {
+      console.log("error in useEffect on studentProfile.js", error)
+    })
+    if (!props.public_id) {
+      navigate('/scan-student-id')
+    }
+  }, [props.public_id, props.checkedOutBooks, props.student, navigate])
 
 
   function checkBookIn(book) {
-    console.log(book)
     let config = {
       headers: {
         "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*'
-        }
+      }
     }   
     let studentAndBookUPC = {
       student : props.public_id,
@@ -68,26 +67,28 @@ function StudentProfile(props) {
   function deleteStudentAccount() {
     // eslint-disable-next-line no-restricted-globals
     if (confirm(`You are about to delete ${props.first} ${props.last}'s account. This action is irreversible. Continue?`)) {
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
+      props.handleLoading(true)
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*'
+          }
         }
+      axios
+      .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, {config})
+      .then(response => {
+        if (response.data === 'USER_DELETED') {
+        alert('Student Deleted - back to view students')
+        props.handleLoading(false)
+        navigate('/view-students', {class : storeClass.class})
+      }})
+      .catch(error => {
+        console.log("Error deleting student", error)
+      })
+    } else {
+      alert('Student account deletion cancelled.')
     }
-    axios
-    .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, {config})
-    .then(response => {
-      if (response.data === 'USER_DELETED') {
-      alert('Student Deleted - back to view students')
-      navigate('/view-students', {class : storeClass.class})
-    }})
-    .catch(error => {
-      console.log("Error deleting student", error)
-    })
-  } else {
-    alert('Student account deletion cancelled.')
   }
-}
 
   function resetPassword() {
     let config = {
@@ -95,16 +96,16 @@ function StudentProfile(props) {
         "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*'
         }
+      }
+      axios
+      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
+      .then(response => {
+        alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
+      })
+      .catch(error => {
+        console.log("Error in resetPassword()", error)
+      })
     }
-    axios
-    .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
-    .then(response => {
-      alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
-    })
-    .catch(error => {
-      console.log("Error in resetPassword()", error)
-    })
-  }
     
 
   return (
