@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 
+import Loading from '../helpers/loading';
+
 export default class Scanner extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      availableCameras: []
+      availableCameras: [],
+      loading: true
     }
-
-    this.turnOffCamera = this.turnOffCamera.bind(this)
   }
 
 handleChange(event) {
@@ -19,7 +20,6 @@ handleChange(event) {
 }
 
 componentDidMount() {
-  console.log(window.location.pathname) // "/scan-student-id"
   Html5Qrcode.getCameras().then(devices => {
     this.setState({
       availableCameras: devices
@@ -50,6 +50,7 @@ componentDidMount() {
         html5QrCode.stop().then(ignore => {
         })
       } 
+      this.setState({loading: false})
       console.log(`QR Code no longer in front of camera.`);
     })
   .catch(err => {
@@ -71,20 +72,11 @@ turnOffCamera() {
   })
 }
 
-// componentWillUnmount() {
-//   this.html5QrCode.stop.then(ignore => {
-//     // QR Code scanning is stopped.
-//   }).catch(err => {
-//     // Stop failed, handle it.
-//     console.log("Unable to stop scanning.", err);
-//   });
-// }
-
   render () {
     return (
       <div>
+        {this.state.loading ? <Loading className='loader' /> : null}
         <div id="qr-reader" />
-        {/* <SmallerGreenButton text={"turn off camera"} clickHandler={this.turnOffCamera} /> */}
       </div>
     );
   }

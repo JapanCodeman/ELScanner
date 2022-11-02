@@ -73,7 +73,7 @@ function ViewStudents(props) {
       </div>
 
       <div className='student-results-wrapper'>
-        {students.length > 0 ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) 
+        {(students.length > 0 && thisClass.class !== "0-0") ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) 
         : 
         <Loading className='mini-loader' />}
       </div>

@@ -1,28 +1,69 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import SmallerGreenButton from '../helpers/smallerGreenButton';
+import Loading from '../helpers/loading';
 import PageTitler from '../helpers/pageTitler';
+import SmallerGreenButton from '../helpers/smallerGreenButton';
 
 function BookInfo(props) {
 
   const navigate = useNavigate()
 
+  const [currentHolder, setCurrentHolder] = useState()
+
   useEffect(() => {
     if (props.book === undefined) {
       navigate('/scan-book-id')
     }
-  })
-
-  const checkBookIn = () => {
-    navigate('/scan-student-id')
     axios
-    .patch(`https://elscanner-backend.herokuapp.com/${props.book.upc}`)
-    .catch(error => {
-      console.log('Error in checkBookIn() in scanBookId.js', error)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${props.book.currentHolder}`)
+    .then(response => {
+      if (response.data.first) {
+        setCurrentHolder({
+          first: response.data.first,
+          last: response.data.last
+        })
+      }
+      else {
+        setCurrentHolder({
+          first: "Onomichi Gakuen",
+          last: "English Library"
+        })
+      }
     })
+    .catch(error => {
+      console.log("Error in useEffect() in bookInfo.js", error)
+    })
+  }, [navigate, props.book])
+
+  function checkBookIn(book) {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm(`Check ${props.book.title} back in from ${currentHolder.first} ${currentHolder.last}?`)) {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*'
+      }
+    }   
+    let studentAndBookUPC = {
+      student : props.book.currentHolder,
+      book : props.book.upc,
+      wordCount : props.book.wordCount
+    }
+    axios
+    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .then(response => {
+      alert(`${response.data}`)
+      props.clearStudent()
+      props.clearBook()
+    })
+    .catch(error => {
+      console.log("Error in checkBookIn() in studentProfile.js", error)
+    })
+    navigate('/admin-home')
   }
+}
 
   const checkBookOut = () => {
     navigate('/scan-student-id');
@@ -39,7 +80,6 @@ function BookInfo(props) {
       <div className='checking-out-to'>Checking out to: {props.student.first} {props.student.last}</div>
       :
       null}
-      {props.book.upc !== null ? 
       <div className='scan-result-table'>
         <label className='scan-result__upc-label'>UPC</label>
         <div className='scan-result__upc'>{props.book.upc}</div>
@@ -54,18 +94,18 @@ function BookInfo(props) {
         <label className='scan-result__status-label'>Status</label>
         <div className='scan-result__status'>{props.book.status}</div>
         <label className='scan-result__current-holder-label'>Held by</label>
-        <div className='scan-result__current-holder'>{props.book.currentHolder}</div>
-          {props.book.currentHolder === "Onomichi Gakuen English Library" ? <SmallerGreenButton text='Check this book out' clickHandler={checkBookOut} />
+        <div className='scan-result__current-holder'>{currentHolder ? `${currentHolder.first} ${currentHolder.last}` : <Loading className='mini-loader' />}</div>
+        <div className='book-info-button-wrapper'>
+          {props.book.currentHolder === "Onomichi Gakuen English Library" ? 
+          
+          <SmallerGreenButton text='Check this book out' clickHandler={checkBookOut} />
 
           :
 
-          <SmallerGreenButton text='Check this book back in' clickHandler={checkBookIn} />}
+          <SmallerGreenButton text='Check this book back in' clickHandler={() => checkBookIn(props.book.upc)} />}
+          <button onClick={rescan} className='scan-result__restart'>Wrong title?</button>
         </div>
-        
-        : 
-        
-        null }
-      <button onClick={rescan} className='scan-result__restart'>Wrong title?</button>
+      </div>
     </div>
   );
 }
