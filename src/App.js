@@ -71,7 +71,7 @@ import AdminProfile from './components/admin/adminProfile';
       <Route path = '/create-class' element = {<CreateClass />} key = 'create-class' />,
       <Route path = '/edit-class' element = {<EditClass setStudent={setStudent} setUpdatesMade={setUpdatesMade} />} key = 'edit-class' />,
       <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
-      <Route path = '/register-students' element={<RegisterStudents />} key = {'register-students'} />,
+      <Route path = '/register-students' element={<RegisterStudents classes={[...classes]} handleLoading={handleLoading} />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading = {handleLoading} />} key = 'student-profile' />,

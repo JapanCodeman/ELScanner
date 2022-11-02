@@ -1,0 +1,97 @@
+.register-student-page {
+  display: flex;
+  flex-direction: column;
+
+  .register-student-page__form {
+    height: auto;
+    display: grid;
+    grid-template-columns: 5vw [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e] 5vw;
+    grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 7vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 7vh [last-name-input-e email-label-s] 5vh [email-label-e email-input-s] 7vh [email-input-e buttons-s] 5vh [buttons-e];
+
+    &__first-name-label {
+      grid-column: first-label-s/first-label-e;
+      grid-row: first-name-label-s/first-name-label-e;
+    }
+    
+    &__class-select-label {
+      grid-column: select-s/select-e;
+      grid-row: first-name-label-s/first-name-label-e;
+      justify-self: end;
+    }
+
+    &__class-select, select {
+      grid-column: select-s/select-e;
+      grid-row: first-name-input-s/first-name-input-e;
+      display: grid;
+      justify-self: end;
+      text-align: center;
+      height: 5vh;
+      width: 75%;
+      color: green;
+      font-family: 'Edu TAS Beginner', cursive;
+      font-size: 18px;
+      border-radius: 25px;
+    }
+
+    &__first-name-input {
+      grid-column: input-field-s/first-label-e;
+      grid-row: first-name-input-s/first-name-input-e;
+    }
+
+    &__last-name-label {
+      grid-column: input-field-s/input-field-e;
+      grid-row: last-name-label-s/last-name-label-e;
+    }
+
+    &__last-name-input {
+      grid-column: input-field-s/input-field-e;
+      grid-row: last-name-input-s/last-name-input-e;
+    }
+
+    &__email-label {
+      grid-column: input-field-s/input-field-e;
+      grid-row: email-label-s/email-label-e;
+    }
+
+    &__email-input {
+      grid-column: input-field-s/input-field-e;
+      grid-row: email-input-s/email-input-e;
+    }
+  }
+
+  label {
+    color: green;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 32px;
+    margin-bottom: 1vh;
+  }
+
+  input {
+    border: none;
+    border-bottom: 2px solid green;
+    font-size: 24px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+
+  .register-page-admin-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-column: input-field-s/input-field-e;
+  }  
+
+  .register-student-page-buttons {
+    height: 12vh;
+    grid-column: input-field-s/input-field-e;
+    grid-row: buttons-s/buttons-e;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vh 0vw 5vh 0vw;
+  }
+}
+

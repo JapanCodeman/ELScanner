@@ -1,7 +1,5 @@
 create adminStudentProfile for viewing students in a class (add Update/Delete functionality to these)
 
-Delete student functionality not working on studentProfile.js? bad api call?
-
 fix failed promise return on incorrect password on login
 
 refactor server responses to all caps in snake case

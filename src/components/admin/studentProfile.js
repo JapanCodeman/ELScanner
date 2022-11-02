@@ -79,11 +79,11 @@ function StudentProfile(props) {
     .then(response => {
       if (response.data === 'USER_DELETED') {
       alert('Student Deleted - back to view students')
+      navigate('/view-students', {class : storeClass.class})
     }})
     .catch(error => {
       console.log("Error deleting student", error)
     })
-    navigate('/view-students', {class : storeClass.class})
   } else {
     alert('Student account deletion cancelled.')
   }
