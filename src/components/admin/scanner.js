@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import SmallerGreenButton from '../helpers/smallerGreenButton';
 
 export default class Scanner extends Component {
   constructor(props) {
@@ -18,7 +17,7 @@ handleChange(event) {
   [event.target.name] : event.target.value
   });
 }
-  
+
 componentDidMount() {
   console.log(window.location.pathname) // "/scan-student-id"
   Html5Qrcode.getCameras().then(devices => {
@@ -46,6 +45,11 @@ componentDidMount() {
     },
     errorMessage => {
       // parse error, ideally ignore it. For example:
+      const availablePaths = ['/scan-student-id', '/scan-book-id']
+      if (!availablePaths.includes(window.location.pathname)) {
+        html5QrCode.stop().then(ignore => {
+        })
+      } 
       console.log(`QR Code no longer in front of camera.`);
     })
   .catch(err => {
@@ -66,6 +70,15 @@ turnOffCamera() {
     console.log("There was an error in shutting off the camera", error)
   })
 }
+
+// componentWillUnmount() {
+//   this.html5QrCode.stop.then(ignore => {
+//     // QR Code scanning is stopped.
+//   }).catch(err => {
+//     // Stop failed, handle it.
+//     console.log("Unable to stop scanning.", err);
+//   });
+// }
 
   render () {
     return (
