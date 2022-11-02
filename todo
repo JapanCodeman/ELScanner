@@ -1,5 +1,3 @@
-create adminStudentProfile for viewing students in a class (add Update/Delete functionality to these)
-
 fix failed promise return on incorrect password on login
 
 refactor server responses to all caps in snake case
@@ -16,14 +14,8 @@ delete student function in studentProfile.js needs a warning before execution
 
 add ability to view other admins to be able to reset their passwords for them or delete their accounts - user cannot delete themselves so one administrator; add safeguard that checks how many returns for users.find({admin search}). If this value == 1, delete request denied 
 
-Ended up with MANY duplicates of a single book somehow? (The Blue eye)
-
 Checking book back in from studentProfile.js properly works, but:
   Maybe redirect back to viewStudents.js? (would be useful in reading class for checking many books in quickly)
-
-bugs:
-
-  critical - scanner.js not stopping scanning on "back"/navigating to new page - only stops on changing page and refresh or correctly reading a code
 
 NOTES ON REAL TRIAL:
 

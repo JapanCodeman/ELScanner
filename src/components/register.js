@@ -25,6 +25,8 @@ function Register(props) {
 
   const [adminCode, setAdminCode] = useState(false)
 
+  const [submitted, setSubmitted] = useState(false)
+
 
   const validate = useCallback(() => {
     if (user.class !== "Administrator") {
@@ -65,6 +67,9 @@ function Register(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (submitted) {
+      return
+    }
     props.handleLoading(true)
     console.log("handleSubmit clicked")
     if (user.password !== confirm.confirmPass) {
@@ -165,7 +170,7 @@ function Register(props) {
         </div>
 
         <div className='register-page-buttons'>
-          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={(e) => handleSubmit(e)} disabled={!validate()}/>
+          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' onClick={() => setSubmitted(true)} clickHandler={(e) => handleSubmit(e)} disabled={!validate()}/>
           <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
         </div>
       </form>

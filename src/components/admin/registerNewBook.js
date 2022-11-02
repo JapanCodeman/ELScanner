@@ -24,6 +24,9 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
       .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
       .then(response => {
         console.log(response)
+        if (response.data === 'BOOK_ALREADY_REGISTERED') {
+          alert("This upc is already registered to a book")
+        }
         if (response.data === 'BOOK_REGISTERED') {
           console.log(response)
           if (props.userRole !== "Student") {
