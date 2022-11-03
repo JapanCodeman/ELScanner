@@ -16,18 +16,20 @@ function AdminHome(props) {
           "Content-Type": "application/json",
           'Access-Control-Allow-Origin': '*'
           }
-      }
+        }
       axios
       .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
+        if (props.classes.length === 0) {
         props.setClasses(response.data)
+        }
       })
       .catch(error => {
         console.log("Error in getting classes", error)
       })
     }
     getAllClasses()
-  }, [props])
+  }, [])
 
   return (
     <div className='admin-home'>

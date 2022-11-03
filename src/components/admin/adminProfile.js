@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import FunctionGreenButton from '../helpers/functionGreenButton';
+import Loading from '../helpers/loading';
 import PageTitler from '../helpers/pageTitler';
 
 function AdminProfile(props) {
 
+  const navigate = useNavigate()
   const location = useLocation()
 
   const [admin, setAdmin] = useState({
@@ -48,11 +50,16 @@ function AdminProfile(props) {
     const deleteAdminAccount = () => {
       // eslint-disable-next-line no-restricted-globals
       if (confirm(`YOU ARE ABOUT TO DELETE ${admin.first} ${admin.last}'S ACCOUNT! THIS ACTIONS IS IRREVERSIBLE! ARE YOU SURE?`)) {
-        window.alert('Account deleted - returning to View Administrators')
+        window.alert('Account deleted - returning to View Administrators') // this displays even before last admin alert; this can be handled in the front end
         axios
         .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${admin.public_id}`)
         .then(response => {
-          console.log(response)
+          if (response.data === 'USER_DELETED') {
+            navigate('/view-administrators')
+          }
+          if (response.data === 'LAST_ADMIN') {
+            return alert('One admin account must remain active. Please register another admin account before deleting this account.')
+          }
         })
         .catch(error => {
           console.log("Error in deleting admin account", error)
@@ -62,19 +69,26 @@ function AdminProfile(props) {
 
   return (
     <div className='admin-profile'>
-      <PageTitler pagetitle={`${admin.first} ${admin.last}`} />
-      <div className='buttons-wrapper'>
-        <FunctionGreenButton 
-          className='green-button' 
-          text='Reset Password' 
-          onClick={resetAdminPassword} 
-        />
-        <FunctionGreenButton 
-          className='green-button' 
-          text='Delete This Account' 
-          onClick={deleteAdminAccount} 
-        />
+      {admin.first !== undefined ?
+      <div>
+        <PageTitler pagetitle={`${admin.first} ${admin.last}`} />
+        <div className='buttons-wrapper'>
+          <FunctionGreenButton 
+            className='green-button' 
+            text='Reset Password' 
+            onClick={resetAdminPassword} 
+          />
+          <FunctionGreenButton 
+            className='green-button' 
+            text='Delete This Account' 
+            onClick={deleteAdminAccount} 
+          />
+        </div>
       </div>
+
+      :
+      
+      <Loading className='loading-page' />}
     </div>
   );
 }

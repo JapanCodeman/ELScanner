@@ -48,7 +48,7 @@ import AdminProfile from './components/admin/adminProfile';
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} setClasses={setClasses} />} key = {'admin-home'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} setClasses={setClasses} classes={[...classes]} />} key = {'admin-home'} />,
       <Route path = '/admin-profile' element = {<AdminProfile handleLoading={handleLoading} />} key = {'admin-profile'} />,
       <Route path = '/book-info' element = {<BookInfo {...book} clearBook={clearBook} clearStudent={clearStudent} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,

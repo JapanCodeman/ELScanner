@@ -2,17 +2,15 @@ fix failed promise return on incorrect password on login
 
 refactor server responses to all caps in snake case
 
-need to find a way to return response for users without a class and still issue them a token so they can navigate to the classReset page while maintaining identity
+need to find a way to return response for users without a class and still issue them a token so they can navigate to the classReset page while maintaining identity - this may only be necessary for end of year class changes.
 
-.pop() on .env one time use codes for admin registration - NOT WORKING; currently unable to register administrators from web
+Not good to mutate config vars for one time use codes - find a different method or set "request admin promotion function"? (not really necessary - just good coding practice)
 
 Fix backend to not output user information to non JWT holders (and not just random JWT)
 
 Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in localStorage?
 
-delete student function in studentProfile.js needs a warning before execution
-
-add ability to view other admins to be able to reset their passwords for them or delete their accounts - user cannot delete themselves so one administrator; add safeguard that checks how many returns for users.find({admin search}). If this value == 1, delete request denied 
+shift handling of "no delete last admin" to front end to handle better
 
 Checking book back in from studentProfile.js properly works, but:
   Maybe redirect back to viewStudents.js? (would be useful in reading class for checking many books in quickly)
@@ -21,5 +19,5 @@ NOTES ON REAL TRIAL:
 
   Make select drop downs for publisher/author - tedious when registering many books - register publishers component? authors component?
 
-  @jwt_required() currently blocking routes completely; how to configure?
+  @jwt_required() currently blocking routes completely; how to configure? - must pass "Authorization: `Bearer: ${token}`" in config
 

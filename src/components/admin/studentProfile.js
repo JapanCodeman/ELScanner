@@ -31,7 +31,7 @@ function StudentProfile(props) {
       console.log("error in useEffect on studentProfile.js", error)
     })
     if (!props.public_id) {
-      navigate('/scan-student-id')
+      navigate(-1)
     }
   }, [props.public_id, props.checkedOutBooks, props.student, navigate])
 
