@@ -8,20 +8,29 @@ import jwtDecode from 'jwt-decode';
   function Login(props) {
 
     const navigate = useNavigate()
-    // props.handleLoading(false) // this is causing an error
+    const userRole = props.userRole
+    const logged_status = props.logged_status
+
 
     const [user, setUser] = useState({
       email: '',
-      password: ''
+      password: null
     })
 
     useEffect(() => {
-      if (props.userRole === 'Student') {
+      if (userRole === 'Student' && logged_status === 'LOGGED_IN') {
         navigate('/home')
-      } else if (props.userRole === 'Administrator') {
-        navigate('/admin-home')
       } 
-    }, [props, navigate])
+      if (userRole === 'Administrator' && logged_status === 'LOGGED_IN') {
+      navigate('/admin-home')
+      }
+      // if (!window.sessionStorage.getItem('token')) {
+      //   props.loginHandler({
+      //     logged_status: "NOT_LOGGED_IN",
+      //     userRole: ''
+      //   })
+      // } 
+    }, [userRole, logged_status, navigate])
 
     const handleChange = (event) => {
       setUser({...user, [event.target.name] : event.target.value})
@@ -30,23 +39,18 @@ import jwtDecode from 'jwt-decode';
     async function handleSubmit(e) {
       e.preventDefault();
       props.handleLoading(true)
-        let config = {
-          headers: {
-            "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': '*'
-            }
-        }
         await axios
-        .post('https://elscanner-backend.herokuapp.com/login', {
+        .post('http://127.0.0.1:5000/login', {
           ...user
         },
-        { withCredentials: true },
-        config)
+        { withCredentials: true })
         .then(response => {
+          console.log(response)
           if (response.data === 'CLASS_RESET') { // how to fix this?
             navigate('/class-reset')
           }
-          else if (response.data === 'PASSWORD_RESET') {
+          else if (response.data.data === 'PASSWORD_RESET') {
+            window.sessionStorage.setItem('token', response.data.token)
             window.alert('You have been granted a password reset - please set your new password')
             props.handleLoading(false)
             navigate('/password-reset')
@@ -59,20 +63,33 @@ import jwtDecode from 'jwt-decode';
             window.alert('Email or Password Invalid')
             props.handleLoading(false)
           } else {
-          window.localStorage.setItem('token', response.data.token)
+          window.sessionStorage.setItem('token', response.data.token)
         }})
         .catch(error => {
           console.log('There was an error in handleSubmit in login.js', error)
         })
-        const token = jwtDecode(window.localStorage.getItem('token'))
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+            }
+        }
+        const token = jwtDecode(window.sessionStorage.getItem('token'))
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${token.sub.public_id}`, config)
         .then(response => {
-          props.loginHandler({
-            logged_status: 'LOGGED_IN',
-            ...response.data
-        })},
-        )
+          console.log('response from login line 79', response)
+          if (response.status === 200) {
+            props.loginHandler({
+              logged_status: 'LOGGED_IN',
+              ...response.data
+            })
+          }
+        })
         .catch(error => {
+          if (error.response.status === 401) {
+            window.alert("SESSION_TIMEOUT in login.js")
+          }
           window.alert(`There was an error logging in - ${error}`)
         })
         props.handleLoading(false)

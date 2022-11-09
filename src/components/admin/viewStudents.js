@@ -24,8 +24,15 @@ function ViewStudents(props) {
   }
 
   const toStudentProfile = (public_id) => {
+    const config = {
+      headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    };
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`, config)
     .then(student => {
       props.handleSetStudent({...student.data})
       navigate('/student-profile')
@@ -40,18 +47,30 @@ function ViewStudents(props) {
     let config = {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
         }
       }
     axios
-    .post('https://elscanner-backend.herokuapp.com/students-by-class', {...thisClass}, config)
+    .post('http://127.0.0.1:5000/students-by-class', {...thisClass}, config)
     .then(response => {
-      setStudents(response.data)
+      if (response.status === 200) {
+        setStudents(response.data)
+      }
     })
     .catch(error => {
+      if (error.response.status === 401) {
+        window.sessionStorage.removeItem('token')
+        props.loginHandler({
+          logged_status: "NOT_LOGGED_IN",
+          userRole: ''
+        })
+        alert("Session Timeout - Please login")
+        navigate('/login')
+      }
       console.log("There was an error retrieving students", error)
     })
-  }, [thisClass])
+  }, [thisClass, navigate, props])
 
   if (props === undefined) {
     return (

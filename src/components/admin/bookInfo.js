@@ -13,11 +13,18 @@ function BookInfo(props) {
   const [currentHolder, setCurrentHolder] = useState()
 
   useEffect(() => {
+    const config = {
+      headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    };
     if (props.book === undefined) {
       navigate('/scan-book-id')
     }
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${props.book.currentHolder}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${props.book.currentHolder}`, config)
     .then(response => {
       if (response.data.first) {
         setCurrentHolder({
@@ -43,7 +50,8 @@ function BookInfo(props) {
     let config = {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
       }
     }   
     let studentAndBookUPC = {
@@ -52,13 +60,24 @@ function BookInfo(props) {
       wordCount : props.book.wordCount
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
-      alert(`${response.data}`)
-      props.clearStudent()
-      props.clearBook()
+      if (response.status === 200) {
+        alert(`${response.data}`)
+        props.clearStudent()
+        props.clearBook()
+      }
     })
     .catch(error => {
+      if (error.response.status === 401) {
+        window.sessionStorage.removeItem('token')
+        props.loginHandler({
+          logged_status: "NOT_LOGGED_IN",
+          userRole: ''
+        })
+        alert("Session Timeout - Please login")
+        navigate('/login')
+      }
       console.log("Error in checkBookIn() in studentProfile.js", error)
     })
     navigate('/admin-home')

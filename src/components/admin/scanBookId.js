@@ -11,7 +11,7 @@ function ScanBookId(props) {
   
   const updateBookId = (bookID) => {
     axios
-    .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
+    .get(`http://127.0.0.1:5000/retrieve-book-info/${bookID}`)
     .then(book => {
       console.log(book)
       if (props.userRole === 'Student' && book.data !== 'Book not registered') {
@@ -26,12 +26,25 @@ function ScanBookId(props) {
           public_id : props.public_id
         }
         axios
-        .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
+        .post("http://127.0.0.1:5000/check-book-out", studentAndBookUPC, config)
         .then(response => {
-          console.log(response)
-          alert(`${response.data} - returning to admin-home`)})
+          if (response.status === 200) {
+            window.alert(`${response.data} - returning to admin-home`)
+          }
+        })
         .catch(error => {
-          console.log('There was an error in checkout()', error)
+          if (error.response.status === 401) {
+            window.sessionStorage.removeItem('token')
+            props.loginHandler({
+              logged_status: "NOT_LOGGED_IN",
+              userRole: ''
+            })
+            alert("Session Timeout - Please login")
+            navigate('/login')
+          }
+          else {
+            console.log('There was an error in checkout()', error)
+          }
         })
         navigate('/admin-home')
       }

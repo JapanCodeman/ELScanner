@@ -26,7 +26,7 @@ function EditClass(props) {
           }
       }
       axios
-      .post('https://elscanner-backend.herokuapp.com/get-reader-leaders', {"class" : thisClass.class}, config)
+      .post('http://127.0.0.1:5000/get-reader-leaders', {"class" : thisClass.class}, config)
       .then(response => {
         setReaderLeaders(response.data)
       })
@@ -38,17 +38,35 @@ function EditClass(props) {
   },[thisClass.class])
 
   const confirmClassChanges = async () => {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+        }
+    }
     // eslint-disable-next-line no-restricted-globals
     if (confirm("Are you sure you want to change the class name? This will affect all students in the class.")) {
       await axios
-      .post('https://elscanner-backend.herokuapp.com/update-class', {...thisClass})
+      .post('http://127.0.0.1:5000/update-class', {...thisClass}, config)
       .then(response => {
-        alert(response.data)
+        if (response.status === 200) {
+          alert(response.data)
+        }
       })
       .catch(error => {
-        console.log("Error in confirming class name change", error)
+        if (error.response.status === 401) {
+          window.sessionStorage.removeItem('token')
+          props.loginHandler({
+            logged_status: "NOT_LOGGED_IN",
+            userRole: ''
+          })
+          alert("Session Timeout - Please login")
+          navigate('/login')
+        } else {
+            console.log("Error in confirming class name change", error)
+          }
       })
-      props.setUpdatesMade(true)
       navigate('/view-classes')
     }
   }
@@ -56,20 +74,38 @@ function EditClass(props) {
   const deleteThisClass = () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("CLASS WILL BE DELETED - THIS WILL AFFECT ALL STUDENTS IN THE CLASS AND CANNOT BE UNDONE - ARE YOU SURE?")) {
-    axios
-    .delete('https://elscanner-backend.herokuapp.com/delete-class', {data : {"class" : thisClass.class}})
-    .then(response => {
-      if (response.data === "CLASS_DELETED") {
-        alert("Class deleted - returning to View Classes")
-        navigate('/view-classes')
-      } else {
-        alert("Class could not be deleted")
-      }
-    })
-    .catch(error => {
-      console.log("Error in deleting class", error)
-    })
-  }}
+      let config = {
+        headers: {
+          // "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+          }
+        }
+      console.log({"class" : thisClass.class})
+      axios
+      .delete(`http://127.0.0.1:5000/delete-class/${thisClass.class}`, config)
+      .then(response => {
+        if (response.data === "CLASS_DELETED") {
+          alert("Class deleted - returning to View Classes")
+          navigate('/view-classes')
+        } else {
+          alert("Class could not be deleted")
+        }
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+        //   window.sessionStorage.removeItem('token')
+        //   props.loginHandler({
+        //     logged_status: "NOT_LOGGED_IN",
+        //     userRole: ''
+        //   })
+        //   alert("Session Timeout - Please login")
+        //   navigate('/login')
+        // } else {
+          console.log("Error in deleting class", error)
+        }
+      })
+    }}
 
   const handleChange = (event) => {
     setThisClass({...thisClass, [event.target.name] : event.target.value})

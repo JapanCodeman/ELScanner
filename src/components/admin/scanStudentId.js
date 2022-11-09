@@ -9,8 +9,15 @@ function ScanStudentID (props) {
   const navigate = useNavigate()
 
   const lookupUser = (public_id) => {
+    const config = {
+      headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    };
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`, config)
     .then(student => {
       console.log(student)
       if (student.data === 'User Not Found') {

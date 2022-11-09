@@ -5,23 +5,40 @@ import Loading from '../helpers/loading';
 import PageTitler from '../helpers/pageTitler';
 import SmallerGreenButton from '../helpers/smallerGreenButton';
 
-function ViewAdministrators() {
+function ViewAdministrators(props) {
 
   const navigate = useNavigate()
 
   const [administrators, setAdministrators] = useState()
 
   useEffect(() => {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    }  
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-administrators')
+    .get('http://127.0.0.1:5000/get-all-administrators', config)
     .then(response => {
-      console.log(response)
-      setAdministrators(response.data)
+      if (response.status === 200) {
+        setAdministrators(response.data)
+      }
     })
     .catch(error => {
+      if (error.response.status === 401) {
+        window.sessionStorage.removeItem('token')
+        props.loginHandler({
+          logged_status: "NOT_LOGGED_IN",
+          userRole: ''
+        })
+        alert("Session Timeout - Please login")
+        navigate('/login')
+      }
       console.log('Error in useEffect ViewAdministrators', error)
     })
-  }, [])
+  }, [navigate])
 
   const adminEdit = (administrator) => {
     navigate('/admin-profile', {state: [administrator]})

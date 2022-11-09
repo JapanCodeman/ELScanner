@@ -8,7 +8,14 @@ function ViewClassProgress() {
 
   useEffect(() => {
     const getClassWordCounts = async () => {
-      await axios.get('https://elscanner-backend.herokuapp.com/get-all-classes-info')
+      const config = {
+        headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+        }
+      };
+      await axios.get('http://127.0.0.1:5000/get-all-classes-info', config)
       .then(response => {
         setClassInfo({
           labels: response.data?.map((classes) => classes.class),

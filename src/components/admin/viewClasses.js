@@ -12,15 +12,30 @@ function ViewClasses() {
   const [allClasses, setAllClasses] = useState()
 
   useEffect(() => {
+    let token = window.sessionStorage.getItem('token')
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization" : `Bearer ${token}`
+        }
+    }
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-classes')
+    .get('http://127.0.0.1:5000/get-all-classes', config)
     .then(response => {
-      setAllClasses(response.data)
+      if (response.status === 200) {
+        setAllClasses(response.data)
+      }
     })
     .catch(error => {
+      if (error.response.status === 401 && window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
+        alert('SESSION_TIMEOUT - please login again')
+        navigate('/login')
+      }
       console.log("There was an error in useEffect() in viewClasses", error)
     })
-  }, [])
+  }, [navigate])
 
   const createNewClass = () => {
     navigate('/create-class')

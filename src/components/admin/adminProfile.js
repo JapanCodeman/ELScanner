@@ -16,8 +16,15 @@ function AdminProfile(props) {
   })
 
   useEffect(() => {
+    const config = {
+      headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    };
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${location.state}`)
+    .get(`http://127.0.0.1:5000/lookup-user/${location.state}`, config)
     .then(response => {
       setAdmin(response.data)
     })
@@ -33,26 +40,38 @@ function AdminProfile(props) {
       let config = {
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*'
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
           }
       }
       axios
-      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : admin.public_id}, config)
+      .post('http://127.0.0.1:5000/delete-password', {"public_id" : admin.public_id}, config)
       .then(response => {
-        console.log(`Password for ${admin.first} ${admin.last}`, response)
+        if (response.status === 200) {
         window.alert(`You have reset ${admin.first} ${admin.last}'s password.`)
+        }
       })
       .catch(error => {
+        if (error.response.status === 401) {
+          window.alert('SESSION_TIMEOUT')
+        }
         console.log('Error resetting admin password', error)
       })
     }}
 
     const deleteAdminAccount = () => {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+          }
+      }
       // eslint-disable-next-line no-restricted-globals
       if (confirm(`YOU ARE ABOUT TO DELETE ${admin.first} ${admin.last}'S ACCOUNT! THIS ACTIONS IS IRREVERSIBLE! ARE YOU SURE?`)) {
         window.alert('Account deleted - returning to View Administrators') // this displays even before last admin alert; this can be handled in the front end
         axios
-        .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${admin.public_id}`)
+        .delete(`http://127.0.0.1:5000/delete-a-user/${admin.public_id}`, config)
         .then(response => {
           if (response.data === 'USER_DELETED') {
             navigate('/view-administrators')
@@ -62,6 +81,11 @@ function AdminProfile(props) {
           }
         })
         .catch(error => {
+          if (error.response.status === 401) {
+            window.sessionStorage.removeItem('token')
+            alert('SESSION_TIMEOUT - please login again')
+            navigate('/login')
+          }
           console.log("Error in deleting admin account", error)
         })
       }

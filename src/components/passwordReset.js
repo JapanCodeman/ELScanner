@@ -21,12 +21,13 @@ function PasswordReset() {
     e.preventDefault();
     const config = {
       headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
       }
   };
     axios
-    .post('https://elscanner-backend.herokuapp.com/password-reset', {...user}, config)
+    .post('http://127.0.0.1:5000/password-reset', {...user}, config)
     .then(response => {
       console.log("password reset response", response)
     })

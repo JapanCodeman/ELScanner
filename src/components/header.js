@@ -16,7 +16,7 @@ function Header(props) {
   }
 
   const logoutCallback = () => {
-    window.localStorage.removeItem('token')
+    window.sessionStorage.removeItem('token')
     props.logoutHandler()
     navigate('/')
   }

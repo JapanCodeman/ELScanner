@@ -13,7 +13,8 @@ function RegisterStudents(props) {
     first: '',
     last: '',
     email: '',
-    password: '',
+    password: null,
+    passwordReset: true,
     class:''
   })
 
@@ -42,7 +43,7 @@ function RegisterStudents(props) {
     props.handleLoading(true)
     console.log("handleSubmit clicked")
       const newUser = {...newStudent}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/admin-register-new-user', newUser)
       .then(response => {
         if (response.data === "Email already registered") {
           alert("That email is already registered - please enter a different email")

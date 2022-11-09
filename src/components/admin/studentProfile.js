@@ -23,7 +23,7 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
       }
     }        
-    axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+    axios.post('http://127.0.0.1:5000/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
     .then(response => {
       setHoldingBooks(response.data)
     })
@@ -40,7 +40,8 @@ function StudentProfile(props) {
     let config = {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
       }
     }   
     let studentAndBookUPC = {
@@ -49,13 +50,25 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
-      alert(`${response.data}`)
-      props.clearStudent()
+      if (response.status === 200) {
+        alert(`${response.data}`)
+        props.clearStudent()
+      }
     })
     .catch(error => {
-      console.log("Error in checkBookIn() in studentProfile.js", error)
+      if (error.response.status === 401) {
+        window.sessionStorage.removeItem('token')
+        props.loginHandler({
+          logged_status: "NOT_LOGGED_IN",
+          userRole: ''
+        })
+        alert("Session Timeout - Please login")
+        navigate('/login')
+      } else {
+        console.log("Error in checkBookIn() in studentProfile.js", error)
+        } 
     })
     navigate('/admin-home')
   }
@@ -71,11 +84,12 @@ function StudentProfile(props) {
       let config = {
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*'
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
           }
         }
       axios
-      .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, {config})
+      .delete(`http://127.0.0.1:5000/delete-a-user/${props.public_id}`, config)
       .then(response => {
         if (response.data === 'USER_DELETED') {
         alert('Student Deleted - back to view students')
@@ -83,6 +97,11 @@ function StudentProfile(props) {
         navigate('/view-students', {class : storeClass.class})
       }})
       .catch(error => {
+        if (error.response.status === 401) {
+          window.sessionStorage.removeItem('token')
+          alert('SESSION_TIMEOUT - please login again')
+          navigate('/login')
+        }
         console.log("Error deleting student", error)
       })
     } else {
@@ -94,15 +113,28 @@ function StudentProfile(props) {
     let config = {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
         }
       }
       axios
-      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
+      .post('http://127.0.0.1:5000/delete-password', {"public_id" : props.public_id}, config)
       .then(response => {
-        alert(`Password for ${props.first} ${props.last} reset. Ask them to login to set new password.`)
+        console.log(response)
+        if (response.status === 200) {
+          window.alert(`Password for ${props.first} ${props.last} reset. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)
+        }
       })
       .catch(error => {
+        if (error.response.status === 401) {
+          window.sessionStorage.removeItem('token')
+          props.loginHandler({
+            logged_status: "NOT_LOGGED_IN",
+            userRole: ''
+          })
+          alert("Session Timeout - Please login")
+          navigate('/login')
+        }
         console.log("Error in resetPassword()", error)
       })
     }

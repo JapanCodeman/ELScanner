@@ -1,7 +1,6 @@
 .login-page {
   &__input-wrapper, form {
     height: 50vh;
-    display: grid;
     grid-template-columns: 10vw [input-field-s] 80vw [input-field-e] 20vw ;
     grid-template-rows: [username-label-s] 5vh [username-label-e username-input-s] 5vh [username-input-e] 10vh [password-label-s] 5vh [password-label-e password-input-s] 5vh [password-input-e spacer-s] 5vh [spacer-e login-button-s] 5vh [login-button-e];
   }
@@ -33,10 +32,8 @@
     grid-row: login-button-s/login-button-e;
     height: 15vh;
     width: 65vw;
-    justify-self: center;
-    justify-content: center;
     align-items: center;
-    text-align: center;
+    align-self: center;
     background-color: green;
     color: white;
     border-radius: 20px;

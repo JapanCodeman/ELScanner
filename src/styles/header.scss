@@ -27,3 +27,16 @@
     transform: translateX(150px);
   }
 }
+
+@media screen and (orientation: landscape) {
+  .header-wrapper {
+    height: 10vh;
+    width: 100vw;
+  }
+
+  .logout-button {
+    position: absolute;
+    right: 0;
+    transform: none;
+  }
+}

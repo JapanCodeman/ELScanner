@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import FunctionGreenButton from '../helpers/functionGreenButton';
 import PageTitler from '../helpers/pageTitler';
 
-function CreateClass() {
+function CreateClass(props) {
 
   const navigate = useNavigate()
 
@@ -17,8 +17,7 @@ function CreateClass() {
   }
 
   const createClass = () => {
-    let token = window.localStorage.getItem("token")
-    console.log(token)
+    let token = window.sessionStorage.getItem("token")
     let config = {
       headers: {
         "Content-Type": "application/json",
@@ -27,12 +26,23 @@ function CreateClass() {
         }
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/create-new-class', {...ClassName}, config)
+    .post('http://127.0.0.1:5000/create-new-class', {...ClassName}, config)
     .then(response => {
-      alert(response.data)
-      navigate('/view-classes')
+      if (response.status === 200) {
+        alert(response.data)
+        navigate('/view-classes')
+      }
     })
     .catch(error => {
+      if (error.response.status === 401) {
+        window.sessionStorage.removeItem('token')
+        props.loginHandler({
+          logged_status: "NOT_LOGGED_IN",
+          userRole: ''
+        })
+        alert("Session Timeout - Please login")
+        navigate('/login')
+      }
       console.log("Error creating class", error)
     })
   }
@@ -40,9 +50,12 @@ function CreateClass() {
   return (
     <div className='create-class'>
       <PageTitler pagetitle='Create Class' />
-      <label className='create-class-input-label'>Class Name?</label>
-      <input className='create-class-input' type='text' name='class' onChange={handleChange} />
-      <FunctionGreenButton className='green-button' text='Create Class' onClick={createClass} />
+      <label className='create-class__input-label'>Class Name?</label>
+      <input className='create-class__input' type='text' name='class' placeholder='Enter class name here' onChange={handleChange} />
+      <div className='create-class__button-wrapper'>
+        <FunctionGreenButton className='green-button' text='Create Class' onClick={createClass} />
+        <FunctionGreenButton className='green-button' text='Return to View Classes' onClick={() =>navigate('/view-classes')} />
+      </div>
     </div>
   );
 }

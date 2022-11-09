@@ -1,6 +1,8 @@
-fix failed promise return on incorrect password on login
+fix failed promise return on incorrect password on login (this will probably be resolved along with figuring out how to return a different response for fresh tokens)
 
 refactor server responses to all caps in snake case
+
+CLASS RESET FOR STUDENTS (admin administer a class reset to all students at the end of the year; students get one chance to set their class; admins can confirm this later by looking at the 'new' classes) - not functioning
 
 need to find a way to return response for users without a class and still issue them a token so they can navigate to the classReset page while maintaining identity - this may only be necessary for end of year class changes.
 
@@ -18,6 +20,4 @@ Checking book back in from studentProfile.js properly works, but:
 NOTES ON REAL TRIAL:
 
   Make select drop downs for publisher/author - tedious when registering many books - register publishers component? authors component?
-
-  @jwt_required() currently blocking routes completely; how to configure? - must pass "Authorization: `Bearer: ${token}`" in config
 

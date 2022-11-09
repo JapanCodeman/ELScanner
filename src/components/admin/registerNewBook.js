@@ -19,9 +19,16 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
     }
 
     const handleSubmit = (event) => {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+          }
+        }
       event.preventDefault();
       axios
-      .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo})
+      .post(`http://127.0.0.1:5000/register-new-book/${bookInfo.upc}`, {...bookInfo}, config)
       .then(response => {
         console.log(response)
         if (response.data === 'BOOK_ALREADY_REGISTERED') {
@@ -37,17 +44,27 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
             let config = {
               headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
+                "Access-Control-Allow-Origin": "*",
+                "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
                 }
-            }
+              }
             let studentAndBookUPC = {
               book_upc : bookInfo.upc,
               public_id : props.public_id
             }
             axios
-            .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
+            .post("http://127.0.0.1:5000/check-book-out", studentAndBookUPC, config)
             .then(alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
             .catch(error => {
+              if (error.response.status === 401) {
+                window.sessionStorage.removeItem('token')
+                props.loginHandler({
+                  logged_status: "NOT_LOGGED_IN",
+                  userRole: ''
+                })
+                alert("Session Timeout - Please login")
+                navigate('/login')
+              }
               console.log('There was an error in checkout()', error)
             })
             navigate('/admin-home')
@@ -55,6 +72,15 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
         }
       })
       .catch(error => {
+        if (error.response.status === 401) {
+          window.sessionStorage.removeItem('token')
+          props.loginHandler({
+            logged_status: "NOT_LOGGED_IN",
+            userRole: ''
+          })
+          alert("Session Timeout - Please login")
+          navigate('/login')
+        }
         console.log('There was an error in the handleSubmit of registerNewBook.js', error)
       })
     }
