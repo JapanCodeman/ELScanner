@@ -17,7 +17,7 @@ function ScanStudentID (props) {
       }
     };
     axios
-    .get(`http://127.0.0.1:5000/lookup-user/${public_id}`, config)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`, config)
     .then(student => {
       console.log(student)
       if (student.data === 'User Not Found') {

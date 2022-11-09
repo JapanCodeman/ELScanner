@@ -22,7 +22,7 @@ function AdminHome(props) {
           }
         }
       axios
-      .get('http://127.0.0.1:5000/get-all-classes', config)
+      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
         console.log(response)
         if (response.status === 200) {

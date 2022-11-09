@@ -24,7 +24,7 @@ function BookInfo(props) {
       navigate('/scan-book-id')
     }
     axios
-    .get(`http://127.0.0.1:5000/lookup-user/${props.book.currentHolder}`, config)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${props.book.currentHolder}`, config)
     .then(response => {
       if (response.data.first) {
         setCurrentHolder({
@@ -60,7 +60,7 @@ function BookInfo(props) {
       wordCount : props.book.wordCount
     }
     axios
-    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
+    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       if (response.status === 200) {
         alert(`${response.data}`)

@@ -28,7 +28,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
         }
       event.preventDefault();
       axios
-      .post(`http://127.0.0.1:5000/register-new-book/${bookInfo.upc}`, {...bookInfo}, config)
+      .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo}, config)
       .then(response => {
         console.log(response)
         if (response.data === 'BOOK_ALREADY_REGISTERED') {
@@ -53,7 +53,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
               public_id : props.public_id
             }
             axios
-            .post("http://127.0.0.1:5000/check-book-out", studentAndBookUPC, config)
+            .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
             .then(alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
             .catch(error => {
               if (error.response.status === 401) {
