@@ -85,6 +85,9 @@ import AdminProfile from './components/admin/adminProfile';
     .then(response => {
       setClassNames(response.data)
     })
+    .catch(error => {
+      console.log("There was an error getting the class names", error)
+    })
   }, [])
 
   useEffect(() => {
