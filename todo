@@ -8,8 +8,6 @@ need to find a way to return response for users without a class and still issue 
 
 Not good to mutate config vars for one time use codes - find a different method or set "request admin promotion function"? (not really necessary - just good coding practice)
 
-Fix backend to not output user information to non JWT holders (and not just random JWT)
-
 Student profile page spits back to rescan scan-student-id on refresh...? Only ready solution is to store in localStorage?
 
 shift handling of "no delete last admin" to front end to handle better

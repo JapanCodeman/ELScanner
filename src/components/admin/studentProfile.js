@@ -92,14 +92,14 @@ function StudentProfile(props) {
       .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
       .then(response => {
         if (response.data === 'USER_DELETED') {
-        alert('Student Deleted - back to view students')
+        window.alert('Student Deleted - back to view students')
         props.handleLoading(false)
         navigate('/view-students', {class : storeClass.class})
       }})
       .catch(error => {
         if (error.response.status === 401) {
           window.sessionStorage.removeItem('token')
-          alert('SESSION_TIMEOUT - please login again')
+          window.alert('SESSION_TIMEOUT - please login again')
           navigate('/login')
         }
         console.log("Error deleting student", error)
