@@ -9,16 +9,17 @@ function ScanBookId(props) {
 
   const navigate = useNavigate()
   
-  const updateBookId = (bookID) => {
-    axios
+  const updateBookId = async (bookID) => {
+    await axios
     .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
     .then(book => {
       console.log(book)
       if (props.userRole === 'Student' && book.data !== 'Book not registered') {
         const config = {
           headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
           }
       };
         let studentAndBookUPC = {
@@ -30,6 +31,7 @@ function ScanBookId(props) {
         .then(response => {
           if (response.status === 200) {
             window.alert(`${response.data} - returning to admin-home`)
+            navigate('/admin-home')
           }
         })
         .catch(error => {
@@ -39,14 +41,13 @@ function ScanBookId(props) {
               logged_status: "NOT_LOGGED_IN",
               userRole: ''
             })
-            alert("Session Timeout - Please login")
+            window.alert("SESSION_TIMEOUT - please login again - Please login")
             navigate('/login')
           }
           else {
             console.log('There was an error in checkout()', error)
           }
         })
-        navigate('/admin-home')
       }
       else if (book.data !== 'Book not registered') {
         props.handleSetBook({book : {...book.data}})

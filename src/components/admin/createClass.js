@@ -29,7 +29,7 @@ function CreateClass(props) {
     .post('https://elscanner-backend.herokuapp.com/create-new-class', {...ClassName}, config)
     .then(response => {
       if (response.status === 200) {
-        alert(response.data)
+        window.alert(response.data)
         navigate('/view-classes')
       }
     })
@@ -40,7 +40,7 @@ function CreateClass(props) {
           logged_status: "NOT_LOGGED_IN",
           userRole: ''
         })
-        alert("Session Timeout - Please login")
+        window.alert("SESSION_TIMEOUT - please login again - Please login")
         navigate('/login')
       }
       console.log("Error creating class", error)

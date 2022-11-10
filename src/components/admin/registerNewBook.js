@@ -32,12 +32,12 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
       .then(response => {
         console.log(response)
         if (response.data === 'BOOK_ALREADY_REGISTERED') {
-          alert("This upc is already registered to a book")
+          window.alert("This upc is already registered to a book")
         }
         if (response.data === 'BOOK_REGISTERED') {
           console.log(response)
           if (props.userRole !== "Student") {
-          alert(`${bookInfo.title} registered to database`)
+          window.alert(`${bookInfo.title} registered to database`)
           navigate('/admin-home')
           }
           if (props.userRole === "Student") {
@@ -54,7 +54,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
             }
             axios
             .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
-            .then(alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
+            .then(window.alert(`${bookInfo.title} checked out to ${props.first} ${props.last} - returning to admin-home`))
             .catch(error => {
               if (error.response.status === 401) {
                 window.sessionStorage.removeItem('token')
@@ -62,7 +62,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
                   logged_status: "NOT_LOGGED_IN",
                   userRole: ''
                 })
-                alert("Session Timeout - Please login")
+                window.alert("SESSION_TIMEOUT - please login again - Please login")
                 navigate('/login')
               }
               console.log('There was an error in checkout()', error)
@@ -78,7 +78,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
             logged_status: "NOT_LOGGED_IN",
             userRole: ''
           })
-          alert("Session Timeout - Please login")
+          window.alert("SESSION_TIMEOUT - please login again - Please login")
           navigate('/login')
         }
         console.log('There was an error in the handleSubmit of registerNewBook.js', error)

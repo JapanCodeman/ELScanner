@@ -63,7 +63,7 @@ function BookInfo(props) {
     .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       if (response.status === 200) {
-        alert(`${response.data}`)
+        window.alert(`${response.data}`)
         props.clearStudent()
         props.clearBook()
       }
@@ -75,7 +75,7 @@ function BookInfo(props) {
           logged_status: "NOT_LOGGED_IN",
           userRole: ''
         })
-        alert("Session Timeout - Please login")
+        window.alert("SESSION_TIMEOUT - please login again - Please login")
         navigate('/login')
       }
       console.log("Error in checkBookIn() in studentProfile.js", error)

@@ -51,7 +51,7 @@ function EditClass(props) {
       .post('https://elscanner-backend.herokuapp.com/update-class', {...thisClass}, config)
       .then(response => {
         if (response.status === 200) {
-          alert(response.data)
+          window.alert(response.data)
         }
       })
       .catch(error => {
@@ -61,7 +61,7 @@ function EditClass(props) {
             logged_status: "NOT_LOGGED_IN",
             userRole: ''
           })
-          alert("Session Timeout - Please login")
+          window.alert("SESSION_TIMEOUT - please login again - Please login")
           navigate('/login')
         } else {
             console.log("Error in confirming class name change", error)
@@ -86,10 +86,10 @@ function EditClass(props) {
       .delete(`https://elscanner-backend.herokuapp.com/delete-class/${thisClass.class}`, config)
       .then(response => {
         if (response.data === "CLASS_DELETED") {
-          alert("Class deleted - returning to View Classes")
+          window.alert("Class deleted - returning to View Classes")
           navigate('/view-classes')
         } else {
-          alert("Class could not be deleted")
+          window.alert("Class could not be deleted")
         }
       })
       .catch(error => {
@@ -99,7 +99,7 @@ function EditClass(props) {
         //     logged_status: "NOT_LOGGED_IN",
         //     userRole: ''
         //   })
-        //   alert("Session Timeout - Please login")
+        //   window.alert("SESSION_TIMEOUT - please login again - Please login")
         //   navigate('/login')
         // } else {
           console.log("Error in deleting class", error)

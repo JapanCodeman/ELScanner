@@ -77,13 +77,13 @@ function AdminProfile(props) {
             navigate('/view-administrators')
           }
           if (response.data === 'LAST_ADMIN') {
-            return alert('One admin account must remain active. Please register another admin account before deleting this account.')
+            return window.alert('One admin account must remain active. Please register another admin account before deleting this account.')
           }
         })
         .catch(error => {
           if (error.response.status === 401) {
             window.sessionStorage.removeItem('token')
-            alert('SESSION_TIMEOUT - please login again')
+            window.alert('SESSION_TIMEOUT - please login again')
             navigate('/login')
           }
           console.log("Error in deleting admin account", error)

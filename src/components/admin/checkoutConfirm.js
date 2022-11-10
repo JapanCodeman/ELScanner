@@ -30,12 +30,12 @@ function CheckoutConfirm(props) {
           logged_status: "NOT_LOGGED_IN",
           userRole: ''
         })
-        alert("Session Timeout - Please login")
+        window.alert("SESSION_TIMEOUT - please login again - Please login")
         navigate('/login')
       }
       console.log('There was an error in checkout()', error)
     })
-    alert(`${props.book.title} checked out to ${props.first} ${props.last} - returning to admin-home`)
+    window.alert(`${props.book.title} checked out to ${props.first} ${props.last} - returning to admin-home`)
     props.clearBook()
     props.clearStudent()
     navigate('/admin-home')

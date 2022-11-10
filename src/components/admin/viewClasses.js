@@ -30,7 +30,7 @@ function ViewClasses() {
     .catch(error => {
       if (error.response.status === 401 && window.sessionStorage.getItem('token')) {
         window.sessionStorage.removeItem('token')
-        alert('SESSION_TIMEOUT - please login again')
+        window.alert('SESSION_TIMEOUT - please login again')
         navigate('/login')
       }
       console.log("There was an error in useEffect() in viewClasses", error)

@@ -17,10 +17,12 @@
     font-size: 32px;
   }
 
-  .qr-code {
-    justify-self: center;
-    align-self: center;
-    margin: 2vh 2vw;
+  .qr-code-wrapper {
+    display: flex;
+    align-items: center;
+    height: auto;
+    margin: 0 auto;
+    max-width: 64;
   }
 
   .your-word-count {

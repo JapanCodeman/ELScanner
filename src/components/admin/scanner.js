@@ -29,7 +29,7 @@ componentDidMount() {
   html5QrCode.start(
     { facingMode: "environment" },     // retrieved in the previous step.
     {
-      fps: 2,    // sets the framerate to 10 frame per second
+      fps: 20,    // sets the framerate to 10 frame per second
       qrbox: 250  // sets only 250 X 250 region of viewfinder to
                   // scannable, rest shaded.
     },

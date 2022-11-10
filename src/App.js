@@ -54,9 +54,9 @@ import AdminProfile from './components/admin/adminProfile';
       <Route path = '/edit-class' element = {<EditClass setStudent={setStudent} loginHandler={setUser}/>} key = 'edit-class' />,
       <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents classes={[...classes]} handleLoading={handleLoading} />} key = {'register-students'} />,
-      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook = {setBook} />} key = {'scan-book-id'} />,
+      <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook={setBook} loginHandler={setUser}/>} key = {'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} handleLoading={handleLoading} />} key = {'scan-student-id'} />,
-      <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading = {handleLoading} />} key = 'student-profile' />,
+      <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading={handleLoading} />} key = 'student-profile' />,
       <Route path = '/view-administrators' element={<ViewAdministrators handleLoading={handleLoading} />} key = {'view-administrators'} />, 
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-classes' element={<ViewClasses />} key = {'view-classes'} />,
@@ -88,7 +88,7 @@ import AdminProfile from './components/admin/adminProfile';
     .catch(error => {
       console.log("There was an error getting the class names", error)
     })
-  }, [])
+  }, [classes])
 
   useEffect(() => {
     const loadingOnRefresh = async () => {
@@ -117,7 +117,7 @@ import AdminProfile from './components/admin/adminProfile';
               logged_status: "NOT_LOGGED_IN",
               userRole: ''
             })
-            alert("Session Timeout - Please login")
+            window.alert("SESSION_TIMEOUT - please login again - Please login")
             window.location.assign('/login') // untested
           }
           console.log('error in useEffect() in root App', error)

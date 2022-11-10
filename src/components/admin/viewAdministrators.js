@@ -33,12 +33,12 @@ function ViewAdministrators(props) {
           logged_status: "NOT_LOGGED_IN",
           userRole: ''
         })
-        alert("Session Timeout - Please login")
+        window.alert("SESSION_TIMEOUT - please login again - Please login")
         navigate('/login')
       }
       console.log('Error in useEffect ViewAdministrators', error)
     })
-  }, [navigate])
+  })
 
   const adminEdit = (administrator) => {
     navigate('/admin-profile', {state: [administrator]})

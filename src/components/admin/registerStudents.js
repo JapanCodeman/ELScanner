@@ -9,6 +9,7 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
 function RegisterStudents(props) {
   const navigate = useNavigate()
 
+  const [isDisabled, setIsDisabled] = useState(true)
   const [newStudent, setNewStudent] = useState({
     first: '',
     last: '',
@@ -22,7 +23,7 @@ function RegisterStudents(props) {
       return newStudent.first.length && 
       newStudent.last.length && 
       newStudent.email.length &&
-      newStudent.class.length;
+      newStudent.class.length
     }, [newStudent]);
   
   useEffect(() => {
@@ -40,21 +41,24 @@ function RegisterStudents(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setIsDisabled(true)
     props.handleLoading(true)
     console.log("handleSubmit clicked")
       const newUser = {...newStudent}
       axios.post('https://elscanner-backend.herokuapp.com/admin-register-new-user', newUser)
       .then(response => {
+        console.log(response)
         if (response.data === "Email already registered") {
-          alert("That email is already registered - please enter a different email")
+          window.alert("That email is already registered - please enter a different email")
         }
-        if (response.data === "Registration successful") {
-          alert("Registration successful - the student may now login and set their password")
-          navigate('/login')
+        if (response.status === 200) {
+          window.alert(`Account for ${newStudent.first} ${newStudent.last} created. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)
+          navigate('/admin-home')
         }
       })
       .catch(error => 
-        console.log("Error in register.js:handleSubmit()", error))
+        console.log("Error in register.js:handleSubmit()", error),
+        setIsDisabled(false))
       props.handleLoading(false)
     }
 
@@ -84,7 +88,7 @@ function RegisterStudents(props) {
         <input className='register-student-page__form__email-input' type='text' autoComplete='email' name='email' value={newStudent.email} onChange={handleChange}/>
 
         <div className='register-student-page-buttons'>
-          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={(e) => handleSubmit(e)} disabled={!validate()}/>
+          <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={(e) => handleSubmit(e)} disabled={!validate() && isDisabled}/>
           <SmallerGreenButton className='smaller-green-button' text='Return to Title' typeSet='button' clickHandler={handleRedirect}/>
         </div>
       </form>

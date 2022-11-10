@@ -22,12 +22,15 @@ function Home(props) {
       <PageTitler pagetitle='Home' />
       <div className='welcome'>Welcome back, {`${props.first} ${props.last}`}</div>
       <div className='your-qr-code'>Your QR Code</div>
-      <QRCode
-        className='qr-code'
-        title="GeeksForGeeks"
-        value={props.public_id}
-        size={150}
-      />
+      <div className='qr-code-wrapper'>
+        <QRCode
+          className='qr-code'
+          style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+          title='StudentQRCode'
+          value={props.public_id}
+          size={256}
+        />
+      </div>
       <div className='your-word-count'>
         Your total word count so far is: {props.wordsRead} words!
       </div>

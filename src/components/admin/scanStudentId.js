@@ -20,8 +20,8 @@ function ScanStudentID (props) {
     .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`, config)
     .then(student => {
       console.log(student)
-      if (student.data === 'User Not Found') {
-        alert('This QR code isn\'t registered - returning to home')
+      if (student.data === 'USER_NOT_FOUND') {
+        window.alert('This QR code isn\'t registered - returning to home')
         navigate('/admin-home')
       } else {
       props.handleSetStudent({...student.data})

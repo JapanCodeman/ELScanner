@@ -16,7 +16,7 @@ function ViewStudents(props) {
   const [thisClass, setThisClass] = useState({
     class : '0-0'
   })
-  
+  const [loading, setLoading] = useState(false)
   const [students, setStudents] = useState([])
 
   const handleChange = (event) => {
@@ -43,7 +43,7 @@ function ViewStudents(props) {
   }
 
   useEffect(() => {
-    setStudents([])
+    setLoading(true)
     let config = {
       headers: {
         "Content-Type": "application/json",
@@ -56,6 +56,7 @@ function ViewStudents(props) {
     .then(response => {
       if (response.status === 200) {
         setStudents(response.data)
+        setLoading(false)
       }
     })
     .catch(error => {
@@ -65,7 +66,7 @@ function ViewStudents(props) {
           logged_status: "NOT_LOGGED_IN",
           userRole: ''
         })
-        alert("Session Timeout - Please login")
+        window.alert("SESSION_TIMEOUT - please login again - Please login")
         navigate('/login')
       }
       console.log("There was an error retrieving students", error)
@@ -92,9 +93,11 @@ function ViewStudents(props) {
       </div>
 
       <div className='student-results-wrapper'>
-        {(students.length > 0 && thisClass.class !== "0-0") ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) 
+        {(thisClass.class) ? students.map(student => <SmallerGreenButton key = {student.public_id} className='smaller-green-button' text={`${student.first} ${student.last}`} clickHandler={() => toStudentProfile(student.public_id)} />) 
         : 
-        <Loading className='mini-loader' />}
+        null}
+        
+        {loading ? <Loading className='mini-loader' /> : null}
       </div>
     </div>
   );

@@ -152,3 +152,17 @@
   }
 }
 
+@media screen and (orientation: landscape) {
+  .register-page {
+    display: flex;
+    flex-direction: column;
+
+    .register-page__form {
+      height: 60vh;
+      display: grid;
+      grid-template-columns: [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e];
+      grid-template-rows: [first-name-label-s] 12vh [first-name-label-e first-name-input-s] 14vh [first-name-input-e last-name-label-s] 12vh [last-name-label-e last-name-input-s] 14vh [last-name-input-e email-label-s] 12vh [email-label-e email-input-s] 14vh [email-input-e password-label-s] 12vh [password-label-e password-input-s] 14vh [password-input-e confirm-password-label-s] 12vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 14vh [confirm-password-input-e];
+    }
+  }
+}
+

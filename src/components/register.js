@@ -76,7 +76,7 @@ function Register(props) {
     props.handleLoading(true)
     console.log("handleSubmit clicked")
     if (user.password !== confirm.confirmPass) {
-      alert("Passwords do not match - reenter")
+      window.alert("Passwords do not match - reenter")
       return
     }
     if (user.class !== 'Administrator' && user.registrationCode === '') {
@@ -84,10 +84,10 @@ function Register(props) {
       axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
       .then(response => {
         if (response.data === "Email already registered") {
-          alert("That email is already registered - please enter a different email or request a password reset from an administrator")
+          window.alert("That email is already registered - please enter a different email or request a password reset from an administrator")
         }
         if (response.data === "Registration successful") {
-          alert("Registration successful - please login to continue")
+          window.alert("Registration successful - please login to continue")
           navigate('/login')
         }
       })
@@ -102,23 +102,23 @@ function Register(props) {
       .then(response => {
         console.log(response.data)
         if (response.data === 'ADMINISTRATOR_REGISTERED') {
-          alert("Account successfully registered with administration privileges - please login to continue")
+          window.alert("Account successfully registered with administration privileges - please login to continue")
           navigate('/login')
         } else if (response.data === 'ADMINISTRATOR_REGISTRATION_FAILED') {
           console.log(response)
-          alert('Invalid Registration Code')
+          window.alert('Invalid Registration Code')
         } else if (response.data === 'EMAIL_ALREADY_REGISTERED') {
           console.log(response)
-          alert('This email is already registered - contact an administrator to reset your email')
+          window.alert('This email is already registered - contact an administrator to reset your email')
         }
       })
       .catch(error => {
         console.log('There was an error in registering the user as admin', error)
-        alert('Invalid Admin Registration Code')
+        window.alert('Invalid Admin Registration Code')
       })
     }
     if (user.registrationCode !== '' && user.class !== 'Administrator') {
-      alert("You are not registering as an Administrator - please clear the registration code field")
+      window.alert("You are not registering as an Administrator - please clear the registration code field")
     }
     props.handleLoading(false)
   }
