@@ -9,7 +9,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname));
 app.use(express.static(path.resolve(__dirname, 'build')));
 app.use(express.static(path.resolve(__dirname, 'public')));
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(enforce.HTTPS({ trustXForwardedHostHeader: true }));
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
