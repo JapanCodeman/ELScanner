@@ -1,7 +1,7 @@
+import sslRedirect from 'heroku-ssl-redirect';
 const express = require('express');
 const favicon = require('express-favicon');
 const path = require('path');
-// const enforce = require('express-sslify');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -9,13 +9,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname));
 app.use(express.static(path.resolve(__dirname, 'build')));
 app.use(express.static(path.resolve(__dirname, 'public')));
-// app.use(enforce.HTTPS({ trustProtoHeader: true }));
-app.use((req, res, next) => {
-  if (req.header('x-forwarded-proto') !== 'https')
-    res.redirect(`https://${req.header('host')}${req.url}`)
-  else
-    next()
-})
+app.use(sslRedirect());
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
