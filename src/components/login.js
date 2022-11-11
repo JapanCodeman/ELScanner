@@ -33,10 +33,17 @@ import jwtDecode from 'jwt-decode';
     async function handleSubmit(e) {
       e.preventDefault();
       props.handleLoading(true)
+      let configSet = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
         await axios
         .post('https://elscanner-backend.herokuapp.com/login', {
           ...user
         },
+        configSet,
         { withCredentials: true })
         .then(response => {
           console.log(response)
