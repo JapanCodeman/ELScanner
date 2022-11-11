@@ -9,7 +9,7 @@
   color: white;
   border-radius: 20px;
   font-family: 'Edu TAS Beginner', cursive;
-  font-size: 4vh;
+  font-size: 5vh;
   text-decoration: none;
   margin: 2vh;
   box-shadow: 7px 6px 28px 5px rgba(0, 0, 0, 0.24);
@@ -17,5 +17,13 @@
 
   &:active {
     transform: scale(0.98)
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .green-button {
+    height: 25vh;
+    width: 25vw;
+    font-size: 4vw;
   }
 }

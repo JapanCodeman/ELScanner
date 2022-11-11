@@ -24,12 +24,6 @@ import jwtDecode from 'jwt-decode';
       if (userRole === 'Administrator' && logged_status === 'LOGGED_IN') {
       navigate('/admin-home')
       }
-      // if (!window.sessionStorage.getItem('token')) {
-      //   props.loginHandler({
-      //     logged_status: "NOT_LOGGED_IN",
-      //     userRole: ''
-      //   })
-      // } 
     }, [userRole, logged_status, navigate])
 
     const handleChange = (event) => {

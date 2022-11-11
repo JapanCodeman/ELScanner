@@ -31,3 +31,11 @@ button:disabled {
   background-color: darkgray;
   cursor: not-allowed;
 }
+
+@media screen and (orientation: landscape) {
+  .smaller-green-button {
+    height: 40vh;
+    width: 40vw;
+    font-size: 6vh;
+  }
+}

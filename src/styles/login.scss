@@ -58,3 +58,25 @@
     font-size: 32px;
   }
 }
+
+@media screen and (orientation: landscape) {
+  .login-page {
+    &__input-wrapper, form {
+      display: grid;
+      height: 70vh;
+      grid-template-columns: 10vw [input-field-s] 80vw [input-field-e] 10vw ;
+      grid-template-rows: [username-label-s] 10vh [username-label-e username-input-s] 10vh [username-input-e password-label-s] 10vh [password-label-e password-input-s] 10vh [password-input-e spacer-s] 5vh [spacer-e login-button-s] 15vh [login-button-e];
+
+
+    &__login-button {
+      grid-row: login-button-s/login-button-e;
+      height: 15vh;
+      width: 40vw;
+      align-self: center;
+    }
+  }
+    input {
+      width: 50vw;
+    }
+  }
+}
