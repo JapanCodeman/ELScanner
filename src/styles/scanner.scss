@@ -1,5 +1,18 @@
-.scanner-wrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  #qr-reader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+  }
+
+@media only screen and (min-width: 1000px) {
+  .scanner-wrapper {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+  #qr-reader {
+    width: 600px;
+  }
 }

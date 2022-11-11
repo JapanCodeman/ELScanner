@@ -74,7 +74,7 @@ turnOffCamera() {
 
   render () {
     return (
-      <div>
+      <div className='scanner-wrapper'>
         {this.state.loading ? <Loading className='loader' /> : null}
         <div id="qr-reader" />
       </div>
