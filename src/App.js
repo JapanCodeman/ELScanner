@@ -80,8 +80,14 @@ import AdminProfile from './components/admin/adminProfile';
   }
 
   useEffect(() => {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+        }
+    }
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-class-names')
+    .get('https://elscanner-backend.herokuapp.com/get-all-class-names', config)
     .then(response => {
       setClassNames(response.data)
     })
