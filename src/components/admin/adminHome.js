@@ -24,7 +24,6 @@ function AdminHome(props) {
       axios
       .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
-        console.log(response)
         if (response.status === 200) {
           if (props.classes.length === 0) {
           props.setClasses(response.data)

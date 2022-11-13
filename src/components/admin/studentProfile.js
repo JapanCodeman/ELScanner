@@ -120,7 +120,6 @@ function StudentProfile(props) {
       axios
       .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
       .then(response => {
-        console.log(response)
         if (response.status === 200) {
           window.alert(`Password for ${props.first} ${props.last} reset. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)
         }

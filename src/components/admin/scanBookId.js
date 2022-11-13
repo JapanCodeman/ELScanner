@@ -13,7 +13,6 @@ function ScanBookId(props) {
     await axios
     .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
     .then(book => {
-      console.log(book)
       if (props.userRole === 'Student' && book.data !== 'Book not registered') {
         const config = {
           headers: {

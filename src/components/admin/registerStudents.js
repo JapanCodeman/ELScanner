@@ -43,11 +43,9 @@ function RegisterStudents(props) {
     e.preventDefault()
     setIsDisabled(true)
     props.handleLoading(true)
-    console.log("handleSubmit clicked")
       const newUser = {...newStudent}
       axios.post('https://elscanner-backend.herokuapp.com/admin-register-new-user', newUser)
       .then(response => {
-        console.log(response)
         if (response.data === "Email already registered") {
           window.alert("That email is already registered - please enter a different email")
         }
@@ -67,7 +65,6 @@ function RegisterStudents(props) {
   }
 
   const handleRedirect = () => {
-    console.log("handleRedirect clicked")
     navigate('/admin-home')
   }
 

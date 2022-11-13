@@ -81,7 +81,6 @@ function EditClass(props) {
           "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
           }
         }
-      console.log({"class" : thisClass.class})
       axios
       .delete(`https://elscanner-backend.herokuapp.com/delete-class/${thisClass.class}`, config)
       .then(response => {

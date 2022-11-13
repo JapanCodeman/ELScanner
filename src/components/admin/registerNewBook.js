@@ -30,12 +30,10 @@ import SmallerGreenButton from '../helpers/smallerGreenButton';
       axios
       .post(`https://elscanner-backend.herokuapp.com/register-new-book/${bookInfo.upc}`, {...bookInfo}, config)
       .then(response => {
-        console.log(response)
         if (response.data === 'BOOK_ALREADY_REGISTERED') {
           window.alert("This upc is already registered to a book")
         }
         if (response.data === 'BOOK_REGISTERED') {
-          console.log(response)
           if (props.userRole !== "Student") {
           window.alert(`${bookInfo.title} registered to database`)
           navigate('/admin-home')

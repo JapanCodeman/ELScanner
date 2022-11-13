@@ -51,7 +51,7 @@ componentDidMount() {
         })
       } 
       this.setState({loading: false})
-      console.log(`QR Code no longer in front of camera.`);
+      // console.log(`QR Code no longer in front of camera.`);
     })
   .catch(err => {
     // Start failed, handle it. For example,
@@ -62,20 +62,10 @@ componentDidMount() {
   })
 }
 
-
-turnOffCamera() {
-  console.log("clicked")
-  Html5Qrcode.stop().then(ignore => {
-  })
-  .catch(error => {
-    console.log("There was an error in shutting off the camera", error)
-  })
-}
-
   render () {
     return (
       <div className='scanner-wrapper'>
-        {this.state.loading ? <Loading className='loader' /> : null}
+        {this.state.loading ? <Loading className='scanner-loader' /> : null}
         <div id="qr-reader" />
       </div>
     );

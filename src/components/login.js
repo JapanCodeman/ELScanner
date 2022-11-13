@@ -46,7 +46,6 @@ import jwtDecode from 'jwt-decode';
         configSet,
         { withCredentials: true })
         .then(response => {
-          console.log(response)
           if (response.data === 'CLASS_RESET') { // how to fix this?
             navigate('/class-reset')
           }
@@ -79,7 +78,6 @@ import jwtDecode from 'jwt-decode';
         const token = jwtDecode(window.sessionStorage.getItem('token'))
         await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
         .then(response => {
-          console.log('response from login line 79', response)
           if (response.status === 200) {
             props.loginHandler({
               logged_status: 'LOGGED_IN',
