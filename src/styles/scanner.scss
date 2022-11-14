@@ -1,6 +1,7 @@
 .scanner-wrapper {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 
   .scanner-loader {
     justify-self: center;
