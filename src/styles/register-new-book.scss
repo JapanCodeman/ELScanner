@@ -10,6 +10,22 @@
     flex-direction: column;
     justify-content: space-between;
 
+    &__book-pub-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      select {
+        height: 5vh;
+        width: 50%;
+        color: green;
+        font-family: 'Edu TAS Beginner', cursive;
+        font-size: 24px;
+        border-radius: 25px;
+        text-align: center;
+        margin-bottom: 2vh;
+      }
+    };
+
     label {
       color: green;
       font-family: 'Edu TAS Beginner', cursive;

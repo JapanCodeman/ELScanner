@@ -24,7 +24,7 @@ function AdminProfile(props) {
       }
     };
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${location.state}`, config)
+    .get(`htts://elscanner-backend.herokuapp.com/lookup-user/${location.state}`, config)
     .then(response => {
       setAdmin(response.data)
     })
@@ -45,7 +45,7 @@ function AdminProfile(props) {
           }
       }
       axios
-      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : admin.public_id}, config)
+      .post('htts://elscanner-backend.herokuapp.com/delete-password', {"public_id" : admin.public_id}, config)
       .then(response => {
         if (response.status === 200) {
         window.alert(`You have reset ${admin.first} ${admin.last}'s password.`)
@@ -71,7 +71,7 @@ function AdminProfile(props) {
       if (confirm(`YOU ARE ABOUT TO DELETE ${admin.first} ${admin.last}'S ACCOUNT! THIS ACTIONS IS IRREVERSIBLE! ARE YOU SURE?`)) {
         window.alert('Account deleted - returning to View Administrators') // this displays even before last admin alert; this can be handled in the front end
         axios
-        .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${admin.public_id}`, config)
+        .delete(`htts://elscanner-backend.herokuapp.com/delete-a-user/${admin.public_id}`, config)
         .then(response => {
           if (response.data === 'USER_DELETED') {
             navigate('/view-administrators')

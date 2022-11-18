@@ -1,0 +1,18 @@
+.no-books-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .no-checked-out-books {
+    display: flex;
+    margin: 5vw 5vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: green;
+    border-radius: 20px;
+    color: black;
+    font-family: 'Edu TAS Beginner', cursive;
+    font-size: 64px;
+  }
+}

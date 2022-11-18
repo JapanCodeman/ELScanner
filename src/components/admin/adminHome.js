@@ -22,7 +22,7 @@ function AdminHome(props) {
           }
         }
       axios
-      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
+      .get('htts://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
         if (response.status === 200) {
           if (props.classes.length === 0) {
@@ -57,6 +57,8 @@ function AdminHome(props) {
         <GreenButton className='green-button' toPage='/view-classes' text='View or Edit Classes' />
         <GreenButton className='green-button' toPage='/view-administrators' text='View Administrators' />
         <GreenButton className='green-button' toPage='/register-students' text='Register Students' />
+        <GreenButton className='green-button' toPage='/register-new-book' text='Manually Register Book' />
+        <GreenButton className='green-button' toPage='/view-checked-out-books' text='View Checked Out Books' />
       </div>
     </div>
   );

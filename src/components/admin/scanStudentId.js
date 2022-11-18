@@ -17,7 +17,7 @@ function ScanStudentID (props) {
       }
     };
     axios
-    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${public_id}`, config)
+    .get(`htts://elscanner-backend.herokuapp.com/lookup-user/${public_id}`, config)
     .then(student => {
       if (student.data === 'USER_NOT_FOUND') {
         window.alert('This QR code isn\'t registered - returning to home')

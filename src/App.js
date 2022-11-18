@@ -29,6 +29,7 @@ import ViewClassProgress from './components/admin/viewClassProgress';
 import ViewStudents from './components/admin/viewStudents';
 import PasswordReset from './components/passwordReset';
 import AdminProfile from './components/admin/adminProfile';
+import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
 
   function App() {
 
@@ -58,6 +59,7 @@ import AdminProfile from './components/admin/adminProfile';
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} handleLoading={handleLoading} />} key = {'scan-student-id'} />,
       <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading={handleLoading} />} key = 'student-profile' />,
       <Route path = '/view-administrators' element={<ViewAdministrators handleLoading={handleLoading} />} key = {'view-administrators'} />, 
+      <Route path = '/view-checked-out-books' element={<ViewCheckedOutBooks handleSetBook={setBook} />} key = {'view-checked-out-books'} />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-classes' element={<ViewClasses />} key = {'view-classes'} />,
       <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} handleSetStudent = {setStudent} />} key = {'view-students'} />
@@ -87,7 +89,7 @@ import AdminProfile from './components/admin/adminProfile';
         }
     }
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-class-names', config)
+    .get('htts://elscanner-backend.herokuapp.com/get-all-class-names', config)
     .then(response => {
       setClassNames(response.data)
     })
@@ -107,7 +109,7 @@ import AdminProfile from './components/admin/adminProfile';
             "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
             }
         }
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+        await axios.get(`htts://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
         .then(response => {
           if (response.status === 200) {
             setUser({
