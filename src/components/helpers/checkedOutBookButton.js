@@ -17,7 +17,7 @@ function CheckedOutBookButton(props) {
         }
     }
     axios
-    .get(`htts://elscanner-backend.herokuapp.com/lookup-user/${props.heldBy}`, config)
+    .get(`https://elscanner-backend.herokuapp.com/lookup-user/${props.heldBy}`, config)
     .then(response => {
       setStudent(response.data)
     })

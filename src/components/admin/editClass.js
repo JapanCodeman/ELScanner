@@ -26,7 +26,7 @@ function EditClass(props) {
           }
       }
       axios
-      .post('htts://elscanner-backend.herokuapp.com/get-reader-leaders', {"class" : thisClass.class}, config)
+      .post('https://elscanner-backend.herokuapp.com/get-reader-leaders', {"class" : thisClass.class}, config)
       .then(response => {
         setReaderLeaders(response.data)
       })
@@ -48,7 +48,7 @@ function EditClass(props) {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("Are you sure you want to change the class name? This will affect all students in the class.")) {
       await axios
-      .post('htts://elscanner-backend.herokuapp.com/update-class', {...thisClass}, config)
+      .post('https://elscanner-backend.herokuapp.com/update-class', {...thisClass}, config)
       .then(response => {
         if (response.status === 200) {
           window.alert(response.data)
@@ -82,7 +82,7 @@ function EditClass(props) {
           }
         }
       axios
-      .delete(`htts://elscanner-backend.herokuapp.com/delete-class/${thisClass.class}`, config)
+      .delete(`https://elscanner-backend.herokuapp.com/delete-class/${thisClass.class}`, config)
       .then(response => {
         if (response.data === "CLASS_DELETED") {
           window.alert("Class deleted - returning to View Classes")

@@ -15,7 +15,7 @@ function MyClass(props) {
           "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
           }
       };
-      await axios.get('htts://elscanner-backend.herokuapp.com/get-all-classes-info', config)
+      await axios.get('https://elscanner-backend.herokuapp.com/get-all-classes-info', config)
       .then(response => {
         setClassInfo({
           labels: response.data?.map((classes) => classes.class),

@@ -27,7 +27,7 @@ function PasswordReset() {
       }
   };
     axios
-    .post('htts://elscanner-backend.herokuapp.com/password-reset', {...user}, config)
+    .post('https://elscanner-backend.herokuapp.com/password-reset', {...user}, config)
     .catch(error => {
       console.log("error in password reset", error)
     })

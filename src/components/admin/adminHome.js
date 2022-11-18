@@ -22,7 +22,7 @@ function AdminHome(props) {
           }
         }
       axios
-      .get('htts://elscanner-backend.herokuapp.com/get-all-classes', config)
+      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
         if (response.status === 200) {
           if (props.classes.length === 0) {

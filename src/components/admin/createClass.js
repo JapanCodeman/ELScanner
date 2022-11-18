@@ -26,7 +26,7 @@ function CreateClass(props) {
         }
     }
     axios
-    .post('htts://elscanner-backend.herokuapp.com/create-new-class', {...ClassName}, config)
+    .post('https://elscanner-backend.herokuapp.com/create-new-class', {...ClassName}, config)
     .then(response => {
       if (response.status === 200) {
         window.alert(response.data)

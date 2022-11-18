@@ -23,7 +23,7 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
       }
     }        
-    axios.post('htts://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+    axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
     .then(response => {
       setHoldingBooks(response.data)
     })
@@ -50,7 +50,7 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('htts://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       if (response.status === 200) {
         window.alert(`${response.data}`)
@@ -89,7 +89,7 @@ function StudentProfile(props) {
           }
         }
       axios
-      .delete(`htts://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
+      .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
       .then(response => {
         if (response.data === 'USER_DELETED') {
         window.alert('Student Deleted - back to view students')
@@ -118,7 +118,7 @@ function StudentProfile(props) {
         }
       }
       axios
-      .post('htts://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
+      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
       .then(response => {
         if (response.status === 200) {
           window.alert(`Password for ${props.first} ${props.last} reset. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)
