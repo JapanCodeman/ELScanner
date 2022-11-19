@@ -53,6 +53,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
       <Route path = '/create-class' element = {<CreateClass loginHandler={setUser}/>} key = 'create-class' />,
       <Route path = '/edit-class' element = {<EditClass setStudent={setStudent} loginHandler={setUser}/>} key = 'edit-class' />,
+      <Route path = '/password-reset' element={<PasswordReset />} key = {'password-reset'} />,
       <Route path = '/register-new-book' element={<RegisterNewBook {...student} handleLoading={handleLoading} />} key = {'register-new-book'} />,
       <Route path = '/register-students' element={<RegisterStudents classes={[...classes]} handleLoading={handleLoading} />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook={setBook} loginHandler={setUser}/>} key = {'scan-book-id'} />,
@@ -77,7 +78,8 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
   const userAuthorizedPages = () => {
     return [
       <Route path = '/home' element = {<Home {...user} handleLoading = {handleLoading} />} key = {'home'} />,
-      <Route path = '/my-class' element = {<MyClass {...user} handleLoading = {handleLoading} />} key = {'my-class'} />
+      <Route path = '/my-class' element = {<MyClass {...user} handleLoading = {handleLoading} />} key = {'my-class'} />,
+      <Route path = '/password-reset' element={<PasswordReset />} key = {'password-reset'} />
     ]
   }
 
@@ -89,7 +91,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
         }
     }
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-class-names', config)
+    .get('http://127.0.0.1:5000/get-all-class-names', config)
     .then(response => {
       setClassNames(response.data)
     })
@@ -109,7 +111,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
             "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
             }
         }
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
         .then(response => {
           if (response.status === 200) {
             setUser({
@@ -162,7 +164,6 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
             <Route exact path = '/' element={<Title />} />
             <Route path = '/class-reset' element={<ClassReset {...user} classes={classes} setLoading={setLoading} />} /> 
             <Route path = '/login' element={<Login {...user} handleLoading={handleLoading} loginHandler={setUser}/>} />
-            <Route path = '/password-reset' element={<PasswordReset />} />
             <Route path = '/register' element={<Register classNames={classNames} handleLoading={handleLoading}/>} />
             <Route path = '*' element={<PageNotFound {...user} />} />
           </Routes>

@@ -6,20 +6,21 @@
     height: auto;
     display: grid;
     grid-template-columns: 5vw [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e] 5vw;
-    grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 7vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 7vh [last-name-input-e email-label-s] 5vh [email-label-e email-input-s] 7vh [email-input-e password-label-s] 5vh [password-label-e password-input-s] 7vh [password-input-e confirm-password-label-s] 5vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 7vh [confirm-password-input-e];
+    grid-template-rows: [first-name-label-s] 5vh [first-name-label-e first-name-input-s] 7vh [first-name-input-e last-name-label-s] 5vh [last-name-label-e last-name-input-s] 7vh [last-name-input-e username-label-s] 5vh [username-label-e username-input-s] 7vh [username-input-e password-label-s] 5vh [password-label-e password-input-s] 7vh [password-input-e confirm-password-label-s] 5vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 7vh [confirm-password-input-e];
 
     &__first-name-label {
       grid-column: first-label-s/first-label-e;
       grid-row: first-name-label-s/first-name-label-e;
     }
-    
+
     &__class-select-label {
       grid-column: select-s/select-e;
       grid-row: first-name-label-s/first-name-label-e;
       justify-self: end;
     }
 
-    &__class-select, select {
+    &__class-select,
+    select {
       grid-column: select-s/select-e;
       grid-row: first-name-input-s/first-name-input-e;
       display: grid;
@@ -28,7 +29,7 @@
       height: 5vh;
       width: 75%;
       color: green;
-      font-family: 'Edu TAS Beginner', cursive;
+      font-family: "Edu TAS Beginner", cursive;
       font-size: 18px;
       border-radius: 25px;
     }
@@ -48,14 +49,14 @@
       grid-row: last-name-input-s/last-name-input-e;
     }
 
-    &__email-label {
+    &__username-label {
       grid-column: input-field-s/input-field-e;
-      grid-row: email-label-s/email-label-e;
+      grid-row: username-label-s/username-label-e;
     }
 
-    &__email-input {
+    &__username-input {
       grid-column: input-field-s/input-field-e;
-      grid-row: email-input-s/email-input-e;
+      grid-row: username-input-s/username-input-e;
     }
 
     &__password-label {
@@ -97,7 +98,6 @@
     &__registration-code-label {
       grid-column: input-field-s/input-field-e;
       grid-row: registration-code-label-s/registration-code-label-e;
-    
 
       &__registration-code-input {
         grid-column: input-field-s/input-field-e;
@@ -118,7 +118,7 @@
 
   label {
     color: green;
-    font-family: 'Edu TAS Beginner', cursive;
+    font-family: "Edu TAS Beginner", cursive;
     font-size: 32px;
     margin-bottom: 1vh;
   }
@@ -133,12 +133,11 @@
     outline: none;
   }
 
-
   .register-page-admin-field-wrapper {
     display: flex;
     flex-direction: column;
     grid-column: input-field-s/input-field-e;
-  }  
+  }
 
   .register-page-buttons {
     height: 12vh;
@@ -161,9 +160,10 @@
       height: 60vh;
       display: grid;
       grid-template-columns: [input-field-s first-label-s] 40vw [first-label-e select-s] 40vw [select-e input-field-e];
-      grid-template-rows: [first-name-label-s] 12vh [first-name-label-e first-name-input-s] 14vh [first-name-input-e last-name-label-s] 12vh [last-name-label-e last-name-input-s] 14vh [last-name-input-e email-label-s] 12vh [email-label-e email-input-s] 14vh [email-input-e password-label-s] 12vh [password-label-e password-input-s] 14vh [password-input-e confirm-password-label-s] 12vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 14vh [confirm-password-input-e];
+      grid-template-rows: [first-name-label-s] 12vh [first-name-label-e first-name-input-s] 14vh [first-name-input-e last-name-label-s] 12vh [last-name-label-e last-name-input-s] 14vh [last-name-input-e username-label-s] 12vh [username-label-e username-input-s] 14vh [username-input-e password-label-s] 12vh [password-label-e password-input-s] 14vh [password-input-e confirm-password-label-s] 12vh [confirm-password-label-e password-mismatch-s] 3vh [password-mismatch-e confirm-password-input-s] 14vh [confirm-password-input-e];
 
-      &__class-select, select {
+      &__class-select,
+      select {
         height: 15vh;
         width: 50%;
         font-size: 3vw;
@@ -185,4 +185,3 @@
     }
   }
 }
-

@@ -13,7 +13,7 @@ function Register(props) {
   const [user, setUser] = useState({
     first: '',
     last: '',
-    email: '',
+    username: '',
     password: '',
     class:'',
     registrationCode: ''
@@ -32,7 +32,7 @@ function Register(props) {
     if (user.class !== "Administrator") {
       return user.first.length && 
       user.last.length && 
-      user.email.length && 
+      user.username.length && 
       user.password.length &&
       user.class.length &&
       confirm.confirmPass.length;}
@@ -40,7 +40,7 @@ function Register(props) {
     if (user.class === "Administrator") {
       return user.first.length && 
       user.last.length && 
-      user.email.length && 
+      user.username.length && 
       user.password.length &&
       user.class.length &&
       user.registrationCode &&
@@ -80,10 +80,10 @@ function Register(props) {
     }
     if (user.class !== 'Administrator' && user.registrationCode === '') {
       const newUser = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/register-new-user', newUser)
       .then(response => {
-        if (response.data === "Email already registered") {
-          window.alert("That email is already registered - please enter a different email or request a password reset from an administrator")
+        if (response.data === "username already registered") {
+          window.alert("That username is already registered - please enter a different username or request a password reset from an administrator")
         }
         if (response.data === "Registration successful") {
           window.alert("Registration successful - please login to continue")
@@ -97,15 +97,15 @@ function Register(props) {
 
     if (user.registrationCode !== '' && user.class === 'Administrator') {
       const newAdmin = {...user}
-      axios.post('https://elscanner-backend.herokuapp.com/register-new-admin', newAdmin)
+      axios.post('http://127.0.0.1:5000/register-new-admin', newAdmin)
       .then(response => {
         if (response.data === 'ADMINISTRATOR_REGISTERED') {
           window.alert("Account successfully registered with administration privileges - please login to continue")
           navigate('/login')
         } else if (response.data === 'ADMINISTRATOR_REGISTRATION_FAILED') {
           window.alert('Invalid Registration Code')
-        } else if (response.data === 'EMAIL_ALREADY_REGISTERED') {
-          window.alert('This email is already registered - contact an administrator to reset your email')
+        } else if (response.data === 'USERNAME_ALREADY_REGISTERED') {
+          window.alert('This username is already registered - contact an administrator to reset your username')
         }
       })
       .catch(error => {
@@ -146,8 +146,8 @@ function Register(props) {
         <input className='register-page__form__first-name-input' type='text' name='first' value={user.first} autoComplete='given-name' onChange={handleChange}/>
         <label className='register-page__form__last-name-label'>Last Name</label>
         <input className='register-page__form__last-name-input' type='text' autoComplete='family-name' name='last' value={user.last} onChange={handleChange}/>
-        <label className='register-page__form__email-label'>Email</label>
-        <input className='register-page__form__email-input' type='text' autoComplete='email' name='email' value={user.email} onChange={handleChange}/>
+        <label className='register-page__form__username-label'>Username</label>
+        <input className='register-page__form__username-input' type='text' autoComplete='username' name='username' value={user.username} onChange={handleChange}/>
         <label className='register-page__form__password-label'>Password</label>
         <input className='register-page__form__password-input' type='password' autoComplete='new-password' name='password' value={user.password} onChange={handleChange}/>
         <label className='register-page__form__confirm-password-label'>Confirm Password</label>

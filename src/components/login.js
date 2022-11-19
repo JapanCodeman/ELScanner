@@ -13,7 +13,7 @@ import jwtDecode from 'jwt-decode';
 
 
     const [user, setUser] = useState({
-      email: '',
+      username: '',
       password: null
     })
 
@@ -40,7 +40,7 @@ import jwtDecode from 'jwt-decode';
         }
       }
         await axios
-        .post('https://elscanner-backend.herokuapp.com/login', {
+        .post('http://127.0.0.1:5000/login', {
           ...user
         },
         configSet,
@@ -56,11 +56,11 @@ import jwtDecode from 'jwt-decode';
             navigate('/password-reset')
           } 
           else if (response.data === 'USER_NOT_FOUND') {
-            window.alert('Email or Password Invalid')
+            window.alert('username or Password Invalid')
             props.handleLoading(false)
           }
           else if (response.data === 'INVALID_PASSWORD') {
-            window.alert('Email or Password Invalid')
+            window.alert('username or Password Invalid')
             props.handleLoading(false)
           } else {
           window.sessionStorage.setItem('token', response.data.token)
@@ -76,7 +76,7 @@ import jwtDecode from 'jwt-decode';
             }
         }
         const token = jwtDecode(window.sessionStorage.getItem('token'))
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${token.sub.public_id}`, config)
         .then(response => {
           if (response.status === 200) {
             props.loginHandler({
@@ -100,8 +100,8 @@ import jwtDecode from 'jwt-decode';
       <PageTitler pagetitle='Login' />
       <div className='login-page__input-wrapper'>
         <form>
-          <label className='login-page__username-label'>Email</label>
-          <input className='login-page__username-input' type='email' name='email' autoComplete='email' onChange={handleChange} />
+          <label className='login-page__username-label'>Username</label>
+          <input className='login-page__username-input' type='text' name='username' autoComplete='username' onChange={handleChange} />
           <label className='login-page__password-label'>Password</label>
           <input className='login-page__password-input' type='password' name='password' autoComplete='current-password' onChange={handleChange} />
           <SmallerGreenButton className='login-page__login-button' text='Login' typeSet='submit' clickHandler={handleSubmit} />

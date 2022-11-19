@@ -1,9 +1,8 @@
 .checked-out-book-button {
-  display: grid;
-  grid-template-columns: [left-s] 62vw [left-e right-s] 35vw [right-e];
-  grid-template-rows: [book-title-s] 1fr [book-title-e row-1-s] 1fr [row-1-e];
-  height: 20vh;
+  display: flex;
+  flex-direction: column;
   margin: 2vw;
+  padding: 0vh 0vw 1vh 0vw;
   background-color: green;
   border-radius: 20px;
   font-family: 'Edu TAS Beginner', cursive;
@@ -11,11 +10,10 @@
   color: white;
   text-decoration: none;
   box-shadow: 7px 6px 28px 5px rgba(0, 0, 0, 0.24);
+  text-overflow: ellipsis;
   transition: 0.2s;
 
   &__book-title {
-    grid-column: left-s/left-e;
-    grid-row: book-title-s/book-title-e;
     display: flex;
     text-align: center;
     margin: 1vh 2vw;
@@ -24,8 +22,6 @@
   }
 
   &__held-by {
-    grid-column: left-s/left-e;
-    grid-row: row-1-s/row-1-e;
     display: flex;
     text-align: center;
     margin: 1vh 2vw;
@@ -35,8 +31,6 @@
   }
 
   &__held-length {
-    grid-column: right-s/right-e;
-    grid-row: book-title-s/book-title-e;
     display: flex;
     text-align: center;
     border-radius: 5px;
@@ -48,20 +42,17 @@
   }
 
   &__to-book-info {
-    grid-column: right-s/right-e;
-    grid-row: row-1-s/row-1-e;
     display: flex;
-    margin: 1vh 2vw;
+    width: 50vw;
     font-family: 'Edu TAS Beginner', cursive;
     font-size: 3vh;
     align-items: center;
+    justify-content: center;
     border-radius: 20px;
     background-color: darkgreen;
   }
 
   &__held-by-user {
-    grid-column: left-s/left-e;
-    grid-row: row-2-s/row-2-e;
     display: flex;
     align-items: center;
     margin: 1vh 2vw;
@@ -69,6 +60,7 @@
   }
   
   button {
+    align-self: center;
     outline: none;
     border: none;
   }

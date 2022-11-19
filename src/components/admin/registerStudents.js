@@ -13,7 +13,7 @@ function RegisterStudents(props) {
   const [newStudent, setNewStudent] = useState({
     first: '',
     last: '',
-    email: '',
+    username: '',
     password: null,
     passwordReset: true,
     class:''
@@ -22,7 +22,7 @@ function RegisterStudents(props) {
   const validate = useCallback(() => {
       return newStudent.first.length && 
       newStudent.last.length && 
-      newStudent.email.length &&
+      newStudent.username.length &&
       newStudent.class.length
     }, [newStudent]);
   
@@ -44,10 +44,10 @@ function RegisterStudents(props) {
     setIsDisabled(true)
     props.handleLoading(true)
       const newUser = {...newStudent}
-      axios.post('https://elscanner-backend.herokuapp.com/admin-register-new-user', newUser)
+      axios.post('http://127.0.0.1:5000/admin-register-new-user', newUser)
       .then(response => {
-        if (response.data === "Email already registered") {
-          window.alert("That email is already registered - please enter a different email")
+        if (response.data === "username already registered") {
+          window.alert("That username is already registered - please enter a different username")
         }
         if (response.status === 200) {
           window.alert(`Account for ${newStudent.first} ${newStudent.last} created. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)
@@ -81,8 +81,8 @@ function RegisterStudents(props) {
         <input className='register-student-page__form__first-name-input' type='text' name='first' value={newStudent.first} autoComplete='given-name' onChange={handleChange}/>
         <label className='register-student-page__form__last-name-label'>Last Name</label>
         <input className='register-student-page__form__last-name-input' type='text' autoComplete='family-name' name='last' value={newStudent.last} onChange={handleChange}/>
-        <label className='register-student-page__form__email-label'>Email</label>
-        <input className='register-student-page__form__email-input' type='text' autoComplete='email' name='email' value={newStudent.email} onChange={handleChange}/>
+        <label className='register-student-page__form__username-label'>Username</label>
+        <input className='register-student-page__form__username-input' type='text' autoComplete='username' name='username' value={newStudent.username} onChange={handleChange}/>
 
         <div className='register-student-page-buttons'>
           <SmallerGreenButton className='smaller-green-button' text={buttonText()} typeSet='submit' clickHandler={(e) => handleSubmit(e)} disabled={!validate() && isDisabled}/>

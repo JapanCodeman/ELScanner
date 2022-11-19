@@ -9,7 +9,7 @@ function PasswordReset() {
   const navigate = useNavigate()
 
   const [user, setUser] = useState({
-    email: '',
+    username: '',
     password: ''
   })
 
@@ -27,7 +27,7 @@ function PasswordReset() {
       }
   };
     axios
-    .post('https://elscanner-backend.herokuapp.com/password-reset', {...user}, config)
+    .post('http://127.0.0.1:5000/password-reset', {...user}, config)
     .catch(error => {
       console.log("error in password reset", error)
     })
@@ -39,8 +39,8 @@ function PasswordReset() {
     <div className='password-reset-wrapper'>
       <PageTitler pagetitle='Reset Password' />
       <form className='password-reset-form' onSubmit={handleSubmit}>
-        <label className='email-label'>Email</label>
-        <input className='email' type='email' name='email' value={user.email} autoComplete='email' onChange={handleChange} />
+        <label className='username-label'>Username</label>
+        <input className='username' type='username' name='username' value={user.username} autoComplete='username' onChange={handleChange} />
         <label className='new-password-label'>New Password</label>
         <input className='new-password' type='password' name='password' value={user.password} autoComplete='new-password' onChange={handleChange} />
         <SmallerGreenButton className='set-new-password' text='Set New Password' clickHandler={handleSubmit} />
