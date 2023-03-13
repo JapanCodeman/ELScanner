@@ -48,6 +48,24 @@ function AdminHome(props) {
     getAllClasses()
   })
 
+  const requestAdminRegistrationCode = () => {
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+        }
+    }
+    let publicId = props.public_id
+    axios.post('http://127.0.0.1:5000/request-admin-registration-code', publicId, config)
+    .then(response => {
+      window.alert(`Use this code to register a new administrator: ${response.data}`)
+    })
+    .catch(error => {
+      console.log('Error retrieving admin registration code', error)
+    })
+  }
+
   const requestSystemReset = () => {
     props.handleLoading(true)
     let configSet = {
@@ -148,6 +166,7 @@ function AdminHome(props) {
         <GreenButton className='green-button' toPage='/register-students' text='Register Students' />
         <GreenButton className='green-button' toPage='/register-new-book' text='Manually Register Book' />
         <GreenButton className='green-button' toPage='/view-checked-out-books' text='View Checked Out Books' />
+        <FunctionGreenButton className='green-button' text='Get Admin Registration Code' style={{fontSize: '4vh'}} onClick={() => requestAdminRegistrationCode()} />
         {dateCheck ? renderReset() : null}
       </div>
     </div>
