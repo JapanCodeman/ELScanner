@@ -18,6 +18,10 @@
   &:active {
     transform: scale(0.98)
   }
+
+  &:disabled {
+    background-color: gray;
+  }
 }
 
 @media screen and (orientation: landscape) {

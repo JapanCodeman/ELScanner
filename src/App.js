@@ -47,7 +47,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
 
   const adminAuthorizedPages = () => {
     return [
-      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} setClasses={setClasses} classes={[...classes]} loginHandler={setUser} />} key = {'admin-home'} />,
+      <Route path = '/admin-home' element = {<AdminHome {...user} handleLoading={handleLoading} clearBook={clearBook} clearStudent={clearStudent} setClasses={setClasses} classes={[...classes]} loginHandler={setUser} yearResetRequestCallback={yearResetRequest}/>} key = {'admin-home'} />,
       <Route path = '/admin-profile' element = {<AdminProfile handleLoading={handleLoading} />} key = {'admin-profile'} />,
       <Route path = '/book-info' element = {<BookInfo {...book} clearBook={clearBook} clearStudent={clearStudent} />} handleLoading={handleLoading} key = {'book-info'} />,
       <Route path = '/checkout-confirm' element = {<CheckoutConfirm {...book} {...student} clearBook={clearBook} clearStudent={clearStudent} />} key = {'checkout-confirm'} />,
@@ -58,13 +58,20 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
       <Route path = '/register-students' element={<RegisterStudents classes={[...classes]} handleLoading={handleLoading} />} key = {'register-students'} />,
       <Route path = '/scan-book-id' element={<ScanBookID {...user} {...student} clearBook={clearBook} clearStudent={clearStudent} handleSetBook={setBook} loginHandler={setUser}/>} key = {'scan-book-id'} />,
       <Route path = '/scan-student-id' element={<ScanStudentID {...user} {...book} clearStudent={clearStudent} handleSetStudent={setStudent} handleLoading={handleLoading} />} key = {'scan-student-id'} />,
-      <Route path = '/student-profile' element={<StudentProfile {...student} clearBook={clearBook} clearStudent={clearStudent} handleLoading={handleLoading} />} key = 'student-profile' />,
+      <Route path = '/student-profile' element={<StudentProfile {...student} classes={classNames} clearBook={clearBook} clearStudent={clearStudent} handleLoading={handleLoading} setNewStudentClassCallback={setNewStudentClass} />} key = 'student-profile' />,
       <Route path = '/view-administrators' element={<ViewAdministrators handleLoading={handleLoading} />} key = {'view-administrators'} />, 
       <Route path = '/view-checked-out-books' element={<ViewCheckedOutBooks handleSetBook={setBook} />} key = {'view-checked-out-books'} />,
       <Route path = '/view-class-progress' element={<ViewClassProgress />} key = {'view-class-progress'} />,
       <Route path = '/view-classes' element={<ViewClasses />} key = {'view-classes'} />,
       <Route path = '/view-students' element={<ViewStudents {...loading} {...[classes]} handleSetStudent = {setStudent} />} key = {'view-students'} />
     ]
+  }
+
+  const yearResetRequest = () => {
+    setUser(
+      {...user,
+      yearResetRequest: !user.yearResetRequest}
+    )
   }
 
   const clearBook = () => {
@@ -75,12 +82,17 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
     setStudent()
   }
 
+  const setNewStudentClass = () => {
+    console.log('setNewStudentClass fired')
+    setStudent()
+  }
+
   const userAuthorizedPages = () => {
-    return [
-      <Route path = '/home' element = {<Home {...user} handleLoading = {handleLoading} />} key = {'home'} />,
-      <Route path = '/my-class' element = {<MyClass {...user} handleLoading = {handleLoading} />} key = {'my-class'} />,
-      <Route path = '/password-reset' element={<PasswordReset />} key = {'password-reset'} />
-    ]
+      return [
+        <Route path = '/home' element = {<Home {...user} handleLoading = {handleLoading} />} key = {'home'} />,
+        <Route path = '/my-class' element = {<MyClass {...user} handleLoading = {handleLoading} />} key = {'my-class'} />,
+        <Route path = '/password-reset' element={<PasswordReset />} key = {'password-reset'} />
+      ]
   }
 
   useEffect(() => {
@@ -91,7 +103,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
         }
     }
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-class-names', config)
+    .get('http://127.0.0.1:5000/get-all-class-names', config)
     .then(response => {
       setClassNames(response.data)
     })
@@ -111,7 +123,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
             "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
             }
         }
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+        await axios.get(`http://127.0.0.1:5000/lookup-user/${decodedToken.sub.public_id}`, config)
         .then(response => {
           if (response.status === 200) {
             setUser({
@@ -162,7 +174,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
             {user.userRole === 'Student' && user.logged_status === "LOGGED_IN" ?
             userAuthorizedPages() : null}
             <Route exact path = '/' element={<Title />} />
-            <Route path = '/class-reset' element={<ClassReset {...user} classes={classes} setLoading={setLoading} />} /> 
+            <Route path = '/class-reset' element={<ClassReset {...user} classNames={classNames} setLoading={setLoading} />} /> 
             <Route path = '/login' element={<Login {...user} handleLoading={handleLoading} loginHandler={setUser}/>} />
             <Route path = '/register' element={<Register classNames={classNames} handleLoading={handleLoading}/>} />
             <Route path = '*' element={<PageNotFound {...user} />} />

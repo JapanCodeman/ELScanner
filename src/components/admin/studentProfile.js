@@ -13,8 +13,57 @@ function StudentProfile(props) {
     holdingBooks: []
   })
   const [storeClass] = useState({
-    class : props.class
+    class : ""
   })
+  const [classChange, setClassChange] = useState({})
+
+  const [newClassOptions, setNewClassOptions] = useState({
+    newClassOptions: []
+  })
+
+  useEffect(() => {
+    if (newClassOptions.newClassOptions.includes(classChange)) {
+      console.log(`class was changed as classChange is ${classChange} which is included in newClassOptions which is ${newClassOptions.newClassOptions}`)
+      if (window.confirm(`Would you like to change ${props.first} ${props.last}'s class to from ${props.class} to ${classChange}?`)) {
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+            }
+          }
+        console.log(`classChange is ${classChange}`)
+        let student_class_info = {
+          "public_id": props.public_id,
+          "class": classChange
+        }
+        console.log(student_class_info)
+        axios.post('http://127.0.0.1:5000/update-student-class', student_class_info, config)
+        .then(response => {
+          console.log(response)
+          window.alert(`${props.first} ${props.last}'s class updated to ${classChange}. Please find them in the new class by searching again. Navigating to admin home.`)
+          navigate('/admin-home')
+        })
+        .catch(error => {
+          console.log('There was an error in updating the student class', error)
+        })
+      }
+    } else {
+      console.log(`class was not changed as classChange is ${classChange} which is not included in newClassOptions which is ${newClassOptions.newClassOptions}`)
+    }
+  }, [classChange, newClassOptions, props.first, props.last, props.class, props.public_id, navigate])
+
+
+  useEffect(() => { 
+    let classArrayCopy = props.classes.slice()
+    let currentClass = classArrayCopy.indexOf(props.class)
+    classArrayCopy.splice(currentClass, 1)
+    setNewClassOptions({
+      newClassOptions: classArrayCopy
+    })
+  }, [props.class, props.classes])
+
+
 
   useEffect(() => {
     let config = {
@@ -23,7 +72,7 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
       }
     }        
-    axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+    axios.post('http://127.0.0.1:5000/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
     .then(response => {
       setHoldingBooks(response.data)
     })
@@ -33,7 +82,7 @@ function StudentProfile(props) {
     if (!props.public_id) {
       navigate(-1)
     }
-  }, [props.public_id, props.checkedOutBooks, props.student, navigate])
+  }, [props.public_id, props.class, props.classes, props.checkedOutBooks, props.student, navigate])
 
 
   function checkBookIn(book) {
@@ -50,7 +99,7 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
+    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       if (response.status === 200) {
         window.alert(`${response.data}`)
@@ -89,7 +138,7 @@ function StudentProfile(props) {
           }
         }
       axios
-      .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
+      .delete(`http://127.0.0.1:5000/delete-a-user/${props.public_id}`, config)
       .then(response => {
         if (response.data === 'USER_DELETED') {
         window.alert('Student Deleted - back to view students')
@@ -109,6 +158,10 @@ function StudentProfile(props) {
     }
   }
 
+  function handleChange(event) {
+    setClassChange(event.target.name = event.target.value);
+  }
+
   function resetPassword() {
     let config = {
       headers: {
@@ -118,7 +171,7 @@ function StudentProfile(props) {
         }
       }
       axios
-      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
+      .post('http://127.0.0.1:5000/delete-password', {"public_id" : props.public_id}, config)
       .then(response => {
         if (response.status === 200) {
           window.alert(`Password for ${props.first} ${props.last} reset. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)
@@ -136,12 +189,16 @@ function StudentProfile(props) {
         }
         console.log("Error in resetPassword()", error)
       })
-    }
+  }
     
-
   return (
     <div className='student-profile'>
-      <PageTitler pagetitle={`${props.first} ${props.last}`} /> 
+      <PageTitler pagetitle={`${props.first} ${props.last}`} />
+      <label className='select-student-new-class-label'>Class</label>
+      <select className='select-student-new-class' name='classChange' onChange={handleChange}>
+          <option value={props.class}>{props.class}</option>
+          {newClassOptions.newClassOptions?.map(_class => <option value={_class} key={_class}>{_class}</option>)}
+      </select>
       <label className='words-read-label'>Words Read:</label>
       <div className='words-read'>{props.wordsRead}</div>
       <label className='total-books-read-label'>Total Books Read:</label>

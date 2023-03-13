@@ -1,9 +1,21 @@
 .class-reset {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   :nth-child(1), :nth-child(2) {
     margin: 3vw;
+  }
+  select {
+    display: grid;
+    justify-self: end;
+    text-align: center;
+    height: 5vh;
+    width: 75%;
+    color: green;
+    font-family: "Edu TAS Beginner", cursive;
+    font-size: 18px;
+    border-radius: 25px;
   }
 }
 

@@ -22,7 +22,7 @@ function CheckoutConfirm(props) {
       public_id : props.public_id
     }
     axios
-    .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
+    .post("http://127.0.0.1:5000/check-book-out", studentAndBookUPC, config)
     .catch(error => {
       if (error.response.status === 401) {
         window.sessionStorage.removeItem('token')
