@@ -38,7 +38,7 @@ function StudentProfile(props) {
           "class": classChange
         }
         console.log(student_class_info)
-        axios.post('http://127.0.0.1:5000/update-student-class', student_class_info, config)
+        axios.post('https://elscanner-backend.herokuapp.com/update-student-class', student_class_info, config)
         .then(response => {
           console.log(response)
           window.alert(`${props.first} ${props.last}'s class updated to ${classChange}. Please find them in the new class by searching again. Navigating to admin home.`)
@@ -72,7 +72,7 @@ function StudentProfile(props) {
         'Access-Control-Allow-Origin': '*'
       }
     }        
-    axios.post('http://127.0.0.1:5000/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
+    axios.post('https://elscanner-backend.herokuapp.com/retrieve-checked-out-books', {"checkedOutBooks" : props.checkedOutBooks}, config)
     .then(response => {
       setHoldingBooks(response.data)
     })
@@ -99,7 +99,7 @@ function StudentProfile(props) {
       wordCount : book.wordCount
     }
     axios
-    .post('http://127.0.0.1:5000/check-book-in', {studentAndBookUPC}, config)
+    .post('https://elscanner-backend.herokuapp.com/check-book-in', {studentAndBookUPC}, config)
     .then(response => {
       if (response.status === 200) {
         window.alert(`${response.data}`)
@@ -138,7 +138,7 @@ function StudentProfile(props) {
           }
         }
       axios
-      .delete(`http://127.0.0.1:5000/delete-a-user/${props.public_id}`, config)
+      .delete(`https://elscanner-backend.herokuapp.com/delete-a-user/${props.public_id}`, config)
       .then(response => {
         if (response.data === 'USER_DELETED') {
         window.alert('Student Deleted - back to view students')
@@ -171,7 +171,7 @@ function StudentProfile(props) {
         }
       }
       axios
-      .post('http://127.0.0.1:5000/delete-password', {"public_id" : props.public_id}, config)
+      .post('https://elscanner-backend.herokuapp.com/delete-password', {"public_id" : props.public_id}, config)
       .then(response => {
         if (response.status === 200) {
           window.alert(`Password for ${props.first} ${props.last} reset. Their temporary password is ${response.data.temporaryPassword}. They should log in with this password and they will be redirected to set their own password.`)

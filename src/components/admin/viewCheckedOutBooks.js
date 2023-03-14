@@ -21,7 +21,7 @@ function ViewCheckedOutBooks(props) {
         }
     }
     axios
-    .get('http://127.0.0.1:5000/retrieve-all-checked-out-books', config)
+    .get('https://elscanner-backend.herokuapp.com/retrieve-all-checked-out-books', config)
     .then(response => {
       setCheckedOutBooks(response.data)
       setLoading(false)

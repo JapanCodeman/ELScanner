@@ -30,7 +30,7 @@ function ClassReset(props) {
       "public_id": props.public_id,
       "class": user.class
     }
-    axios.post('http://127.0.0.1:5000/update-student-class', updateInfo, config)
+    axios.post('https://elscanner-backend.herokuapp.com/update-student-class', updateInfo, config)
     .then(response => {
       if (response.data === 'CLASS_UPDATED') {
         console.log('Function test line 36, classReset.js', response.data)

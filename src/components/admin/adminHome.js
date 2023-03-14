@@ -24,7 +24,7 @@ function AdminHome(props) {
           }
         }
       axios
-      .get('http://127.0.0.1:5000/get-all-classes', config)
+      .get('https://elscanner-backend.herokuapp.com/get-all-classes', config)
       .then(response => {
         if (response.status === 200) {
           if (props.classes.length === 0) {
@@ -57,7 +57,7 @@ function AdminHome(props) {
         }
     }
     let publicId = props.public_id
-    axios.post('http://127.0.0.1:5000/request-admin-registration-code', publicId, config)
+    axios.post('https://elscanner-backend.herokuapp.com/request-admin-registration-code', publicId, config)
     .then(response => {
       window.alert(`Use this code to register a new administrator: ${response.data}`)
     })
@@ -77,7 +77,7 @@ function AdminHome(props) {
     }
     const userInfo = jwtDecode(window.sessionStorage.getItem('token'))
     const publicId = userInfo.sub.public_id
-    axios.get('http://127.0.0.1:5000/check-year-reset-count', configSet, userInfo, { withCredentials: true })
+    axios.get('https://elscanner-backend.herokuapp.com/check-year-reset-count', configSet, userInfo, { withCredentials: true })
     .then(response => {
       props.handleLoading(false)
       if (response.data === "TIME_DELTA_ERROR") {
@@ -89,7 +89,7 @@ function AdminHome(props) {
         if (confirm("YOU ARE ABOUT TO RESET THE ELSCANNER SYSTEM. THIS ACTION IS IRREVERSIBLE AND SHOULD ONLY BE PERFORMED AT THE END OF THE YEAR. DO YOU WISH TO RESET THE SYSTEM AND REMOVE ALL CLASS AND STUDENT INFORMATION?")) {
           props.handleLoading(true)
           window.alert("SYSTEM RESET IN PROGRESS - THIS WILL TAKE A FEW MOMENTS - PLEASE DO NOT LEAVE THE PAGE")
-          axios.post('http://127.0.0.1:5000/year-reset', publicId, configSet, { withCredentials: true })
+          axios.post('https://elscanner-backend.herokuapp.com/year-reset', publicId, configSet, { withCredentials: true })
           .then(response => {
             if (response.data === "SYSTEM_RESET_TEST_COMPLETE") {
               window.alert("System reset complete. Please assign new classes before allowing students to login to select their new class.")
@@ -126,7 +126,7 @@ function AdminHome(props) {
         "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
       }
     }
-    axios.post('http://127.0.0.1:5000/revoke-system-reset-request', publicId, configSet, { withCredentials: true})
+    axios.post('https://elscanner-backend.herokuapp.com/revoke-system-reset-request', publicId, configSet, { withCredentials: true})
     .then(response => {
       props.handleLoading(false)
       if (response.data === "SYSTEM_RESET_REQUEST_REVOKED") {
