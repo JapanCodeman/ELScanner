@@ -9,14 +9,22 @@ function CreateClass(props) {
   const navigate = useNavigate()
 
   const [ClassName, setClassName] = useState({
-
+    class: ""
   })
 
   const handleChange = (event) => {
     setClassName({[event.target.name] : event.target.value})
   }
 
+  const classSetCheck = () => {
+    return ClassName.class !== "" 
+  }
+
   const createClass = () => {
+    if (!classSetCheck()) {
+      window.alert("You must set a name for this class.")
+      return
+    }
     let token = window.sessionStorage.getItem("token")
     let config = {
       headers: {

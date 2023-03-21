@@ -76,8 +76,8 @@ function EditClass(props) {
     if (confirm("CLASS WILL BE DELETED - THIS WILL AFFECT ALL STUDENTS IN THE CLASS AND CANNOT BE UNDONE - ARE YOU SURE?")) {
       let config = {
         headers: {
-          // "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
           }
         }
