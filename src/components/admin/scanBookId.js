@@ -11,7 +11,7 @@ function ScanBookId(props) {
   
   const updateBookId = async (bookID) => {
     await axios
-    .get(`https://elscanner-backend.herokuapp.com//retrieve-book-info/${bookID}`)
+    .get(`https://elscanner-backend.herokuapp.com/retrieve-book-info/${bookID}`)
     .then(book => {
       if (props.userRole === 'Student' && book.data !== 'Book not registered') {
         const config = {
@@ -26,7 +26,7 @@ function ScanBookId(props) {
           public_id : props.public_id
         }
         axios
-        .post("https://elscanner-backend.herokuapp.com//check-book-out", studentAndBookUPC, config)
+        .post("https://elscanner-backend.herokuapp.com/check-book-out", studentAndBookUPC, config)
         .then(response => {
           if (response.status === 200) {
             window.alert(`${response.data} - returning to admin-home`)

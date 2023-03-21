@@ -40,7 +40,7 @@ function Login(props) {
       }
     }
       await axios
-      .post('https://elscanner-backend.herokuapp.com//login', {
+      .post('https://elscanner-backend.herokuapp.com/login', {
         ...user
       },
       configSet,
@@ -79,7 +79,7 @@ function Login(props) {
           }
       }
       const token = jwtDecode(window.sessionStorage.getItem('token'))
-      await axios.get(`https://elscanner-backend.herokuapp.com//lookup-user/${token.sub.public_id}`, config)
+      await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${token.sub.public_id}`, config)
       .then(response => {
         if (response.status === 200) {
           props.loginHandler({
