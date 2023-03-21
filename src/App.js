@@ -103,7 +103,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
         }
     }
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-class-names', config)
+    .get('https://elscanner-backend.herokuapp.com//get-all-class-names', config)
     .then(response => {
       setClassNames(response.data)
     })
@@ -123,7 +123,7 @@ import ViewCheckedOutBooks from './components/admin/viewCheckedOutBooks';
             "Authorization": `Bearer ${window.sessionStorage.getItem('token')}`
             }
         }
-        await axios.get(`https://elscanner-backend.herokuapp.com/lookup-user/${decodedToken.sub.public_id}`, config)
+        await axios.get(`https://elscanner-backend.herokuapp.com//lookup-user/${decodedToken.sub.public_id}`, config)
         .then(response => {
           if (response.status === 200) {
             setUser({

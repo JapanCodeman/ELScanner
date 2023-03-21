@@ -20,7 +20,7 @@ function ViewAdministrators(props) {
       }
     }  
     axios
-    .get('https://elscanner-backend.herokuapp.com/get-all-administrators', config)
+    .get('https://elscanner-backend.herokuapp.com//get-all-administrators', config)
     .then(response => {
       if (response.status === 200) {
         setAdministrators(response.data)
